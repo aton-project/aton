@@ -1,3 +1,4 @@
+
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
@@ -63,7 +64,7 @@ favicon: 'img/favicon.ico',
       title: 'ATON',
       logo: {
         alt: 'ATON Logo',
-        src: 'img/logos/aton-logo.svg',
+        src: 'img/logos/aton-logo.png',
       },
       items: [
         {

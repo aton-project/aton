@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="book/static/img/logos/aton-logo.svg" alt="ATON Logo" width="240">
+  <img src="book/static/img/logos/aton-logo.png" alt="ATON Logo" width="240">
 </p>
 
 <h1 align="center">ATON</h1>

@@ -1,22 +1,27 @@
-# Website
+# ATON Book
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The ATON Book is the authoritative specification of the ATON Engineering Operating System.
 
-## Installation
+It documents the vision, concepts, architecture and design decisions of the project.
+
+> The Book defines the architecture.
+> The implementation follows the Book.
+
+## Prerequisites
+
+- Node.js 22+
+- npm
+
+## Run locally
 
 ```bash
 npm install
+npm start
 ```
 
-**Note**: feel free to use the package manager of your choice.
+The documentation is available at:
 
-## Local Development
-
-```bash
-npm run start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+http://localhost:4000
 
 ## Build
 
@@ -24,20 +29,20 @@ This command starts a local development server and opens up a browser window. Mo
 npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## Structure
 
-## Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true npm run deploy
+```text
+docs/
+├── getting-started/
+├── concepts/
+├── architecture/
+├── reference/
+└── decisions/
 ```
 
-Not using SSH:
+## Documentation Principles
 
-```bash
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+- Documentation is written before implementation.
+- Architecture is technology independent.
+- Decisions are documented as ADRs.
+- The Book is the single source of truth for the domain model.
