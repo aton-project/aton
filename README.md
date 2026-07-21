@@ -56,32 +56,99 @@ Engineering capabilities such as Requirements Management, MBSE, Test Management 
 ──────────────────────────────────────────
           Git Repository Storage
 ```
+The Kernel provides the common engineering infrastructure.
+
+All engineering capabilities are implemented as independent extensions, allowing ATON to remain modular, extensible and technology independent.
+
+## Project Documentation
+
+The following documents describe the project, its architecture, development process and governance.
+
+| Document | Purpose |
+|-----------|---------|
+| **README.md** | Project overview, vision, architecture and getting started. |
+| **ROADMAP.md** | Planned milestones, releases and long-term project goals. |
+| **CONTRIBUTING.md** | Guidelines for contributing to the project. |
+| **DEVELOPMENT.md** | Development workflow, environment setup and implementation process. |
+| **CODING_GUIDELINES.md** | Coding standards and best practices for all project languages. |
+| **CHANGELOG.md** | History of notable changes between project releases. |
+| **CODE_OF_CONDUCT.md** | Community standards and expected behavior. |
+| **SECURITY.md** | Security policy and vulnerability reporting process. |
+
+Together, these documents define how ATON is designed, developed, maintained and governed.
 
 ## Repository Structure
 
-```text
-book/            Project documentation
+| Module | Description |
+|---------|-------------|
+| **book** | Project documentation |
+| **aton-model** | Engineering domain model |
+| **aton-kernel** | Kernel services |
+| **aton-git** | Git persistence |
+| **aton-rest** | REST API |
+| **aton-web** | Web frontend |
+| **aton-ai** | AI capabilities |
+| **examples** | Example projects |
 
-aton-model/      Engineering domain model
+## Getting Started
 
-aton-kernel/     Kernel services
+ATON is an architecture-driven engineering platform.
 
-aton-git/        Git persistence
+Whether you want to explore the project, understand its concepts or contribute to its implementation, the following steps will help you get started.
 
-aton-rest/       REST API
+### 1. Clone the Repository
 
-aton-web/        Web frontend
-
-aton-ai/         AI capabilities
-
-examples/        Example projects
+```bash
+git clone https://github.com/aton-project/aton.git
+cd aton
 ```
 
-## Documentation
+### 2. Read the Documentation
 
-The ATON Book is the authoritative specification of the project.
+Before writing code, we recommend reading:
 
-Documentation is written before implementation.
+- **README.md** – Project overview
+- **The ATON Book** – Architecture and concepts
+- **Architecture Decision Records (ADRs)** – Key design decisions
+
+### 3. Start the Documentation
+
+The Book is the authoritative specification of the project.
+
+```bash
+cd book
+npm install
+npm start
+```
+
+The documentation will be available at:
+
+```
+http://localhost:3000
+```
+
+### 4. Explore the Project
+
+A good starting point is the following reading order:
+
+1. Vision
+2. Core Principles
+3. Architecture
+4. ADRs
+5. Domain Model
+6. Repository Structure
+
+### 5. Contribute
+
+If you would like to contribute, please read:
+
+- **CONTRIBUTING.md**
+- **DEVELOPMENT.md**
+- **CODING_GUIDELINES.md**
+
+Before implementing new functionality, ensure that the corresponding architecture is documented.
+
+> **The Book defines the system. The implementation follows the Book.**
 
 ## Project Status
 
@@ -89,19 +156,31 @@ Documentation is written before implementation.
 
 The architecture, documentation and domain model are currently being established before implementation begins.
 
+Current Focus
+
+- Documentation
+- Domain Model
+- Architecture Decisions
+- Engineering Metamodel
+
+Production-ready implementation has not yet started.
+
 ## Roadmap
 
-- **v0.1** Foundation
-- **v0.2** Kernel
-- **v0.3** Persistence
-- **v0.4** REST API
-- **v0.5** Web UI
+| Release | Goal |
+|---------|------|
+| **v0.1** | Foundation |
+| **v0.2** | Kernel |
+| **v0.3** | Git Persistence |
+| **v0.4** | REST API |
+| **v0.5** | Web UI |
+| **v0.6** | AI |
 
 ## Contributing
 
-Contributions are welcome.
+Contributions of all kinds are welcome, including architecture discussions, documentation improvements, bug reports and implementation.
 
-Please read the contribution guidelines before submitting pull requests.
+Please read CONTRIBUTING.md before submitting Issues or Pull Requests.
 
 ## License
 
