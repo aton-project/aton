@@ -1,4 +1,4 @@
-#Glossary - Core Terminology
+# Glossary - Core Terminology
 
 Purpose
 
