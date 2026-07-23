@@ -1,5 +1,19 @@
-references: []
+references:
+  - ietf:rfc:2119
+
 dependsOn: []
+
 supersedes: []
+
 supersededBy: []
-relatedTo: []
+
+relatedTo:
+  - aton:rfc:0001
+  - aton:rfc:0002
+  - aton:rfc:0003
+  - aton:rfc:0004
+  - aton:rfc:0005
+
+children: []
+
+parents: []
