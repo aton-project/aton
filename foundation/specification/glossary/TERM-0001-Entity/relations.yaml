@@ -1,0 +1,5 @@
+- type: specializes
+  target: TERM-0005-Knowledge-Unit
+
+- type: referenced-by
+  target: RFC-0001
