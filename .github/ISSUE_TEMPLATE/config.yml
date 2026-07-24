@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: ATON Documentation
+    url: https://aton-project.org
+    about: Read the ATON documentation.
+
+  - name: Engineering Discussions
+    url: https://github.com/aton-project/aton/discussions
+    about: Ask questions and discuss ideas before opening an issue.
