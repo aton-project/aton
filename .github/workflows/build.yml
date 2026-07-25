@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Validate"]
+    types:
+      - completed
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: book/package-lock.json
+
+      - name: Install dependencies
+        working-directory: book
+        run: npm ci
+
+      - name: Build documentation
+        working-directory: book
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aton-book
+          path: book/build
