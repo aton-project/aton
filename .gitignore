@@ -28,3 +28,11 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Deployment
+/releases/
+/current-test
+/current-prod
+/logs/
+/tmp/
+

@@ -34,6 +34,7 @@ const sidebars: SidebarsConfig = {
         'architecture/kernel-domain-model',
         'architecture/kernel-service-architecture',
         'architecture/kernel-architecture-rules',
+        'architecture/deployment-architecture',
       ],
     },
 
@@ -42,11 +43,8 @@ const sidebars: SidebarsConfig = {
       label: 'Decisions',
       collapsed: false,
       items: [
-        'decisions/aton-vision',
-        'decisions/engineering-knowledge-graph',
-        'decisions/everything-is-an-artifact',
-        'decisions/git-source-of-truth',
-        'decisions/emf-implementation-model',
+        'decisions/README',
+        'decisions/template',
       ],
     },
   ],
