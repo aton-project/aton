@@ -18,7 +18,6 @@ export default function Home(): ReactNode {
           textAlign: 'center',
         }}
       >
-        <h1>ATON TEST BUILD 001</h1>
         <Heading as="h1" style={{ fontSize: '4rem' }}>
           ATON
         </Heading>
