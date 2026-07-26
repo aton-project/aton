@@ -7,6 +7,7 @@ on:
 
 jobs:
   deploy:
+    environment: test
     runs-on: ubuntu-latest
 
     steps:
@@ -36,14 +37,9 @@ jobs:
           ssh-keyscan -p ${{ secrets.DEPLOY_PORT }} \
             ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Install rsync
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
-
       - name: Deploy
         run: |
           rsync -az --delete \
-            -e "ssh -p ${{ secrets.DEPLOY_PORT }}" \
+            -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.DEPLOY_PORT }}"
             book/build/ \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH_TEST }}
