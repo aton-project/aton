@@ -1,11 +1,10 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
-  bookSidebar: [
+  docs: [
     {
       type: 'category',
       label: 'Getting Started',
-      collapsed: false,
       items: [
         'getting-started/intro',
         'getting-started/vision',
@@ -17,7 +16,6 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Concepts',
-      collapsed: false,
       items: [
         'concepts/engineering-operating-system',
         'concepts/artifact',
@@ -28,24 +26,44 @@ const sidebars: SidebarsConfig = {
 
     {
       type: 'category',
-      label: 'Architecture',
-      collapsed: false,
+      label: 'Reference',
       items: [
-        'architecture/kernel-domain-model',
-        'architecture/kernel-service-architecture',
-        'architecture/kernel-architecture-rules',
-        'architecture/deployment-architecture',
+        {
+          type: 'category',
+          label: 'Architecture',
+          items: [
+            'reference/architecture/kernel-domain-model',
+            'reference/architecture/kernel-service-architecture',
+            'reference/architecture/kernel-architecture-rules',
+            'reference/architecture/deployment-architecture',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Brand',
+          items: [
+            'reference/brand/brand-guidelines',
+          ],
+        },
       ],
     },
 
     {
       type: 'category',
-      label: 'Decisions',
-      collapsed: false,
-      items: [
-        'decisions/README',
-        'decisions/template',
-      ],
+      label: 'Specifications',
+      items: [],
+    },
+
+    {
+      type: 'category',
+      label: 'Tutorials',
+      items: [],
+    },
+
+    {
+      type: 'category',
+      label: 'Community',
+      items: [],
     },
   ],
 };

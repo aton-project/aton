@@ -69,7 +69,7 @@ favicon: 'img/favicon.ico',
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'bookSidebar',
+          sidebarId: 'docs',
           position: 'left',
           label: 'Book',
         },
