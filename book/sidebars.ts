@@ -51,18 +51,30 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Specifications',
+      link: {
+        type: 'doc',
+        id: 'specifications/index',
+      },
       items: [],
     },
 
     {
       type: 'category',
       label: 'Tutorials',
+      link: {
+        type: 'doc',
+        id: 'tutorials/index',
+      },
       items: [],
     },
 
     {
       type: 'category',
       label: 'Community',
+      link: {
+        type: 'doc',
+        id: 'community/index',
+      },
       items: [],
     },
   ],
