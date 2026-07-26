@@ -68,10 +68,34 @@ favicon: 'img/favicon.ico',
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'docs',
+          to: '/docs/getting-started',
+          label: 'Getting Started',
           position: 'left',
-          label: 'Book',
+        },
+        {
+          to: '/docs/concepts',
+          label: 'Concepts',
+          position: 'left',
+        },
+        {
+          to: '/docs/reference',
+          label: 'Reference',
+          position: 'left',
+        },
+        {
+          to: '/docs/specifications',
+          label: 'Specifications',
+          position: 'left',
+        },
+        {
+          to: '/docs/tutorials',
+          label: 'Tutorials',
+          position: 'left',
+        },
+        {
+          to: '/docs/community',
+          label: 'Community',
+          position: 'left',
         },
         {
           href: 'https://github.com/aton-project/aton',
