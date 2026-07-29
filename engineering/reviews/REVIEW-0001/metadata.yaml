@@ -1,0 +1,10 @@
+id: REVIEW-0001
+title: Review of ADR-0001
+entityType: review
+
+version: 0.1.0
+status: in-progress
+
+subject:
+  artifact: ADR-0001
+  version: 1.0.0
