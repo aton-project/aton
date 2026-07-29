@@ -1,2 +1,8 @@
+parents: []
+
+children:
+  - ADR-0002
+
 references: []
-dependsOn: []
+
+related: []

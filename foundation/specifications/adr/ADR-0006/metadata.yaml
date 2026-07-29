@@ -1,10 +1,10 @@
-id: ADR-0001
-title: Self-Hosting Foundation
+id: ADR-0006
+title: Engineering Knowledge Graph
 
 type: architecture-decision
 status: accepted
 
-version: 2.0.0
+version: 1.0.0
 
 authors:
   - ATON Project
@@ -13,6 +13,8 @@ created: 2026-07-28
 updated: 2026-07-28
 
 tags:
-  - foundation
-  - self-hosting
+  - engineering-knowledge
+  - graph
+  - traceability
   - architecture
+  - foundation

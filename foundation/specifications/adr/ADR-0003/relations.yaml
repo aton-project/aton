@@ -5,5 +5,5 @@ children: []
 references: []
 
 related:
-  - ADR-0003
-  - ADR-0005
+  - ADR-0002
+  - ADR-0006
