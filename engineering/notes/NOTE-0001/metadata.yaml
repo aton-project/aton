@@ -5,3 +5,6 @@ title: Embedded Artifacts
 entityType: note
 
 status: proposed
+
+createdFrom:
+  - REVIEW-0001#F-005
