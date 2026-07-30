@@ -1,0 +1,7 @@
+id: F-005
+
+title: Findings are modeled as standalone artifacts
+
+entityType: finding
+
+status: open

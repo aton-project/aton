@@ -1,2 +1,5 @@
 reviews:
   - ADR-0001
+
+findings:
+  - FINDING-0001
