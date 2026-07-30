@@ -1,0 +1,10 @@
+id: NOTE-0002
+
+title: Review Process Specification
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0001#F-004
