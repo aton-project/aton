@@ -1,2 +1,6 @@
-implementedBy:
+reviewedArtifact:
   - ADR-0001
+
+creates:
+  - NOTE-0002
+
