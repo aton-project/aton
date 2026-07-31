@@ -1,0 +1,8 @@
+id: REVIEW-0002
+
+title: Review of ADR-0002 — Markdown as the Canonical Authoring Format
+
+entityType: review
+
+reviewedArtifact:
+  - ADR-0002
