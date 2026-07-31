@@ -1,0 +1,10 @@
+id: NOTE-0005
+
+title: Architecture Decision Lifecycle
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0002#F-005
