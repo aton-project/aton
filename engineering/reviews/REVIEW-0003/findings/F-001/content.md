@@ -12,3 +12,28 @@ artifacts.
 ## Recommendation
 
 Clarify the scope of the decision.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The architectural scope should consistently address all engineering artifacts,
+not only the Foundation.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Target: ADR-0003
+
+Verification: Pending

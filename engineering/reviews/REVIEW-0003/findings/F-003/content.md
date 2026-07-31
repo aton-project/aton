@@ -12,3 +12,28 @@ historical evolution.
 ## Recommendation
 
 Clarify the relationship between engineering knowledge and Git history.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The distinction between engineering knowledge and the evolution of engineering
+knowledge should be expressed more precisely.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Target: ADR-0003
+
+Verification: Pending
