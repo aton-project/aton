@@ -21,8 +21,8 @@ than advanced document formatting capabilities.
 
 ## Decision
 
-Markdown SHALL be used as the canonical authoring format for engineering
-content within the Foundation.
+Markdown SHALL be used as the canonical authoring format for all engineering
+content.
 
 Markdown SHALL be human-readable without requiring specialized software.
 
@@ -33,10 +33,12 @@ Examples include mathematical expressions, diagrams, and other
 domain-specific representations.
 
 Markdown MAY be transformed into other representations for rendering,
-publishing, exchange, or automated processing.
+-publishing, exchange, or automated processing.
 
-Markdown is the canonical source for engineering content but SHALL NOT define
-the logical Engineering Knowledge Model.
+Markdown is the canonical serialization of engineering content.
+
+The Engineering Knowledge Model defines the semantics of engineering knowledge
+independently of its serialization.
 
 ---
 
@@ -90,7 +92,10 @@ portability, and long-term maintainability.
 
 ## Architectural Principle
 
-> Markdown is the canonical authoring format of the Foundation.
+> Markdown is the canonical serialization format for engineering content.
 
-> Engineering knowledge is authored in Markdown but defined by the Engineering
-> Knowledge Model.
+> The Engineering Knowledge Model defines the semantics of engineering
+> knowledge independently of its serialization.
+
+> Engineering artifacts are authored in implementation-independent canonical
+> formats.
