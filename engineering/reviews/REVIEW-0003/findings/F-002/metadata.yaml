@@ -1,0 +1,9 @@
+id: F-002
+
+title: Architectural role of Git is incompletely specified
+
+entityType: finding
+
+severity: major
+
+status: open

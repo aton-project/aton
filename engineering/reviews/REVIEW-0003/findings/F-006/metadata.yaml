@@ -1,0 +1,9 @@
+id: F-006
+
+title: Git tooling compatibility scope is too narrow
+
+entityType: finding
+
+severity: minor
+
+status: open
