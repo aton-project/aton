@@ -14,3 +14,28 @@ authored using Markdown.
 
 Clarify whether this decision applies only to the Foundation or to all
 engineering artifacts.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The architectural scope of the decision is no longer aligned with the current
+ATON architecture.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Target: ADR-0002
+
+Verification: Pending

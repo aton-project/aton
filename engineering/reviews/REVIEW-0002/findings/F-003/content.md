@@ -14,3 +14,27 @@ made more explicit.
 
 Clarify that Markdown defines the serialization of engineering content, while
 the Engineering Knowledge Model defines its semantics.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The distinction between serialization and semantics should be explicit.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Target: ADR-0002
+
+Verification: Pending
