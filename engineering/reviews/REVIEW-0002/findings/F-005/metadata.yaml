@@ -1,0 +1,9 @@
+id: F-005
+
+title: ADR lifecycle is not reflected by the status
+
+entityType: finding
+
+severity: major
+
+status: open

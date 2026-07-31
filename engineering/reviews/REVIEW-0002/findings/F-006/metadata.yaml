@@ -1,0 +1,9 @@
+id: F-006
+
+title: Redundant temporal metadata
+
+entityType: finding
+
+severity: major
+
+status: open

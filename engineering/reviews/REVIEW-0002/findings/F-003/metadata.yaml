@@ -1,0 +1,9 @@
+id: F-003
+
+title: Syntax and semantics should be separated more clearly
+
+entityType: finding
+
+severity: minor
+
+status: open
