@@ -1,0 +1,10 @@
+id: NOTE-0007
+
+title: Derived Artifact Metadata
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0003#F-005
