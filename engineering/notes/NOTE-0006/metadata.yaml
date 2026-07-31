@@ -1,0 +1,10 @@
+id: NOTE-0006
+
+title: Engineering Semantics of Git Commits
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0003#F-004
