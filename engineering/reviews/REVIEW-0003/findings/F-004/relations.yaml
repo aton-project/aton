@@ -1,2 +1,5 @@
 reviewedArtifact:
   - ADR-0003
+
+creates:
+  - NOTE-0006
