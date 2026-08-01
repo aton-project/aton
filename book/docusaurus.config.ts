@@ -81,7 +81,7 @@ favicon: 'img/favicon.ico',
         },
         {
           type: 'doc',
-          docId: 'reference/architecture/index',
+          docId: 'reference/index',
           label: 'Reference',
           position: 'left',
         },
