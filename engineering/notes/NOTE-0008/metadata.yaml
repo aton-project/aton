@@ -1,0 +1,10 @@
+id: NOTE-0008
+
+title: Entity and Artifact Semantics
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0004#F-002
