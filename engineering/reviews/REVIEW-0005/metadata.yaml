@@ -1,0 +1,8 @@
+id: REVIEW-0005
+
+title: Review of ADR-0005 — Separation of Content, Metadata and Relations
+
+entityType: review
+
+reviewedArtifact:
+  - ADR-0005
