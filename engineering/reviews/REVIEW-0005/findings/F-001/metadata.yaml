@@ -1,0 +1,9 @@
+id: F-001
+
+title: Entity and Artifact separation is not reflected
+
+entityType: finding
+
+severity: major
+
+status: open

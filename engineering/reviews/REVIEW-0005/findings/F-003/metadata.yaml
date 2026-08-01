@@ -1,0 +1,9 @@
+id: F-003
+
+title: Relation semantics are incomplete
+
+entityType: finding
+
+severity: major
+
+status: open

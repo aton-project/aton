@@ -1,0 +1,9 @@
+id: F-002
+
+title: Metadata semantics are incomplete
+
+entityType: finding
+
+severity: major
+
+status: open
