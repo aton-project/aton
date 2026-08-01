@@ -1,0 +1,10 @@
+id: NOTE-0011
+
+title: Persisted and Derived Metadata
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0004#F-006
