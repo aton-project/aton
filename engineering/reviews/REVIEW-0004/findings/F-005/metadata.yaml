@@ -1,0 +1,9 @@
+id: F-005
+
+title: Views should not be limited to documents
+
+entityType: finding
+
+severity: minor
+
+status: open
