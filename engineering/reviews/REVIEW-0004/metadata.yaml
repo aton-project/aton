@@ -1,0 +1,8 @@
+id: REVIEW-0004
+
+title: Review of ADR-0004 — Artifact-Based Knowledge Organization
+
+entityType: review
+
+reviewedArtifact:
+  - ADR-0004
