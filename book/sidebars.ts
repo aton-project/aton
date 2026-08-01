@@ -5,6 +5,10 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Getting Started',
+      link: {
+        type: 'doc',
+        id: 'getting-started/index',
+      },
       items: [
         'getting-started/intro',
         'getting-started/vision',
@@ -16,6 +20,10 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Concepts',
+      link: {
+        type: 'doc',
+        id: 'concepts/index',
+      },
       items: [
         'concepts/engineering-operating-system',
         'concepts/artifact',
@@ -27,6 +35,10 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Reference',
+      link: {
+        type: 'doc',
+        id: 'reference/index',
+      },
       items: [
         {
           type: 'category',
