@@ -12,3 +12,28 @@ entities and their artifact representations.
 ## Recommendation
 
 Clarify the architectural roles of entities and artifacts.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The Engineering Knowledge Model now distinguishes between entities and
+artifacts. ADR-0004 should reflect this separation.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Target: ADR-0004
+
+Verification: Pending
