@@ -1,0 +1,10 @@
+id: NOTE-0014
+
+title: Logical and Physical Artifact Representation
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0005#F-004
