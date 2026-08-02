@@ -12,3 +12,26 @@ The architectural meaning of navigation is not defined.
 ## Recommendation
 
 Clarify the architectural intent of graph navigation.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The architectural semantics of navigation are currently undefined and require
+dedicated engineering work.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Create NOTE
+
+### Execution
+
+Verification: Pending

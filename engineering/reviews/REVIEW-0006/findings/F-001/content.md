@@ -17,3 +17,26 @@ Engineering Knowledge Graph.
 Avoid binding the Engineering Knowledge Graph to artifacts until the
 Engineering Knowledge Model defines the relationship between entities and
 artifacts.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The distinction between engineering entities and engineering artifacts should
+be reflected consistently within the Engineering Knowledge Graph.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Verification: Pending
