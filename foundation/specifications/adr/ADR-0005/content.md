@@ -11,11 +11,11 @@ Accepted
 Engineering artifacts contain different kinds of information that evolve
 independently.
 
-The engineering content expresses the technical knowledge.
+Engineering content expresses engineering knowledge.
 
-Metadata describes the artifact itself.
+Metadata describes engineering artifacts.
 
-Relationships define how artifacts are connected.
+Relationships describe how engineering concepts are connected.
 
 Combining these concerns in a single structure reduces maintainability,
 reusability, and automated processing.
@@ -24,20 +24,19 @@ reusability, and automated processing.
 
 ## Decision
 
-Artifacts SHALL separate engineering content, metadata, and relationships
-into independent logical components.
+Engineering artifacts SHALL separate engineering content, metadata, and
+relationships into independent logical components.
 
-Engineering content SHALL contain only the technical knowledge intended for
+Engineering content SHALL contain only engineering knowledge intended for
 human understanding.
 
-Metadata SHALL describe the artifact itself and SHALL NOT contain engineering
-content.
+Metadata SHALL describe engineering artifacts and SHALL NOT contain
+engineering knowledge.
 
-Relationships SHALL explicitly describe dependencies and connections between
-artifacts.
+Engineering relationships SHALL be represented explicitly.
 
-Each component MAY evolve independently while remaining part of the same
-logical artifact.
+Each logical component MAY evolve independently while remaining part of the
+same engineering artifact.
 
 ---
 
@@ -48,7 +47,7 @@ This decision provides:
 - clear separation of concerns
 - simplified maintenance
 - improved traceability
-- reusable engineering content
+- reusable engineering knowledge
 - implementation-independent artifact structure
 - efficient automated processing
 
@@ -81,7 +80,8 @@ Rejected because metadata becomes difficult to process independently.
 
 ### Implicit Relationships
 
-Rejected because traceability should always be explicit rather than inferred.
+Rejected because engineering relationships should always be represented
+explicitly rather than being inferred.
 
 ---
 
@@ -89,6 +89,6 @@ Rejected because traceability should always be explicit rather than inferred.
 
 > Content expresses engineering knowledge.
 
-> Metadata describes artifacts.
+> Metadata describes engineering artifacts.
 
-> Relationships connect engineering knowledge.
+> Relationships connect engineering concepts.
