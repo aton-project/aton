@@ -1,0 +1,8 @@
+id: REVIEW-0006
+
+title: Review of ADR-0006 — Engineering Knowledge Graph
+
+entityType: review
+
+reviewedArtifact:
+  - ADR-0006
