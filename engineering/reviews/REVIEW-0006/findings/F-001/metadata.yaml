@@ -1,0 +1,9 @@
+id: F-001
+
+title: Entity and Artifact are not distinguished
+
+entityType: finding
+
+severity: major
+
+status: open

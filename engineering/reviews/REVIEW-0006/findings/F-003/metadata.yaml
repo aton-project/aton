@@ -1,0 +1,9 @@
+id: F-003
+
+title: Logical graph and physical representation are not separated
+
+entityType: finding
+
+severity: major
+
+status: open

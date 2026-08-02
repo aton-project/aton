@@ -1,0 +1,9 @@
+id: F-002
+
+title: Relationship semantics are not defined
+
+entityType: finding
+
+severity: major
+
+status: open

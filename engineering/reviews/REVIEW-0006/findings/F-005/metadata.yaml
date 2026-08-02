@@ -1,0 +1,9 @@
+id: F-005
+
+title: Views should replace documents
+
+entityType: finding
+
+severity: minor
+
+status: open
