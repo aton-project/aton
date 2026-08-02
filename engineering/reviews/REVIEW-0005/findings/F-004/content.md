@@ -13,3 +13,27 @@ representation is not specified.
 
 Clarify the distinction between logical separation and physical
 representation.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The distinction between the logical engineering model and its physical
+representation affects the overall architecture and requires dedicated
+engineering work.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Create NOTE
+
+### Execution
+
+Verification: Pending

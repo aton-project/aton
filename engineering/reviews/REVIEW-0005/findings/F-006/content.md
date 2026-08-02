@@ -12,3 +12,25 @@ persisted redundantly.
 ## Recommendation
 
 Review the necessity of persisted temporal metadata.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The treatment of temporal metadata requires dedicated engineering work.
+
+### Classification
+
+Category: metadata
+
+### Disposition
+
+Create NOTE
+
+### Execution
+
+Verification: Pending

@@ -13,3 +13,26 @@ entities and engineering artifacts, but this distinction is not reflected.
 ## Recommendation
 
 Clarify the scope of the architectural decision.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The distinction between engineering entities and engineering artifacts should
+be reflected consistently across the Foundation.
+
+### Classification
+
+Category: architecture
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Verification: Pending

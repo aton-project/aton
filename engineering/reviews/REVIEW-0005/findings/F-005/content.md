@@ -12,3 +12,25 @@ governance and process-related information.
 ## Recommendation
 
 Use the broader term engineering knowledge.
+
+## Assessment
+
+### Decision
+
+Accepted
+
+### Rationale
+
+The decision should consistently use the broader term engineering knowledge.
+
+### Classification
+
+Category: editorial
+
+### Disposition
+
+Direct Implementation
+
+### Execution
+
+Verification: Pending
