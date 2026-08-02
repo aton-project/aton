@@ -1,0 +1,10 @@
+id: NOTE-0016
+
+title: Engineering Relationship Semantics
+
+entityType: note
+
+status: proposed
+
+createdFrom:
+  - REVIEW-0006#F-002
