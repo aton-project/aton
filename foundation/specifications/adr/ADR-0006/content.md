@@ -8,8 +8,8 @@ Accepted
 
 ## Context
 
-Engineering knowledge consists of interconnected concepts rather than isolated
-artifacts.
+Engineering knowledge consists of interconnected engineering concepts rather
+than isolated artifacts.
 
 Requirements depend on specifications.
 
@@ -19,7 +19,7 @@ Architecture decisions influence requirements.
 
 Interfaces connect system components.
 
-Traditional document hierarchies cannot adequately represent these complex
+Traditional hierarchical structures cannot adequately represent these complex
 relationships.
 
 The Foundation therefore requires an explicit knowledge model capable of
@@ -32,16 +32,15 @@ representing engineering knowledge as a connected whole.
 The Foundation SHALL represent engineering knowledge as an Engineering
 Knowledge Graph.
 
-Artifacts SHALL be connected through explicit relationships.
+Engineering concepts SHALL be connected through explicit relationships.
 
 Relationships SHALL be first-class elements of the Engineering Knowledge
 Model.
 
-Engineering knowledge SHALL be navigable independently of any document
-structure.
+Engineering knowledge SHALL be navigable independently of any view.
 
 The Engineering Knowledge Graph SHALL represent the canonical logical
-structure of engineering knowledge.
+organization of engineering knowledge.
 
 ---
 
@@ -57,33 +56,33 @@ This decision provides:
 - implementation-independent knowledge representation
 
 Engineering knowledge becomes a connected network rather than a collection of
-independent documents.
+independent hierarchical structures.
 
 ---
 
 ## Rationale
 
-Engineering systems are networks of related concepts.
+Engineering systems are networks of related engineering concepts.
 
-Representing engineering knowledge as a graph reflects the true structure of
-complex engineering projects and enables advanced analysis, visualization,
-automation, and reasoning.
+Representing engineering knowledge as a graph reflects the natural structure
+of complex engineering projects and enables advanced analysis,
+visualization, automation, and reasoning.
 
-The Engineering Knowledge Graph serves as the conceptual foundation for the
-entire ATON ecosystem.
+The Engineering Knowledge Graph serves as the conceptual foundation of the
+ATON Engineering Knowledge Model.
 
 ---
 
 ## Alternatives Considered
 
-### Hierarchical Document Trees
+### Hierarchical Structures
 
 Rejected because engineering relationships are not purely hierarchical.
 
 ### Folder-Based Organization
 
-Rejected because folders express storage structure rather than engineering
-relationships.
+Rejected because folders describe storage organization rather than engineering
+knowledge.
 
 ### Relational Database Models
 
@@ -94,7 +93,8 @@ conceptual engineering model.
 
 ## Architectural Principle
 
-> Engineering knowledge is a graph of explicitly related artifacts.
+> Engineering knowledge is represented as an Engineering Knowledge Graph.
 
-> Documents present engineering knowledge; the Engineering Knowledge Graph
-> defines it.
+> Engineering concepts are connected through explicit relationships.
+
+> Views present engineering knowledge but do not define its structure.
