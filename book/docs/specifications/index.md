@@ -22,4 +22,4 @@ This section is currently under construction.
 
 ## Generated Specifications
 
-- [RFC-0001 — Entity Model](generated/specifications/rfc/RFC-0001)
+
