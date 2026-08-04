@@ -36,3 +36,9 @@ Thumbs.db
 /logs/
 /tmp/
 
+# Renderer
+book/docs/generated/
+
+# Python
+__pycache__/
+*.pyc
