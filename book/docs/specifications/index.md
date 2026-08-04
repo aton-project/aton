@@ -19,3 +19,7 @@ Here you will find the normative specifications for:
 - Interfaces
 
 This section is currently under construction.
+
+## Generated Specifications
+
+- [RFC-0001 — Entity Model](generated/specifications/rfc/RFC-0001)

@@ -72,6 +72,14 @@ const sidebars: SidebarsConfig = {
 
     {
       type: 'category',
+      label: 'Generated',
+      items: [
+        'generated/specifications/rfc/RFC-0001',
+      ],
+    },
+
+    {
+      type: 'category',
       label: 'Tutorials',
       link: {
         type: 'doc',
