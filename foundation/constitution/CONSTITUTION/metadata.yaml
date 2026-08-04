@@ -1,0 +1,35 @@
+id: CONSTITUTION
+
+title: ATON Constitution
+
+type: constitution
+
+status: accepted
+
+version: 1.0.0
+
+authors:
+  - ATON Project
+
+created: 2026-08-03
+updated: 2026-08-03
+
+tags:
+  - foundation
+  - constitution
+  - architecture
+  - governance
+
+parents: []
+
+children: []
+
+references: []
+
+related:
+  - ADR-0001
+  - ADR-0002
+  - ADR-0003
+  - ADR-0004
+  - ADR-0005
+  - ADR-0006
