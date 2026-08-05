@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from loader import load_foundation
+from verification import verify
 from writer import write_all
 
 
@@ -18,6 +19,13 @@ def main():
     print()
 
     print("Rendering Markdown...")
+
+    report = verify(model)
+
+    if not report.ok:
+        raise RuntimeError(
+            "Foundation verification failed."
+        )
 
     write_all(model)
 
