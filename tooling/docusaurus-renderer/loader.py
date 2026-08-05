@@ -74,7 +74,7 @@ def load_artifact(metadata_file: Path) -> Artifact | None:
     )
 
 
-def scan_foundation() -> list[Artifact]:
+def load_foundation() -> KnowledgeModel:
 
     artifacts: list[Artifact] = []
 
@@ -87,5 +87,7 @@ def scan_foundation() -> list[Artifact]:
 
     artifacts.sort(key=lambda a: a.id)
 
-    return artifacts
+    return KnowledgeModel(
+        artifacts=artifacts
+    )
 

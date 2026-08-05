@@ -49,7 +49,7 @@ def write_artifact(artifact: Artifact):
         encoding="utf-8",
     )
 
-def write_all(artifacts):
+def write_all(model):
 
     if OUTPUT.exists():
         import shutil
@@ -60,7 +60,7 @@ def write_all(artifacts):
         exist_ok=True,
     )
 
-    for artifact in artifacts:
+    for artifact in model.artifacts:
         write_artifact(artifact)
 
 

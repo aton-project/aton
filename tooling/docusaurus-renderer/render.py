@@ -12,14 +12,14 @@ def main():
 
     print("Loading Foundation...")
 
-    artifacts = scan_foundation()
+    model = load_foundation()
 
     print(f"Loaded {len(artifacts)} artifacts.")
     print()
 
     print("Rendering Markdown...")
 
-    write_all(artifacts)
+    write_all(model)
 
     print()
     print("Done.")
