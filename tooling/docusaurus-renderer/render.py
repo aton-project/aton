@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from loader import scan_foundation
+from loader import load_foundation
 from writer import write_all
 
 
@@ -14,7 +14,7 @@ def main():
 
     model = load_foundation()
 
-    print(f"Loaded {len(artifacts)} artifacts.")
+    print(f"Loaded {len(model.artifacts)} artifacts.")
     print()
 
     print("Rendering Markdown...")

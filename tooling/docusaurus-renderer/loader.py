@@ -2,6 +2,7 @@ from pathlib import Path
 
 import yaml
 
+from knowledge_model import KnowledgeModel
 from model import Artifact
 
 ROOT = Path(__file__).resolve().parents[2]
