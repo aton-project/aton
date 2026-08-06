@@ -12,6 +12,7 @@ def verify(model: KnowledgeModel) -> None:
     verify_missing_content(model, report)
     verify_missing_title(model, report
     verify_unknown_relation_targets(model, report)
+    verify_duplicate_relations(model, report)
 
 
 def verify_duplicate_artifact_ids(
@@ -80,3 +81,30 @@ def verify_unknown_relation_targets(
                     f"Unknown relation target '{relation.target}'."
                 )
 
+
+def verify_duplicate_relations(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+    """
+    Verify that an artifact does not contain duplicate relations.
+    """
+
+    for artifact in model.repository.all():
+
+        seen: set[tuple[str, str]] = set()
+
+        for relation in artifact.relations:
+
+            key = (
+                relation.type,
+                relation.target,
+            )
+
+            if key in seen:
+                report.error(
+                    artifact,
+                    f"Duplicate relation '{relation.type}' to '{relation.target}'.",
+                )
+            else:
+                seen.add(key)
