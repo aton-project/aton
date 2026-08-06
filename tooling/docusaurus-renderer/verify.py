@@ -8,10 +8,9 @@ def verify(model: KnowledgeModel) -> None:
     Raises RuntimeError if verification fails.
     """
 
-    verify_duplicate_artifact_ids(
-        model,
-        report,
-    )
+    verify_duplicate_artifact_ids(model, report)
+    verify_missing_content(model, report)
+
 
 def verify_duplicate_artifact_ids(
     model: KnowledgeModel,
@@ -29,3 +28,17 @@ def verify_duplicate_artifact_ids(
             )
         else:
             seen.add(artifact.id)
+
+
+def verify_missing_content(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+
+    for artifact in model.repository.all():
+
+        if not artifact.content.strip():
+            report.error(
+                artifact,
+                "Artifact has no content."
+            )
