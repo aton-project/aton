@@ -4,6 +4,7 @@ import yaml
 
 from knowledge_model import KnowledgeModel
 from model import Artifact
+from artifact_repository import ArtifactRepository
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -88,7 +89,12 @@ def load_foundation() -> KnowledgeModel:
 
     artifacts.sort(key=lambda a: a.id)
 
-    return KnowledgeModel(
-        artifacts=artifacts
+    model = KnowledgeModel(
+        artifacts=artifacts,
     )
 
+    model.repository = ArtifactRepository(
+        model.artifacts
+    )
+
+    return model
