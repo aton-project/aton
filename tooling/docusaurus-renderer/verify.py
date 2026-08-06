@@ -11,6 +11,7 @@ def verify(model: KnowledgeModel) -> None:
     verify_duplicate_artifact_ids(model, report)
     verify_missing_content(model, report)
     verify_missing_title(model, report
+    verify_unknown_relation_targets(model, report)
 
 
 def verify_duplicate_artifact_ids(
@@ -58,3 +59,24 @@ def verify_missing_title(
                 artifact,
                 "Artifact has no title."
             )
+
+
+def verify_unknown_relation_targets(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+
+    for artifact in model.repository.all():
+
+        for relation in artifact.relations:
+
+            target = model.repository.artifact(
+                relation.target
+            )
+
+            if target is None:
+                report.error(
+                    artifact,
+                    f"Unknown relation target '{relation.target}'."
+                )
+
