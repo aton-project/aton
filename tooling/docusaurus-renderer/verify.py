@@ -8,13 +8,24 @@ def verify(model: KnowledgeModel) -> None:
     Raises RuntimeError if verification fails.
     """
 
-    ids = set()
+    verify_duplicate_artifact_ids(
+        model,
+        report,
+    )
+
+def verify_duplicate_artifact_ids(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+
+    seen: set[str] = set()
 
     for artifact in model.repository.all():
 
-        if artifact.id in ids:
-            raise RuntimeError(
-                f"Duplicate artifact id: {artifact.id}"
+        if artifact.id in seen:
+            report.error(
+                artifact,
+                f"Duplicate artifact ID '{artifact.id}'."
             )
-
-        ids.add(artifact.id)
+        else:
+            seen.add(artifact.id)
