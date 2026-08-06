@@ -10,6 +10,7 @@ def verify(model: KnowledgeModel) -> None:
 
     verify_duplicate_artifact_ids(model, report)
     verify_missing_content(model, report)
+    verify_missing_title(model, report
 
 
 def verify_duplicate_artifact_ids(
@@ -41,4 +42,19 @@ def verify_missing_content(
             report.error(
                 artifact,
                 "Artifact has no content."
+            )
+
+
+def verify_missing_title(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+
+    for artifact in model.repository.all():
+
+        if not artifact.title.strip():
+
+            report.error(
+                artifact,
+                "Artifact has no title."
             )
