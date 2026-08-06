@@ -15,7 +15,7 @@ def main():
 
     model = load_foundation()
 
-    print(f"Loaded {len(model.artifacts)} artifacts.")
+    print(f"Loaded {len(model.repository.all())} artifacts.")
     print()
 
     print("Rendering Markdown...")

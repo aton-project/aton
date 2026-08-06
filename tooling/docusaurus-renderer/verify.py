@@ -10,7 +10,7 @@ def verify(model: KnowledgeModel) -> None:
 
     ids = set()
 
-    for artifact in model.artifacts:
+    for artifact in model.repository.all():
 
         if artifact.id in ids:
             raise RuntimeError(

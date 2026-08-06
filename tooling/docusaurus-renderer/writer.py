@@ -60,7 +60,7 @@ def write_all(model):
         exist_ok=True,
     )
 
-    for artifact in model.artifacts:
+    for artifact in model.repository.all():
         write_artifact(artifact)
 
 
