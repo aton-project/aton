@@ -19,6 +19,9 @@ def verify_duplicate_artifact_ids(
     model: KnowledgeModel,
     report: VerificationReport,
 ) -> None:
+    """
+    Verify that all artifact IDs are unique.
+    """
 
     seen: set[str] = set()
 
@@ -27,7 +30,7 @@ def verify_duplicate_artifact_ids(
         if artifact.id in seen:
             report.error(
                 artifact,
-                f"Duplicate artifact ID '{artifact.id}'."
+                f"Duplicate artifact ID '{artifact.id}'.",
             )
         else:
             seen.add(artifact.id)
@@ -37,13 +40,16 @@ def verify_missing_content(
     model: KnowledgeModel,
     report: VerificationReport,
 ) -> None:
+    """
+    Verify that all artifacts contain content.
+    """
 
     for artifact in model.repository.all():
 
-        if not artifact.content.strip():
+        if not artifact.content or not artifact.content.strip():
             report.error(
                 artifact,
-                "Artifact has no content."
+                "Artifact has no content.",
             )
 
 
@@ -51,14 +57,16 @@ def verify_missing_title(
     model: KnowledgeModel,
     report: VerificationReport,
 ) -> None:
+    """
+    Verify that all artifacts have a title.
+    """
 
     for artifact in model.repository.all():
 
-        if not artifact.title.strip():
-
+        if not artifact.title or not artifact.title.strip():
             report.error(
                 artifact,
-                "Artifact has no title."
+                "Artifact has no title.",
             )
 
 
@@ -66,6 +74,9 @@ def verify_unknown_relation_targets(
     model: KnowledgeModel,
     report: VerificationReport,
 ) -> None:
+    """
+    Verify that all relation targets reference existing artifacts.
+    """
 
     for artifact in model.repository.all():
 
@@ -78,7 +89,7 @@ def verify_unknown_relation_targets(
             if target is None:
                 report.error(
                     artifact,
-                    f"Unknown relation target '{relation.target}'."
+                    f"Unknown relation target '{relation.target}'.",
                 )
 
 
