@@ -97,11 +97,11 @@ def verify_unknown_relation_targets(
 
             for target in targets:
 
-            if model.repository.artifact(target) is None:
-                report.error(
-                    artifact,
-                    f"Unknown relation target '{target}'.",
-                )
+                if model.repository.artifact(target) is None:
+                    report.error(
+                        artifact,
+                        f"Unknown relation target '{target}'.",
+                    )
 
 
 def verify_duplicate_relations(
