@@ -12,7 +12,7 @@ def verify(model: KnowledgeModel) -> VerificationReport:
 
     verify_duplicate_artifact_ids(model, report)
     verify_missing_content(model, report)
-    verify_missing_title(model, report
+    verify_missing_title(model, report)
     verify_unknown_relation_targets(model, report)
     verify_duplicate_relations(model, report)
     verify_self_references(model, report)
