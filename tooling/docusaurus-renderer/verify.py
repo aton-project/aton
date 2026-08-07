@@ -13,6 +13,7 @@ def verify(model: KnowledgeModel) -> None:
     verify_missing_title(model, report
     verify_unknown_relation_targets(model, report)
     verify_duplicate_relations(model, report)
+    verify_self_references(model, report)
 
 
 def verify_duplicate_artifact_ids(
@@ -119,3 +120,26 @@ def verify_duplicate_relations(
                 )
             else:
                 seen.add(key)
+
+
+def verify_self_references(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+    """
+    Verify that artifacts do not reference themselves.
+    """
+
+    print("Verifying self references...")
+
+    for artifact in model.repository.all():
+
+        for relation in artifact.relations:
+
+            if relation.target == artifact.id:
+
+                report.error(
+                    artifact,
+                    f"Self reference detected via relation "
+                    f"'{relation.type}' to '{relation.target}'.",
+                )
