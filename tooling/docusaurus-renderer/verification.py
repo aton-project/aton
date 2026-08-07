@@ -93,16 +93,14 @@ def verify_unknown_relation_targets(
 
     for artifact in model.repository.all():
 
-        for relation in artifact.relations:
+        for relation_type, targets in artifact.relations.items():
 
-            target = model.repository.artifact(
-                relation.target
-            )
+            for target in targets:
 
-            if target is None:
+            if model.repository.artifact(target) is None:
                 report.error(
                     artifact,
-                    f"Unknown relation target '{relation.target}'.",
+                    f"Unknown relation target '{target}'.",
                 )
 
 
@@ -120,20 +118,19 @@ def verify_duplicate_relations(
 
         seen: set[tuple[str, str]] = set()
 
-        for relation in artifact.relations:
+        for relation_type, targets in artifact.relations.items():
 
-            key = (
-                relation.type,
-                relation.target,
-            )
+            for target in targets:
 
-            if key in seen:
-                report.error(
-                    artifact,
-                    f"Duplicate relation '{relation.type}' to '{relation.target}'.",
-                )
-            else:
-                seen.add(key)
+                key = (relation_type, target)
+
+                if key in seen:
+                    report.error(
+                        artifact,
+                        f"Duplicate relation '{relation_type}' to '{target}'.",
+                    )
+                else:
+                    seen.add(key)
 
 
 def verify_self_references(
@@ -148,12 +145,13 @@ def verify_self_references(
 
     for artifact in model.repository.all():
 
-        for relation in artifact.relations:
+        for relation_type, targets in artifact.relations.items():
 
-            if relation.target == artifact.id:
+            for target in targets:
 
-                report.error(
-                    artifact,
-                    f"Self reference detected via relation "
-                    f"'{relation.type}' to '{relation.target}'.",
-                )
+                if target == artifact.id:
+                    report.error(
+                        artifact,
+                        f"Self reference detected via relation "
+                        f"'{relation_type}' to '{target}'.",
+                    )
