@@ -14,6 +14,20 @@ class VerificationReport:
     def add(self, issue: VerificationIssue) -> None:
         self.issues.append(issue)
 
+    def error(
+        self,
+        artifact,
+        message: str,
+    ) -> None:
+        self.add(
+            VerificationIssue(
+                severity="error",
+                rule="verification",
+                artifact=artifact.id,
+                message=message,
+            )
+        )
+
     @property
     def ok(self) -> bool:
         return not any(
