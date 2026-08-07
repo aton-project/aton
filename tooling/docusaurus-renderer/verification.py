@@ -11,10 +11,8 @@ def verify(model: KnowledgeModel) -> VerificationReport:
     report = VerificationReport()
 
     for artifact in model.repository.all():
-        print(artifact.id)
-        print(type(artifact.relations))
+        print(f"{artifact.id}: {type(artifact.relations)}")
         print(artifact.relations)
-        break
 
     verify_duplicate_artifact_ids(model, report)
     verify_missing_content(model, report)
