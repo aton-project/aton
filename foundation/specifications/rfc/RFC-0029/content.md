@@ -93,9 +93,9 @@ The conceptual representation is:
 
     predicate:
       domain:
-        - <source-type>
+        - `<source-type>`
       range:
-        - <target-type>
+        - `<target-type>`
 
 The domain SHALL contain one or more ontology type identifiers.
 
