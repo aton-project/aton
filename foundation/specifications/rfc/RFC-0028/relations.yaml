@@ -1,0 +1,13 @@
+references:
+  - RFC-0025
+  - RFC-0026
+  - RFC-0027
+
+dependsOn:
+  - RFC-0027
+
+supersedes: []
+
+supersededBy: []
+
+relatedTo: []
