@@ -1,6 +1,4 @@
-titel: Entity
 id: TERM-0001
-type: TERM
+title: Knowledge Unit
+entityType: glossary-entry
 status: Draft
-author: Marco Kachelriess
-artifact-model: 0.1

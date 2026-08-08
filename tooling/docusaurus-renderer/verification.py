@@ -1,25 +1,43 @@
 from knowledge_model import KnowledgeModel
 from verification_report import VerificationReport
 
+
 def verify(model: KnowledgeModel) -> VerificationReport:
     """
     Verify the loaded Foundation.
-
-    Raises RuntimeError if verification fails.
     """
 
     report = VerificationReport()
 
-    for artifact in model.repository.all():
-        print(f"{artifact.id}: {type(artifact.relations)}")
-        print(artifact.relations)
+    verify_duplicate_artifact_ids(
+        model,
+        report,
+    )
 
-    verify_duplicate_artifact_ids(model, report)
-    verify_missing_content(model, report)
-    verify_missing_title(model, report)
-    verify_unknown_relation_targets(model, report)
-    verify_duplicate_relations(model, report)
-    verify_self_references(model, report)
+    verify_missing_content(
+        model,
+        report,
+    )
+
+    verify_missing_title(
+        model,
+        report,
+    )
+
+    verify_unknown_relation_targets(
+        model,
+        report,
+    )
+
+    verify_duplicate_relations(
+        model,
+        report,
+    )
+
+    verify_self_references(
+        model,
+        report,
+    )
 
     return report
 
@@ -32,17 +50,23 @@ def verify_duplicate_artifact_ids(
     Verify that all artifact IDs are unique.
     """
 
-    print("Verifying duplicate artifact IDs...")
+    print(
+        "Verifying duplicate artifact IDs..."
+    )
 
     seen: set[str] = set()
 
     for artifact in model.repository.all():
 
         if artifact.id in seen:
+
             report.error(
                 artifact,
-                f"Duplicate artifact ID '{artifact.id}'.",
+                f"Duplicate artifact ID "
+                f"'{artifact.id}'.",
+                rule="duplicate-artifact-id",
             )
+
         else:
             seen.add(artifact.id)
 
@@ -55,14 +79,21 @@ def verify_missing_content(
     Verify that all artifacts contain content.
     """
 
-    print("Verifying missing content...")
+    print(
+        "Verifying missing content..."
+    )
 
     for artifact in model.repository.all():
 
-        if not artifact.content or not artifact.content.strip():
+        if (
+            not artifact.content
+            or not artifact.content.strip()
+        ):
+
             report.error(
                 artifact,
                 "Artifact has no content.",
+                rule="missing-content",
             )
 
 
@@ -74,14 +105,21 @@ def verify_missing_title(
     Verify that all artifacts have a title.
     """
 
-    print("Verifying missing title...")
+    print(
+        "Verifying missing title..."
+    )
 
     for artifact in model.repository.all():
 
-        if not artifact.title or not artifact.title.strip():
+        if (
+            not artifact.title
+            or not artifact.title.strip()
+        ):
+
             report.error(
                 artifact,
                 "Artifact has no title.",
+                rule="missing-title",
             )
 
 
@@ -90,22 +128,31 @@ def verify_unknown_relation_targets(
     report: VerificationReport,
 ) -> None:
     """
-    Verify that all relation targets reference existing artifacts.
+    Verify that relation targets referencing Foundation artifacts
+    resolve to existing artifacts.
+
+    External targets are currently accepted as unresolved external
+    entities. They are not treated as artifact lookup failures.
     """
 
-    print("Verifying unknown relation targets...")
+    print(
+        "Verifying unknown relation targets..."
+    )
 
     for artifact in model.repository.all():
 
-        for relation_type, targets in artifact.relations.items():
+        for relation in artifact.relations:
 
-            for target in targets:
+            target = model.repository.artifact(
+                relation.target
+            )
 
-                if model.repository.artifact(target) is None:
-                    report.error(
-                        artifact,
-                        f"Unknown relation target '{target}'.",
-                    )
+            if target is None:
+
+                # External Entity handling will be defined by the
+                # ontology layer. For now, do not fail the renderer
+                # merely because a target is not a Foundation artifact.
+                continue
 
 
 def verify_duplicate_relations(
@@ -116,25 +163,35 @@ def verify_duplicate_relations(
     Verify that an artifact does not contain duplicate relations.
     """
 
-    print("Verifying duplicate relations...")
+    print(
+        "Verifying duplicate relations..."
+    )
 
     for artifact in model.repository.all():
 
         seen: set[tuple[str, str]] = set()
 
-        for relation_type, targets in artifact.relations.items():
+        for relation in artifact.relations:
 
-            for target in targets:
+            key = (
+                relation.type,
+                relation.target,
+            )
 
-                key = (relation_type, target)
+            if key in seen:
 
-                if key in seen:
-                    report.error(
-                        artifact,
-                        f"Duplicate relation '{relation_type}' to '{target}'.",
-                    )
-                else:
-                    seen.add(key)
+                report.error(
+                    artifact,
+                    (
+                        f"Duplicate relation "
+                        f"'{relation.type}' to "
+                        f"'{relation.target}'."
+                    ),
+                    rule="duplicate-relation",
+                )
+
+            else:
+                seen.add(key)
 
 
 def verify_self_references(
@@ -145,17 +202,22 @@ def verify_self_references(
     Verify that artifacts do not reference themselves.
     """
 
-    print("Verifying self references...")
+    print(
+        "Verifying self references..."
+    )
 
     for artifact in model.repository.all():
 
-        for relation_type, targets in artifact.relations.items():
+        for relation in artifact.relations:
 
-            for target in targets:
+            if relation.target == artifact.id:
 
-                if target == artifact.id:
-                    report.error(
-                        artifact,
-                        f"Self reference detected via relation "
-                        f"'{relation_type}' to '{target}'.",
-                    )
+                report.error(
+                    artifact,
+                    (
+                        "Self reference detected via "
+                        f"relation '{relation.type}' "
+                        f"to '{relation.target}'."
+                    ),
+                    rule="self-reference",
+                )

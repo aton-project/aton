@@ -4,6 +4,16 @@ from typing import Any
 
 
 @dataclass(slots=True)
+class Relation:
+    """
+    Canonical internal representation of a Foundation relation.
+    """
+
+    type: str
+    target: str
+
+
+@dataclass(slots=True)
 class Artifact:
     """
     A Foundation artifact loaded from the repository.
@@ -28,7 +38,7 @@ class Artifact:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     # Parsed relations
-    relations: list[Any] = field(default_factory=list)
+    relations: list[Relation] = field(default_factory=list)
 
     def __str__(self) -> str:
         return f"{self.id} ({self.type})"

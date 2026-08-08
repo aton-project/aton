@@ -1,5 +1,9 @@
-- type: specializes
-  target: TERM-0005-Knowledge-Unit
+references: []
 
-- type: referenced-by
-  target: RFC-0001
+dependsOn: []
+
+supersedes: []
+
+supersededBy: []
+
+relatedTo: []

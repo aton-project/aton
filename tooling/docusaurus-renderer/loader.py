@@ -1,10 +1,12 @@
 from pathlib import Path
+from typing import Any
 
 import yaml
 
-from knowledge_model import KnowledgeModel
-from model import Artifact
 from artifact_repository import ArtifactRepository
+from knowledge_model import KnowledgeModel
+from model import Artifact, Relation
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -26,10 +28,185 @@ def determine_type(relative_path: Path) -> str:
     parts = relative_path.parts
 
     if "specifications" in parts:
-        i = parts.index("specifications")
-        return parts[i + 1].lower()
+        index = parts.index("specifications")
 
-    return parts[0].lower()
+        if index + 1 < len(parts):
+            return parts[index + 1].lower()
+
+    return parts[0].lower() if parts else ""
+
+
+def parse_relations(data: Any, relations_file: Path) -> list[Relation]:
+    """
+    Normalize all supported Foundation relation serialization formats into
+    the canonical internal representation:
+
+        list[Relation]
+
+    Supported formats:
+
+    1. Legacy list format:
+
+        - type: refines
+          target: AX-0001
+
+    2. Mapping format:
+
+        references:
+          - RFC-0001
+
+        dependsOn:
+          - ADR-0003
+
+    3. Embedded relation object format:
+
+        relations:
+          - type: refines
+            target: AX-0001
+
+    An empty relation set may be represented as:
+
+        []
+
+    or:
+
+        relations: []
+    """
+
+    result: list[Relation] = []
+
+    if data is None:
+        return result
+
+    # ------------------------------------------------------------
+    # Legacy list format
+    # ------------------------------------------------------------
+
+    if isinstance(data, list):
+
+        for entry in data:
+
+            if not isinstance(entry, dict):
+                print(
+                    f"WARNING: Invalid relation entry in: "
+                    f"{relations_file}"
+                )
+                continue
+
+            relation_type = entry.get("type")
+            target = entry.get("target")
+
+            if not isinstance(relation_type, str):
+                print(
+                    f"WARNING: Relation without valid type in: "
+                    f"{relations_file}"
+                )
+                continue
+
+            if not isinstance(target, str):
+                print(
+                    f"WARNING: Relation without valid target in: "
+                    f"{relations_file}"
+                )
+                continue
+
+            result.append(
+                Relation(
+                    type=relation_type,
+                    target=target,
+                )
+            )
+
+        return result
+
+    # ------------------------------------------------------------
+    # Mapping format
+    # ------------------------------------------------------------
+
+    if isinstance(data, dict):
+
+        # Embedded relation object format:
+        #
+        # relations:
+        #   - type: refines
+        #     target: AX-0001
+
+        if "relations" in data:
+
+            embedded = data.get("relations")
+
+            if embedded is None:
+                return result
+
+            if not isinstance(embedded, list):
+                print(
+                    f"WARNING: 'relations' must be a list in: "
+                    f"{relations_file}"
+                )
+                return result
+
+            return parse_relations(
+                embedded,
+                relations_file,
+            )
+
+        # Mapping format:
+        #
+        # references:
+        #   - RFC-0001
+        #
+        # dependsOn:
+        #   - ADR-0003
+
+        for relation_type, targets in data.items():
+
+            if not isinstance(relation_type, str):
+                print(
+                    f"WARNING: Invalid relation type in: "
+                    f"{relations_file}"
+                )
+                continue
+
+            if targets is None:
+                continue
+
+            if not isinstance(targets, list):
+                print(
+                    f"WARNING: Relation targets for "
+                    f"'{relation_type}' must be a list in: "
+                    f"{relations_file}"
+                )
+                continue
+
+            for target in targets:
+
+                if not isinstance(target, str):
+                    print(
+                        f"WARNING: Invalid relation target for "
+                        f"'{relation_type}' in: "
+                        f"{relations_file}"
+                    )
+                    continue
+
+                result.append(
+                    Relation(
+                        type=relation_type,
+                        target=target,
+                    )
+                )
+
+        return result
+
+    # ------------------------------------------------------------
+    # Unsupported format
+    # ------------------------------------------------------------
+
+    print(
+        f"WARNING: Unsupported relations format in: "
+        f"{relations_file}"
+    )
+
+    return result
 
 
 def load_artifact(metadata_file: Path) -> Artifact | None:
@@ -39,7 +216,9 @@ def load_artifact(metadata_file: Path) -> Artifact | None:
     content_file = artifact_dir / "content.md"
 
     if not content_file.is_file():
-        print(f"WARNING: Missing content.md: {artifact_dir}")
+        print(
+            f"WARNING: Missing content.md: {artifact_dir}"
+        )
         return None
 
     relations_file = artifact_dir / "relations.yaml"
@@ -48,29 +227,61 @@ def load_artifact(metadata_file: Path) -> Artifact | None:
         metadata_file.read_text(encoding="utf-8")
     ) or {}
 
-    relations = []
+    if not isinstance(metadata, dict):
+        print(
+            f"WARNING: Invalid metadata format: "
+            f"{metadata_file}"
+        )
+        return None
 
-    if relations_file.exists():
+    relations: list[Relation] = []
+
+    if relations_file.is_file():
+
         try:
-            relations = yaml.safe_load(
+            raw_relations = yaml.safe_load(
                 relations_file.read_text(encoding="utf-8")
-            ) or []
-        except Exception as e:
-            print(f"WARNING: Invalid relations file: {relations_file}")
-            print(f"         {e}")
+            )
+
+            relations = parse_relations(
+                raw_relations,
+                relations_file,
+            )
+
+        except Exception as exc:
+            print(
+                f"WARNING: Invalid relations file: "
+                f"{relations_file}"
+            )
+            print(f"         {exc}")
 
     relative = artifact_dir.relative_to(FOUNDATION)
 
     return Artifact(
-        id=metadata.get("id", artifact_dir.name),
+        id=metadata.get(
+            "id",
+            artifact_dir.name,
+        ),
         type=determine_type(relative),
-        title=metadata.get("title", ""),
-        status=metadata.get("status", ""),
+        title=metadata.get(
+            "title",
+            "",
+        ),
+        status=metadata.get(
+            "status",
+            "",
+        ),
         source_dir=artifact_dir,
         content_file=content_file,
         metadata_file=metadata_file,
-        relations_file=relations_file if relations_file.exists() else None,
-        content=content_file.read_text(encoding="utf-8"),
+        relations_file=(
+            relations_file
+            if relations_file.is_file()
+            else None
+        ),
+        content=content_file.read_text(
+            encoding="utf-8"
+        ),
         metadata=metadata,
         relations=relations,
     )
@@ -80,14 +291,20 @@ def load_foundation() -> KnowledgeModel:
 
     artifacts: list[Artifact] = []
 
-    for metadata_file in sorted(FOUNDATION.rglob("metadata.yaml")):
+    for metadata_file in sorted(
+        FOUNDATION.rglob("metadata.yaml")
+    ):
 
-        artifact = load_artifact(metadata_file)
+        artifact = load_artifact(
+            metadata_file
+        )
 
         if artifact:
             artifacts.append(artifact)
 
-    artifacts.sort(key=lambda a: a.id)
+    artifacts.sort(
+        key=lambda artifact: artifact.id
+    )
 
     model = KnowledgeModel(
         artifacts=artifacts,

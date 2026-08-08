@@ -18,12 +18,28 @@ class VerificationReport:
         self,
         artifact,
         message: str,
+        rule: str = "unknown",
     ) -> None:
         self.add(
             VerificationIssue(
                 severity="error",
-                rule="verification",
-                artifact=artifact.id,
+                rule=rule,
+                artifact=artifact.id if artifact else None,
+                message=message,
+            )
+        )
+
+    def warning(
+        self,
+        artifact,
+        message: str,
+        rule: str = "unknown",
+    ) -> None:
+        self.add(
+            VerificationIssue(
+                severity="warning",
+                rule=rule,
+                artifact=artifact.id if artifact else None,
                 message=message,
             )
         )
