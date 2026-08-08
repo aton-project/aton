@@ -1,0 +1,14 @@
+references:
+  - ADR-0009
+  - NOTE-0021
+  - RFC-0025
+  - ENTITY-0001
+
+dependsOn:
+  - RFC-0025
+
+supersedes: []
+
+supersededBy: []
+
+relatedTo: []
