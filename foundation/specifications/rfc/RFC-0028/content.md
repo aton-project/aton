@@ -88,7 +88,6 @@ normative Foundation artifacts.
 Examples:
 
     references
-    dependsOn
     refines
     specializes
     governs
@@ -161,9 +160,19 @@ the inverse relation defined by the ontology.
 
 Status:
 
-    canonical
+    unresolved
 
-The Predicate is retained as defined by RFC-0027.
+The semantic meaning of existing `dependsOn` relations has not been
+established by the current ATON ontology.
+
+RFC-0027 does not define `dependsOn` as a canonical Predicate.
+
+Existing `dependsOn` relations SHALL therefore remain unresolved until an
+explicit ontology decision defines their semantics and allowed source-to-target
+Concept pairs.
+
+The existence of `dependsOn` relations SHALL NOT be interpreted as evidence
+that `dependsOn` is a canonical Predicate.
 
 ### refines
 
@@ -441,7 +450,6 @@ The currently observed Foundation contains the following relation classes:
 The migration state defined by this RFC is:
 
     canonical:
-        dependsOn
         governs
         references
         refines
@@ -454,6 +462,7 @@ The migration state defined by this RFC is:
         referenced-by
 
     unresolved:
+        dependsOn
         children
         related
         relatedTo
