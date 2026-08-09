@@ -70,6 +70,32 @@ domain model.
 Subsequent architectural decisions SHALL follow the same principle for all
 future domain concepts.
 
+### Explicit Ontology Type Identity
+
+Each artifact that participates in the ATON semantic model SHALL explicitly
+declare its canonical ontology type.
+
+The canonical ontology type SHALL be represented by the `ontologyType`
+metadata field.
+
+The `ontologyType` SHALL reference a canonical ontology Concept identifier.
+
+The ontology type SHALL NOT be inferred from:
+
+- repository paths;
+- directory names;
+- file names;
+- persistence formats;
+- artifact type classification.
+
+Persistence classification and ontology identity are separate concerns.
+
+An artifact SHALL have exactly one explicitly declared canonical ontology
+type.
+
+Concept specialization SHALL be represented by the ontology model and SHALL
+NOT be duplicated as multiple ontology type values on the artifact.
+
 ## Alternatives Considered
 
 ### Preserve multiple internal representations
@@ -88,3 +114,4 @@ maintenance effort.
 ## References
 
 - NOTE-0020 Canonical Relation Model Required
+- RFC-0029 Canonical Semantic Relation Constraint Model

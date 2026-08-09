@@ -1,19 +1,15 @@
 id: ADR-0004
 title: Artifact-Based Knowledge Organization
-
 type: architecture-decision
 status: accepted
-
 version: 1.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - artifact
-  - engineering-knowledge
-  - architecture
-  - foundation
+- artifact
+- engineering-knowledge
+- architecture
+- foundation
+ontologyType: ONT-ADR

@@ -1,20 +1,16 @@
 id: ADR-0005
 title: Separation of Content, Metadata and Relations
-
 type: architecture-decision
 status: accepted
-
 version: 1.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - artifact
-  - metadata
-  - relations
-  - architecture
-  - foundation
+- artifact
+- metadata
+- relations
+- architecture
+- foundation
+ontologyType: ONT-ADR

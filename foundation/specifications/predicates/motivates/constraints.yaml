@@ -1,0 +1,5 @@
+allowedPairs:
+  - source: ONT-Note
+    target: ONT-ADR
+  - source: ONT-Finding
+    target: ONT-ADR

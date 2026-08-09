@@ -1,14 +1,15 @@
 from knowledge_model import KnowledgeModel
 from verification_report import VerificationReport
+from predicate_registry import predicate_state
 
 
 def verify(model: KnowledgeModel) -> VerificationReport:
     """
     Verify the loaded Foundation.
     """
-
     report = VerificationReport()
 
+    # Structural verification
     verify_duplicate_artifact_ids(
         model,
         report,
@@ -39,6 +40,12 @@ def verify(model: KnowledgeModel) -> VerificationReport:
         report,
     )
 
+    # Semantic verification
+    verify_semantic_relations(
+        model,
+        report,
+    )
+
     return report
 
 
@@ -49,7 +56,6 @@ def verify_duplicate_artifact_ids(
     """
     Verify that all artifact IDs are unique.
     """
-
     print(
         "Verifying duplicate artifact IDs..."
     )
@@ -57,16 +63,12 @@ def verify_duplicate_artifact_ids(
     seen: set[str] = set()
 
     for artifact in model.repository.all():
-
         if artifact.id in seen:
-
             report.error(
                 artifact,
-                f"Duplicate artifact ID "
-                f"'{artifact.id}'.",
+                f"Duplicate artifact ID '{artifact.id}'.",
                 rule="duplicate-artifact-id",
             )
-
         else:
             seen.add(artifact.id)
 
@@ -78,18 +80,15 @@ def verify_missing_content(
     """
     Verify that all artifacts contain content.
     """
-
     print(
         "Verifying missing content..."
     )
 
     for artifact in model.repository.all():
-
         if (
             not artifact.content
             or not artifact.content.strip()
         ):
-
             report.error(
                 artifact,
                 "Artifact has no content.",
@@ -104,18 +103,15 @@ def verify_missing_title(
     """
     Verify that all artifacts have a title.
     """
-
     print(
         "Verifying missing title..."
     )
 
     for artifact in model.repository.all():
-
         if (
             not artifact.title
             or not artifact.title.strip()
         ):
-
             report.error(
                 artifact,
                 "Artifact has no title.",
@@ -134,24 +130,21 @@ def verify_unknown_relation_targets(
     External targets are currently accepted as unresolved external
     entities. They are not treated as artifact lookup failures.
     """
-
     print(
         "Verifying unknown relation targets..."
     )
 
     for artifact in model.repository.all():
-
         for relation in artifact.relations:
-
             target = model.repository.artifact(
                 relation.target
             )
 
             if target is None:
-
-                # External Entity handling will be defined by the
-                # ontology layer. For now, do not fail the renderer
-                # merely because a target is not a Foundation artifact.
+                # External Entity handling will be defined by
+                # the ontology layer. For now, do not fail the
+                # renderer merely because a target is not a
+                # Foundation artifact.
                 continue
 
 
@@ -162,24 +155,20 @@ def verify_duplicate_relations(
     """
     Verify that an artifact does not contain duplicate relations.
     """
-
     print(
         "Verifying duplicate relations..."
     )
 
     for artifact in model.repository.all():
-
         seen: set[tuple[str, str]] = set()
 
         for relation in artifact.relations:
-
             key = (
                 relation.type,
                 relation.target,
             )
 
             if key in seen:
-
                 report.error(
                     artifact,
                     (
@@ -189,7 +178,6 @@ def verify_duplicate_relations(
                     ),
                     rule="duplicate-relation",
                 )
-
             else:
                 seen.add(key)
 
@@ -201,17 +189,13 @@ def verify_self_references(
     """
     Verify that artifacts do not reference themselves.
     """
-
     print(
         "Verifying self references..."
     )
 
     for artifact in model.repository.all():
-
         for relation in artifact.relations:
-
             if relation.target == artifact.id:
-
                 report.error(
                     artifact,
                     (
@@ -220,4 +204,171 @@ def verify_self_references(
                         f"to '{relation.target}'."
                     ),
                     rule="self-reference",
+                )
+
+
+def verify_semantic_relations(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+    """
+    Verify relations against the ATON ontology and migration state.
+
+    Predicate migration states are defined by RFC-0028.
+
+    Canonical and inverse predicates are resolved against their
+    Predicate artifacts and validated using their explicit allowedPairs.
+
+    Deprecated and unresolved predicates are reported as warnings and
+    are not subjected to semantic pair validation.
+
+    Unknown predicates are reported as errors.
+    """
+    print(
+        "Verifying semantic relations..."
+    )
+
+    for artifact in model.repository.all():
+
+        for relation in artifact.relations:
+
+            # Ontology definition artifacts describe Concepts.
+            # Their documentation references are not instance-level
+            # semantic relations and therefore are outside Concept-pair
+            # validation.
+            if artifact.metadata.get("entityType") == "ontology":
+                continue
+
+            state = predicate_state(relation.type)
+
+            # --------------------------------------------------------
+            # Unknown predicate
+            # --------------------------------------------------------
+
+            if state is None:
+                report.error(
+                    artifact,
+                    (
+                        f"Relation uses unknown predicate "
+                        f"'{relation.type}'."
+                    ),
+                    rule="unknown-relation-predicate",
+                )
+                continue
+
+            # --------------------------------------------------------
+            # Unresolved legacy predicate
+            # --------------------------------------------------------
+
+            if state == "unresolved":
+                report.warning(
+                    artifact,
+                    (
+                        f"Relation uses unresolved predicate "
+                        f"'{relation.type}'."
+                    ),
+                    rule="unresolved-relation-predicate",
+                )
+                continue
+
+            # --------------------------------------------------------
+            # Deprecated predicate
+            # --------------------------------------------------------
+
+            if state == "deprecated":
+                report.warning(
+                    artifact,
+                    (
+                        f"Relation uses deprecated predicate "
+                        f"'{relation.type}'."
+                    ),
+                    rule="deprecated-relation-predicate",
+                )
+                continue
+
+            # --------------------------------------------------------
+            # Canonical / inverse predicate
+            # --------------------------------------------------------
+
+            predicate = model.repository.predicate(
+                f"PRED-{relation.type}"
+            )
+
+            if predicate is None:
+                report.error(
+                    artifact,
+                    (
+                        f"Relation uses {state} predicate "
+                        f"'{relation.type}', but no corresponding "
+                        f"Predicate artifact exists."
+                    ),
+                    rule="missing-predicate-definition",
+                )
+                continue
+
+            # --------------------------------------------------------
+            # Source ontology type
+            # --------------------------------------------------------
+
+            if not artifact.ontology_type:
+                report.error(
+                    artifact,
+                    (
+                        f"Source artifact '{artifact.id}' has no "
+                        f"explicit ontology type for relation "
+                        f"'{relation.type}'."
+                    ),
+                    rule="unknown-source-type",
+                )
+                continue
+
+            # --------------------------------------------------------
+            # Target resolution
+            # --------------------------------------------------------
+
+            target = model.repository.artifact(
+                relation.target
+            )
+
+            if target is None:
+                # External target handling remains outside the
+                # current semantic verification scope.
+                continue
+
+            # --------------------------------------------------------
+            # Target ontology type
+            # --------------------------------------------------------
+
+            if not target.ontology_type:
+                report.error(
+                    artifact,
+                    (
+                        f"Target artifact '{target.id}' has no "
+                        f"explicit ontology type for relation "
+                        f"'{relation.type}'."
+                    ),
+                    rule="unknown-target-type",
+                )
+                continue
+
+            # --------------------------------------------------------
+            # Exact allowed source-to-target pair
+            # --------------------------------------------------------
+
+            allowed = any(
+                pair.source == artifact.ontology_type
+                and pair.target == target.ontology_type
+                for pair in predicate.allowed_pairs
+            )
+
+            if not allowed:
+                report.error(
+                    artifact,
+                    (
+                        f"Relation '{artifact.id} --{relation.type}--> "
+                        f"{target.id}' is not an allowed semantic pair: "
+                        f"{artifact.ontology_type} -> "
+                        f"{target.ontology_type}."
+                    ),
+                    rule="relation-allowed-pair-violation",
                 )

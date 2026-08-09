@@ -1,19 +1,15 @@
 id: ADR-0002
 title: Markdown as the Canonical Authoring Format
-
 type: architecture-decision
 status: accepted
-
 version: 1.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - markdown
-  - authoring
-  - foundation
-  - architecture
+- markdown
+- authoring
+- foundation
+- architecture
+ontologyType: ONT-ADR

@@ -1,18 +1,14 @@
 id: ADR-0001
 title: Self-Hosting Foundation
-
 type: architecture-decision
 status: accepted
-
 version: 2.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - foundation
-  - self-hosting
-  - architecture
+- foundation
+- self-hosting
+- architecture
+ontologyType: ONT-ADR

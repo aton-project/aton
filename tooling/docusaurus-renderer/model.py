@@ -14,6 +14,15 @@ class Relation:
 
 
 @dataclass(slots=True)
+class AllowedPair:
+    """
+    Semantic source-to-target Concept pair allowed by a Predicate.
+    """
+    source: str
+    target: str
+
+
+@dataclass(slots=True)
 class Artifact:
     """
     A Foundation artifact loaded from the repository.
@@ -22,6 +31,7 @@ class Artifact:
     # Basic identity
     id: str
     type: str
+    ontology_type: str | None
     title: str
     status: str
 
@@ -30,6 +40,7 @@ class Artifact:
     content_file: Path
     metadata_file: Path
     relations_file: Path | None = None
+    constraints_file: Path | None = None
 
     # Artifact content
     content: str = ""
@@ -39,6 +50,9 @@ class Artifact:
 
     # Parsed relations
     relations: list[Relation] = field(default_factory=list)
+
+    # Parsed semantic constraints
+    allowed_pairs: list[AllowedPair] = field(default_factory=list)
 
     def __str__(self) -> str:
         return f"{self.id} ({self.type})"

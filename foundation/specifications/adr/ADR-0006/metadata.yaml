@@ -1,20 +1,16 @@
 id: ADR-0006
 title: Engineering Knowledge Graph
-
 type: architecture-decision
 status: accepted
-
 version: 1.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - engineering-knowledge
-  - graph
-  - traceability
-  - architecture
-  - foundation
+- engineering-knowledge
+- graph
+- traceability
+- architecture
+- foundation
+ontologyType: ONT-ADR

@@ -5,7 +5,7 @@ import yaml
 
 from artifact_repository import ArtifactRepository
 from knowledge_model import KnowledgeModel
-from model import Artifact, Relation
+from model import AllowedPair, Artifact, Relation
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -209,6 +209,75 @@ def parse_relations(data: Any, relations_file: Path) -> list[Relation]:
     return result
 
 
+def parse_allowed_pairs(
+    data: Any,
+    constraints_file: Path,
+) -> list[AllowedPair]:
+    """
+    Parse the canonical semantic constraint representation.
+
+    Expected format:
+
+        allowedPairs:
+          - source: Note
+            target: ADR
+    """
+    result: list[AllowedPair] = []
+
+    if data is None:
+        return result
+
+    if not isinstance(data, dict):
+        print(
+            f"WARNING: Invalid constraints format in: "
+            f"{constraints_file}"
+        )
+        return result
+
+    allowed_pairs = data.get("allowedPairs", [])
+
+    if not isinstance(allowed_pairs, list):
+        print(
+            f"WARNING: 'allowedPairs' must be a list in: "
+            f"{constraints_file}"
+        )
+        return result
+
+    for entry in allowed_pairs:
+        if not isinstance(entry, dict):
+            print(
+                f"WARNING: Invalid allowed pair in: "
+                f"{constraints_file}"
+            )
+            continue
+
+        source = entry.get("source")
+        target = entry.get("target")
+
+        if not isinstance(source, str):
+            print(
+                f"WARNING: Allowed pair without valid source in: "
+                f"{constraints_file}"
+            )
+            continue
+
+        if not isinstance(target, str):
+            print(
+                f"WARNING: Allowed pair without valid target in: "
+                f"{constraints_file}"
+            )
+            continue
+
+        result.append(
+            AllowedPair(
+                source=source,
+                target=target,
+            )
+        )
+
+    return result
+
+
 def load_artifact(metadata_file: Path) -> Artifact | None:
 
     artifact_dir = metadata_file.parent
@@ -257,12 +326,41 @@ def load_artifact(metadata_file: Path) -> Artifact | None:
 
     relative = artifact_dir.relative_to(FOUNDATION)
 
+    constraints_file = artifact_dir / "constraints.yaml"
+
+    allowed_pairs: list[AllowedPair] = []
+
+    if constraints_file.is_file():
+        try:
+            raw_constraints = yaml.safe_load(
+                constraints_file.read_text(encoding="utf-8")
+            )
+
+            allowed_pairs = parse_allowed_pairs(
+                raw_constraints,
+                constraints_file,
+            )
+
+        except Exception as exc:
+            print(
+                f"WARNING: Invalid constraints file: "
+                f"{constraints_file}"
+            )
+            print(f"         {exc}")
+
+
     return Artifact(
         id=metadata.get(
             "id",
+
+
+
             artifact_dir.name,
         ),
         type=determine_type(relative),
+        ontology_type=metadata.get(
+            "ontologyType",
+        ),
         title=metadata.get(
             "title",
             "",
@@ -279,11 +377,17 @@ def load_artifact(metadata_file: Path) -> Artifact | None:
             if relations_file.is_file()
             else None
         ),
+        constraints_file=(
+            constraints_file
+            if constraints_file.is_file()
+            else None
+        ),
         content=content_file.read_text(
             encoding="utf-8"
         ),
         metadata=metadata,
         relations=relations,
+        allowed_pairs=allowed_pairs,
     )
 
 

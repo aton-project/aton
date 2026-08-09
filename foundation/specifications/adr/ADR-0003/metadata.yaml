@@ -1,19 +1,15 @@
 id: ADR-0003
 title: Git as the Version Control System
-
 type: architecture-decision
 status: accepted
-
 version: 1.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - git
-  - version-control
-  - foundation
-  - architecture
+- git
+- version-control
+- foundation
+- architecture
+ontologyType: ONT-ADR

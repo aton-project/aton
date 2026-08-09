@@ -1,3 +1,4 @@
 id: ADR-0009
 title: Semantic Constraints for Relations
 status: Accepted
+ontologyType: ONT-ADR

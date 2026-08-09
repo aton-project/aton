@@ -1,20 +1,16 @@
 id: ADR-0007
 title: Foundation as the Normative Engineering Knowledge Base
-
 type: architecture-decision
 status: accepted
-
 version: 1.0.0
-
 authors:
-  - ATON Project
-
+- ATON Project
 created: 2026-07-28
 updated: 2026-07-28
-
 tags:
-  - foundation
-  - architecture
-  - governance
-  - engineering-knowledge
-  - standards
+- foundation
+- architecture
+- governance
+- engineering-knowledge
+- standards
+ontologyType: ONT-ADR

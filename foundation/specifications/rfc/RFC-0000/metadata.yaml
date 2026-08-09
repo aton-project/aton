@@ -1,26 +1,16 @@
 id: RFC-0000
-
 title: Document Conventions
-
 entityType: rfc
-
 status: Accepted
-
 version: 1.0.0
-
 author: Marco Kachelrieß
-
 created: 2026-07-23
-
 updated: 2026-07-23
-
 language: en
-
 tags:
-  - specification
-  - conventions
-  - governance
-
+- specification
+- conventions
+- governance
 reviewers: []
-
 approvers: []
+ontologyType: ONT-RFC

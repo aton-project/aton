@@ -1,0 +1,13 @@
+allowedPairs:
+  - source: ONT-Requirement
+    target: ONT-Requirement
+  - source: ONT-RFC
+    target: ONT-RFC
+  - source: ONT-ADR
+    target: ONT-ADR
+  - source: ONT-Component
+    target: ONT-Component
+  - source: ONT-Interface
+    target: ONT-Interface
+  - source: ONT-AX
+    target: ONT-AX

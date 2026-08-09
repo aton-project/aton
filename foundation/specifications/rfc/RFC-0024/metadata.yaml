@@ -3,4 +3,5 @@ title: Docusaurus Renderer
 status: draft
 version: 0.1.0
 authors:
-  - Marco Kachelriess
+- Marco Kachelriess
+ontologyType: ONT-RFC

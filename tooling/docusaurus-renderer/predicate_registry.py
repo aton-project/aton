@@ -11,7 +11,6 @@ Concept pairs. Those are defined by the Predicate artifacts themselves.
 PREDICATE_STATES: dict[str, str] = {
     # Canonical Predicates
     "references": "canonical",
-    "dependsOn": "canonical",
     "refines": "canonical",
     "specializes": "canonical",
     "governs": "canonical",
@@ -23,6 +22,7 @@ PREDICATE_STATES: dict[str, str] = {
     "referenced-by": "deprecated",
 
     # Semantically unresolved legacy Predicates
+    "dependsOn": "unresolved",
     "children": "unresolved",
     "related": "unresolved",
     "relatedTo": "unresolved",

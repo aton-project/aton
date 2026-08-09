@@ -1,0 +1,9 @@
+allowedPairs:
+  - source: ONT-ADR
+    target: ONT-Artifact
+  - source: ONT-ADR
+    target: ONT-Collection
+  - source: ONT-Constitution
+    target: ONT-Artifact
+  - source: ONT-Constitution
+    target: ONT-Collection

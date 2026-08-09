@@ -2,3 +2,4 @@ id: TERM-0001
 title: Knowledge Unit
 entityType: glossary-entry
 status: Draft
+ontologyType: ONT-GlossaryEntry
