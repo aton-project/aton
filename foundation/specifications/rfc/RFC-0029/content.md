@@ -11,17 +11,20 @@ relation predicates.
 
 The model extends the structural relation model defined by RFC-0025
 with ontology-level constraints that determine which source and target
-types are semantically valid for a relation predicate.
+Concept combinations are semantically valid for a relation predicate.
 
-The purpose of this RFC is to provide a deterministic foundation for
-semantic relation verification without coupling semantic constraints
-to individual Relation instances.
+RFC-0027 defines the ATON ontology and its normative source-to-target
+Concept pairs.
+
+The purpose of this RFC is to define the canonical representation and
+verification semantics required to evaluate those constraints
+deterministically.
 
 ## Motivation
 
 RFC-0025 defines the canonical structural representation of a relation.
 
-A relation is represented by:
+A Relation instance consists of:
 
 - a predicate;
 - a target.
@@ -29,31 +32,29 @@ A relation is represented by:
 The source is provided by the Entity that owns the relation.
 
 This representation is structurally sufficient but does not determine
-whether the combination of source type, predicate and target type is
-semantically valid.
+whether the combination of source Concept, predicate and target Concept
+is semantically valid.
 
-ADR-0009 therefore establishes that relation predicates SHALL have
-ontology-defined semantic constraints.
+RFC-0027 therefore establishes that Predicate applicability SHALL be
+defined by explicit allowed source-to-target Concept pairs.
 
-This RFC defines the canonical model required to implement that decision.
+This RFC defines the canonical constraint model required to implement
+that decision.
 
 ## Design Principle
 
 Semantic relation validity SHALL be evaluated using the following model:
 
-    Source Type -- Predicate --> Target Type
+    Source Concept -- Predicate --> Target Concept
 
-A predicate therefore defines a semantic contract consisting of:
+A Predicate therefore defines an explicit set of permitted source-to-
+target Concept pairs.
 
-- a domain;
-- a range.
+The pair itself is normative.
 
-The domain defines permitted source types.
-
-The range defines permitted target types.
-
-A concrete relation is semantically valid only if both its source and
-target satisfy the corresponding predicate constraints.
+A Predicate SHALL NOT be represented merely by independent source and
+target sets whose Cartesian product implicitly defines valid
+combinations.
 
 ## Terminology
 
@@ -68,65 +69,128 @@ Examples include:
 - refines;
 - dependsOn.
 
-### Domain
+### Concept
 
-The set of ontology types that may act as the source of a predicate.
+A semantic category defined by the ATON ontology.
 
-### Range
+The initial Concept vocabulary is defined by RFC-0027.
 
-The set of ontology types that may act as the target of a predicate.
+### Allowed Pair
+
+A pair consisting of:
+
+- one permitted source Concept;
+- one permitted target Concept.
+
+An Allowed Pair defines one valid source-to-target combination for a
+Predicate.
 
 ### Constraint
 
-A semantic restriction associated with a predicate.
+The semantic applicability definition associated with a Predicate.
 
 ### Relation Instance
 
-A concrete occurrence of a predicate between a source Entity and a
+A concrete occurrence of a Predicate between a source Entity and a
 target Entity.
 
 ## Canonical Constraint Model
 
-Each relation predicate SHALL have a semantic constraint definition.
+Each normative Predicate SHALL have a semantic constraint definition.
 
-The conceptual representation is:
+The canonical conceptual representation is:
 
     predicate:
-      domain:
-        - `<source-type>`
-      range:
-        - `<target-type>`
+      allowedPairs:
+        - source: <source-concept>
+          target: <target-concept>
 
-The domain SHALL contain one or more ontology type identifiers.
+Each entry in `allowedPairs` SHALL define exactly one permitted
+source-to-target Concept combination.
 
-The range SHALL contain one or more ontology type identifiers.
+A Predicate MAY define multiple allowed pairs.
 
-A predicate SHALL NOT have an undefined semantic domain or range once it
-is subject to semantic verification.
+A Predicate with no allowed pair SHALL NOT be considered semantically
+applicable to any source-to-target Concept combination.
 
-## Multiple Allowed Types
+## Explicit Pair Semantics
 
-A predicate MAY permit multiple source types.
+The allowed source-to-target pairs SHALL be evaluated exactly as
+defined.
 
 For example:
 
     predicate: motivates
 
+    allowedPairs:
+      - source: Note
+        target: ADR
+      - source: Finding
+        target: ADR
+
+The following relations are therefore valid:
+
+    Note -> motivates -> ADR
+    Finding -> motivates -> ADR
+
+The following relations are invalid:
+
+    Note -> motivates -> Decision
+    Finding -> motivates -> Note
+    Decision -> motivates -> ADR
+
+The existence of a Concept in either position does not make an
+otherwise undefined combination valid.
+
+## No Cartesian Product Semantics
+
+A Predicate SHALL NOT interpret its constraints as independent domain
+and range sets.
+
+For example, the following conceptual model is NOT canonical:
+
+    predicate: motivates
+
     domain:
+      - Note
       - Finding
-      - Observation
 
     range:
-      - Note
+      - ADR
 
-This means that both of the following source types are permitted:
+Such a representation is ambiguous because it relies on implicit
+combination semantics.
 
-    Finding
-    Observation
+The canonical model explicitly represents:
 
-The same applies to the range.
+    Note -> ADR
+    Finding -> ADR
 
-A predicate MAY therefore define multiple allowed target types.
+This preserves the exact semantics defined by RFC-0027.
+
+## Concept Identity
+
+Allowed pair entries SHALL reference canonical ontology Concept
+identifiers.
+
+For ontology Concepts represented as Foundation ontology artifacts,
+the canonical identifiers are their ontology artifact IDs, for example:
+
+    ONT-ADR
+    ONT-RFC
+    ONT-Requirement
+    ONT-Component
+
+Human-readable Concept titles and Markdown headings SHALL NOT be used
+as semantic identifiers.
+
+RFC-0027 may use Concept names such as `ADR`, `RFC`, `Requirement` and
+`Component` in explanatory text. Such names SHALL be interpreted as the
+corresponding canonical ontology Concepts.
+
+Concepts defined by RFC-0027 but not yet represented by Foundation
+ontology artifacts SHALL NOT be used by semantic verification until
+their canonical ontology definitions exist.
 
 ## Relation Evaluation
 
@@ -137,86 +201,127 @@ For a concrete relation:
 the semantic verifier SHALL perform the following evaluation:
 
 1. Resolve the source Entity.
-2. Resolve the source Entity type.
-3. Resolve the relation predicate.
-4. Resolve the predicate semantic constraint.
+2. Resolve the source Concept.
+3. Resolve the relation Predicate.
+4. Resolve the Predicate semantic constraint.
 5. Resolve the target Entity.
-6. Resolve the target Entity type.
-7. Verify that the source type is permitted by the predicate domain.
-8. Verify that the target type is permitted by the predicate range.
+6. Resolve the target Concept.
+7. Construct the pair:
 
-The relation is semantically valid only when all required resolutions
-succeed and both domain and range constraints are satisfied.
+       source Concept + target Concept
+
+8. Verify that the exact pair is contained in the Predicate's
+   `allowedPairs`.
+
+The relation is semantically valid only when the exact pair exists.
 
 ## Unknown Predicate
 
-A relation whose predicate has no semantic constraint definition SHALL
+A relation whose Predicate has no semantic constraint definition SHALL
 be treated as semantically undefined.
 
 The verifier SHALL NOT infer semantic validity merely from the existence
-of the predicate string.
+of the Predicate string.
 
-The exact verification severity for an undefined predicate SHALL be
-defined by the implementation policy.
+The initial implementation SHOULD report an undefined Predicate as a
+warning during migration.
 
-The initial implementation SHOULD report the condition as a warning
-during migration and SHALL support escalation to an error once semantic
-constraints become mandatory.
+Once semantic constraints are mandatory, an undefined Predicate SHALL
+be reported as an error.
 
-## Unknown Source Type
+## Unknown Source Concept
 
-If the source Entity cannot be resolved to an ontology type, semantic
-verification SHALL report the condition.
+If the source Entity cannot be resolved to a canonical ontology
+Concept, semantic verification SHALL report the condition.
 
-The verifier SHALL NOT assume that an unknown source type satisfies the
-predicate domain.
+The verifier SHALL NOT assume that an unknown source Concept satisfies
+an Allowed Pair.
 
-## Unknown Target Type
+## Unknown Target Concept
 
-If the target Entity cannot be resolved to an ontology type, semantic
-verification SHALL report the condition unless the relation target is
-explicitly classified as an external entity.
+If the target Entity cannot be resolved to a canonical ontology
+Concept, semantic verification SHALL report the condition unless the
+relation target is explicitly classified as an external entity.
 
 External entity handling remains subject to the existing relation model
 and ontology rules.
 
-## Domain Violation
+## Source Concept Violation
 
-If the source Entity type is not contained in the predicate domain, the
-relation SHALL be considered semantically invalid.
-
-Example:
-
-    motivates:
-      domain:
-        - Finding
-      range:
-        - Note
-
-Given:
-
-    Note --motivates--> Note
-
-the relation is structurally representable but semantically invalid.
-
-## Range Violation
-
-If the target Entity type is not contained in the predicate range, the
-relation SHALL be considered semantically invalid.
+If the source Concept does not participate in any Allowed Pair for the
+given Predicate, the relation SHALL be considered semantically invalid.
 
 Example:
 
     motivates:
-      domain:
-        - Finding
-      range:
-        - Note
+      allowedPairs:
+        - source: ONT-Note
+          target: ONT-ADR
 
 Given:
 
-    Finding --motivates--> Decision
+    ONT-Decision --motivates--> ONT-ADR
 
-the relation is structurally representable but semantically invalid.
+the relation is invalid because `ONT-Decision` is not an allowed source
+Concept for `motivates`.
+
+## Target Concept Violation
+
+If the target Concept does not form an Allowed Pair with the resolved
+source Concept for the given Predicate, the relation SHALL be
+considered semantically invalid.
+
+Example:
+
+    motivates:
+      allowedPairs:
+        - source: ONT-Finding
+          target: ONT-ADR
+
+Given:
+
+    ONT-Finding --motivates--> ONT-Note
+
+the relation is invalid because the exact pair
+`ONT-Finding -> ONT-Note` is not defined.
+
+## Exact Pair Matching
+
+Semantic validation SHALL use exact Concept matching.
+
+A relation SHALL NOT become valid because:
+
+- the source Concept is related to an allowed Concept;
+- the target Concept is related to an allowed Concept;
+- the source Concept specializes an allowed Concept;
+- the target Concept specializes an allowed Concept.
+
+Such behavior requires explicit ontology hierarchy semantics and is
+outside the scope of this RFC.
+
+## Type Specialization
+
+RFC-0027 defines Concept specialization as taxonomy.
+
+Concept specialization SHALL NOT automatically expand Predicate
+applicability.
+
+For example, if:
+
+    ONT-ADR specializes ONT-Decision
+
+and:
+
+    ONT-Note -> motivates -> ONT-ADR
+
+is valid, this SHALL NOT automatically make:
+
+    ONT-Note -> motivates -> ONT-Decision
+
+valid.
+
+The corresponding pair MUST be explicitly defined if it is intended to
+be valid.
 
 ## Structural and Semantic Verification
 
@@ -234,142 +339,89 @@ Structural verification includes at least:
 
 Semantic verification includes at least:
 
-- unknown predicates;
-- unknown source types;
-- unknown target types;
-- domain violations;
-- range violations.
+- unknown Predicates;
+- unknown source Concepts;
+- unknown target Concepts;
+- invalid source-to-target Concept pairs.
 
 A relation MAY therefore pass structural verification while failing
 semantic verification.
 
 ## Ontology Authority
 
-The ontology SHALL be the authoritative source for predicate semantic
+The ontology SHALL be the authoritative source for Predicate semantic
 constraints.
 
-Individual relation instances SHALL NOT redefine their predicate's
-domain or range.
+Individual Relation instances SHALL NOT redefine the semantic
+constraints of their Predicate.
 
-This prevents different instances of the same predicate from acquiring
+A Relation instance continues to contain only the structural relation
+information defined by RFC-0025.
+
+This prevents different instances of the same Predicate from acquiring
 inconsistent semantic definitions.
 
 ## Separation from the Relation Model
 
 The canonical Relation model defined by RFC-0025 SHALL remain unchanged
-by this RFC at the conceptual level.
+at the conceptual level.
 
 A Relation instance continues to represent:
 
     predicate + target
 
-Semantic constraints belong to the ontology and are resolved during
-semantic verification.
+Semantic constraints belong to the ontology and SHALL be resolved
+during semantic verification.
 
-The verifier MAY construct an internal semantic representation during
-processing, but such information SHALL NOT become duplicated into every
-Relation instance.
+The verifier MAY construct an internal semantic representation while
+processing a relation.
 
-## Type Identity
-
-Domain and range entries SHALL reference canonical ontology type
-identifiers.
-
-They SHALL NOT depend on:
-
-- display titles;
-- Markdown headings;
-- file paths;
-- human-readable descriptions.
-
-This ensures that semantic validation remains stable when presentation
-information changes.
-
-## Type Specialization
-
-The initial implementation SHALL support exact type matching.
-
-For example:
-
-    domain:
-      - Entity
-
-A source of type `Entity` satisfies the constraint.
-
-A source of a specialized type SHALL NOT automatically satisfy the
-constraint until ontology type specialization and inheritance rules have
-been explicitly defined.
-
-Future RFCs MAY introduce type hierarchy semantics.
-
-## Cardinality
-
-This RFC defines domain and range constraints only.
-
-It does not define:
-
-- minimum relation counts;
-- maximum relation counts;
-- mandatory relations;
-- uniqueness beyond duplicate relation detection.
-
-Cardinality constraints MAY be introduced by a future RFC.
-
-## Inverse Relations
-
-This RFC does not require inverse predicate definitions.
-
-For example:
-
-    refines
-    refinedBy
-
-may exist as independent predicates.
-
-An explicit inverse relation model MAY be introduced separately.
+Such information SHALL NOT be duplicated into every Relation instance.
 
 ## Serialization
 
 The semantic constraint model SHALL be serializable independently of
-individual relation instances.
+individual Relation instances.
 
-The canonical serialization format SHALL be defined by the ontology
-artifact model and implementation.
+The canonical conceptual serialization is:
 
-The following conceptual representation is normative:
+    predicate: motivates
+    allowedPairs:
+      - source: ONT-Note
+        target: ONT-ADR
+      - source: ONT-Finding
+        target: ONT-ADR
 
-    predicate:
-      domain:
-        - TypeA
-        - TypeB
-      range:
-        - TypeC
-        - TypeD
-
-The exact file location and artifact type are implementation concerns
-and SHALL not alter the semantic meaning of the model.
+The exact file location and surrounding ontology artifact structure are
+implementation concerns and SHALL NOT alter the semantic meaning of
+the model.
 
 ## Verification Algorithm
 
 The semantic verification algorithm SHALL conceptually implement:
 
     for each relation:
-        resolve source
-        resolve predicate constraint
-        resolve target
+        resolve source Entity
+        resolve source Concept
+        resolve Predicate constraint
+        resolve target Entity
+        resolve target Concept
 
-        verify source type ∈ domain
-        verify target type ∈ range
+        pair = (source Concept, target Concept)
 
-A failure of either membership test SHALL produce a semantic
+        verify pair ∈ allowedPairs
+
+A failure of the pair membership test SHALL produce a semantic
 verification issue.
 
 The verifier SHALL identify:
 
 - the source artifact;
-- the predicate;
+- the Predicate;
 - the target artifact;
-- the violated constraint.
+- the resolved source Concept;
+- the resolved target Concept;
+- the violated semantic constraint.
 
 ## Error Reporting
 
@@ -379,13 +431,12 @@ identifiers.
 The implementation SHOULD provide rules corresponding to at least:
 
     unknown-relation-predicate
-    unknown-source-type
-    unknown-target-type
-    relation-domain-violation
-    relation-range-violation
+    unknown-source-concept
+    unknown-target-concept
+    relation-concept-pair-violation
 
 The exact reporting format SHALL follow the existing
-VerificationReport model.
+`VerificationReport` model.
 
 ## Migration Strategy
 
@@ -395,15 +446,15 @@ migration.
 Semantic verification SHALL initially operate in migration-compatible
 mode.
 
-Predicates without defined constraints SHOULD produce warnings rather
-than immediately invalidating the Foundation.
+Predicates without defined semantic constraints SHOULD produce warnings
+rather than immediately invalidating the Foundation.
 
-Once all required predicates have semantic constraints, the project MAY
+Once all required Predicates have semantic constraints, the project MAY
 promote missing semantic definitions from warnings to errors.
 
-Existing semantic violations SHALL be corrected by changing the affected
-engineering artifacts or by changing the ontology definition through the
-normal ATON governance process.
+Existing semantic violations SHALL be corrected by changing the
+affected engineering artifacts or by changing the ontology definition
+through the normal ATON governance process.
 
 The verifier SHALL NOT silently modify engineering artifacts.
 
@@ -411,44 +462,56 @@ The verifier SHALL NOT silently modify engineering artifacts.
 
 Assume the ontology defines:
 
-    motivates:
-      domain:
-        - Finding
-      range:
-        - Note
+    predicate: motivates
+    allowedPairs:
+      - source: ONT-Note
+        target: ONT-ADR
+      - source: ONT-Finding
+        target: ONT-ADR
 
 and the Foundation contains:
 
-    FINDING-0001
-    type: Finding
+    NOTE-0020
+    concept: ONT-Note
 
-    NOTE-0001
-    type: Note
+    ADR-0008
+    concept: ONT-ADR
 
 The relation:
 
-    FINDING-0001 --motivates--> NOTE-0001
+    NOTE-0020 --motivates--> ADR-0008
 
 is semantically valid.
 
 If the Foundation contains:
 
-    DECISION-0001
-    type: Decision
+    ADR-0009
+    concept: ONT-ADR
 
 then:
 
-    DECISION-0001 --motivates--> NOTE-0001
+    ADR-0009 --motivates--> ADR-0008
 
-is semantically invalid because `Decision` is not in the domain of
-`motivates`.
+is semantically invalid because:
 
-Likewise:
+    ONT-ADR -> ONT-ADR
 
-    FINDING-0001 --motivates--> DECISION-0001
+is not an Allowed Pair for `motivates`.
 
-is semantically invalid because `Decision` is not in the range of
-`motivates`.
+Likewise, if the Foundation contains:
+
+    DECISION-0001
+    concept: ONT-Decision
+
+then:
+
+    DECISION-0001 --motivates--> ADR-0008
+
+is semantically invalid because:
+
+    ONT-Decision -> ONT-ADR
+
+is not an Allowed Pair for `motivates`.
 
 ## Compatibility
 
@@ -459,29 +522,31 @@ Existing structural relations remain representable.
 
 Semantic constraints are an additional ontology-level layer.
 
-No existing Relation instance needs to contain a domain or range
+No existing Relation instance needs to contain an `allowedPairs`
 definition.
 
 ## Implementation Boundary
 
 The following are in scope:
 
-- canonical predicate constraints;
-- domain constraints;
-- range constraints;
+- canonical Predicate constraints;
+- explicit source-to-target Concept pairs;
 - semantic relation verification;
 - semantic verification reporting;
-- migration-compatible handling of undefined predicates.
+- migration-compatible handling of undefined Predicates;
+- canonical ontology Concept identity.
 
 The following are out of scope:
 
 - type inheritance;
+- automatic Predicate inheritance;
 - cardinality;
-- inverse relations;
+- inverse relation generation;
 - transitivity;
 - symmetry;
 - property chains;
 - reasoning over relation graphs;
+- inference;
 - automatic relation repair.
 
 These capabilities require separate architectural decisions or RFCs.
@@ -490,23 +555,30 @@ These capabilities require separate architectural decisions or RFCs.
 
 The implementation of this RFC SHALL satisfy at least the following:
 
-1. A predicate can define one or more allowed source types.
-2. A predicate can define one or more allowed target types.
-3. A concrete relation can be evaluated against these constraints.
-4. Domain violations are detected.
-5. Range violations are detected.
-6. Undefined predicates can be reported.
+1. A Predicate can define one or more explicit allowed source-to-target
+   Concept pairs.
+2. A concrete Relation can be evaluated against those pairs.
+3. Invalid source-to-target Concept combinations are detected.
+4. Undefined Predicates can be reported.
+5. Unknown source Concepts can be reported.
+6. Unknown target Concepts can be reported.
 7. Structural relation validation remains independent of semantic
    validation.
 8. Existing Relation instances do not contain duplicated semantic
    constraint definitions.
 9. Verification issues identify the affected artifact and rule.
-10. Existing Foundation artifacts remain structurally loadable during
+10. Concept specialization does not implicitly expand Predicate
+    applicability.
+11. Existing Foundation artifacts remain structurally loadable during
     migration.
+12. The semantic model does not rely on an implicit Cartesian product of
+    source and target Concept sets.
 
 ## References
 
+- RFC-0025 Canonical Relation Model
+- RFC-0026 Ontological Predicates
+- RFC-0027 ATON Ontology
 - ADR-0009 Semantic Constraints for Relations
 - NOTE-0021 Semantic Constraints for Relations
-- RFC-0025 Canonical Relation Model
 - ENTITY-0001 Universal Entity Model
