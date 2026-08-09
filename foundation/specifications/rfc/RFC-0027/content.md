@@ -81,9 +81,37 @@ The initial Concept taxonomy is:
     Metadata
     Property
     Entity
+    AX
+    Constitution
+    Predicate
 
 The `Artifact` Concept is the general concept from which artifact Concepts
 may derive.
+
+### AX
+
+`AX` (ATON Experience) is the Concept representing the specification of how
+engineering knowledge is presented, explored, and understood in ATON
+applications.
+
+AX defines user experience semantics and is independent of a specific user
+interface implementation.
+
+### Constitution
+
+`Constitution` is the Concept representing the highest architectural and
+governance document of the ATON Foundation.
+
+The Constitution establishes the enduring purpose, principles, boundaries,
+and architectural foundations of ATON.
+
+### Predicate
+
+`Predicate` is the Concept representing a canonical semantic relationship in
+the ATON ontology.
+
+A Predicate defines a directional relationship between a source Concept and a
+target Concept and SHALL define its allowed source-to-target Concept pairs.
 
 ## Concept Specialization
 
