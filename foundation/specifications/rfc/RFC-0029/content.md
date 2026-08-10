@@ -102,8 +102,8 @@ The canonical conceptual representation is:
 
     predicate:
       allowedPairs:
-        - source: <source-concept>
-          target: <target-concept>
+        - source: `<source-concept>`
+          target: `<target-concept>`
 
 Each entry in `allowedPairs` SHALL define exactly one permitted
 source-to-target Concept combination.
