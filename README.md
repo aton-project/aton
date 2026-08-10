@@ -168,13 +168,39 @@ Production-ready implementation has not yet started.
 ## Roadmap
 
 | Release | Goal |
-|---------|------|
-| **v0.1** | Foundation |
-| **v0.2** | Kernel |
-| **v0.3** | Git Persistence |
-| **v0.4** | REST API |
-| **v0.5** | Web UI |
-| **v0.6** | AI |
+|---|---|
+| v0.1 | Foundation |
+| v0.2 | AX Core & Engineering Knowledge Model |
+| v0.3 | Ontology & Semantic Foundation |
+| v0.4 | ATON Kernel |
+| v0.5 | Git Persistence & Repository Model |
+| v0.6 | REST API |
+| v0.7 | Web UI |
+| v0.8 | AI Integration |
+| v0.9 | Engineering Platform |
+| v1.0 | Production-ready ATON |
+
+The roadmap describes major architectural milestones rather than
+fixed feature commitments. Individual releases may contain multiple
+incremental implementation steps.
+
+### Current Status
+
+**v0.3 – Ontology & Semantic Foundation**
+
+The current release establishes the semantic foundation of ATON,
+including:
+
+- canonical ontology concepts
+- explicit ontology type identity
+- semantic Predicates
+- canonical relation constraints
+- allowed source-to-target Concept pairs
+- semantic relation validation
+- Predicate migration and legacy relation handling
+- deployment architecture documentation
+
+Production-ready implementation has not yet started.
 
 ## Contributing
 
