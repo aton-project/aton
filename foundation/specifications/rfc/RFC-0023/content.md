@@ -189,15 +189,19 @@ the relationships.
 
 For a relation:
 
+    '''text
     A --P--> B
+    '''
 
 the traceability model provides two navigational perspectives:
 
+    '''text
     outgoing:
         A -> B
 
     incoming:
         B <- A
+    '''
 
 Both perspectives refer to the same canonical Relation.
 
