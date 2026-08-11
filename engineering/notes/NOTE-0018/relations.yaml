@@ -1,2 +1,16 @@
 origin:
   - REVIEW-0006#F-004
+
+references:
+  - ADR-0006
+  - ADR-0018
+  - RFC-0014
+
+dependsOn: []
+
+supersedes: []
+
+supersededBy:
+  - RFC-0014
+
+relatedTo: []

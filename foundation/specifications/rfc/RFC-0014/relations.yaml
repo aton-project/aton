@@ -1,13 +1,17 @@
 references:
-  - ADR-0006
   - ADR-0011
   - ADR-0012
-  - RFC-0012
-  - RFC-0013
+  - ADR-0013
+  - ADR-0014
+  - ADR-0016
+  - ADR-0018
   - RFC-0025
   - RFC-0029
+  - NOTE-0018
 
 dependsOn:
+  - RFC-0012
+  - RFC-0013
   - RFC-0025
   - RFC-0029
 

@@ -1,15 +1,22 @@
 references:
-  - ADR-0006
+  - ADR-0002
+  - ADR-0008
   - ADR-0011
   - ADR-0012
+  - ADR-0018
   - RFC-0012
   - RFC-0013
+  - RFC-0014
   - RFC-0025
   - RFC-0029
+  - RFC-0030
+  - RFC-0031
+  - NOTE-0014
+  - NOTE-0017
 
 dependsOn:
-  - RFC-0025
-  - RFC-0029
+  - RFC-0012
+  - RFC-0013
 
 supersedes: []
 
