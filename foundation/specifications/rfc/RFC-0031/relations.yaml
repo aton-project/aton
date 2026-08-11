@@ -1,0 +1,14 @@
+references:
+  - ADR-0002
+  - RFC-0030
+  - NOTE-0003
+
+dependsOn:
+  - ADR-0002
+  - RFC-0030
+
+supersedes: []
+
+supersededBy: []
+
+relatedTo: []
