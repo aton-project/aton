@@ -1,5 +1,5 @@
-id: TERM-0001
-title: Knowledge Unit
+id: TERM-Entity
+title: Entity
 entityType: glossary-entry
 status: Draft
 ontologyType: ONT-GlossaryEntry

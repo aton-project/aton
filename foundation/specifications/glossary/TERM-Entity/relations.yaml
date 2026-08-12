@@ -1,9 +1,6 @@
-references: []
-
+references:
+  - ENTITY-0001
 dependsOn: []
-
 supersedes: []
-
 supersededBy: []
-
 relatedTo: []
