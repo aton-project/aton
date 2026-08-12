@@ -1,4 +1,4 @@
-# RFC-0027 ATON Ontology
+# RFC-0027 — ATON Ontology
 
 ## Status
 
@@ -59,34 +59,37 @@ Individual artifacts are instances of Concepts.
 
 ## Concept Model
 
-All ATON artifacts SHALL belong to a defined Concept.
+The ATON ontology SHALL define Concepts used to classify engineering
+knowledge.
 
-The initial Concept taxonomy is:
+The initial ATON Concept vocabulary includes:
 
-    Artifact
-    Requirement
-    Decision
-    RFC
-    ADR
-    Note
-    Review
-    Finding
-    Component
-    Interface
-    Test
-    Definition
-    GlossaryEntry
-    View
-    Collection
-    Metadata
-    Property
-    Entity
-    AX
-    Constitution
-    Predicate
+- Artifact;
+- Engineering Entity;
+- Requirement;
+- Decision;
+- RFC;
+- ADR;
+- Note;
+- Review;
+- Finding;
+- Component;
+- Interface;
+- Test;
+- Definition;
+- Glossary Entry;
+- View;
+- Collection;
+- AX;
+- Constitution; and
+- Predicate.
 
-The `Artifact` Concept is the general concept from which artifact Concepts
-may derive.
+The exact relationship between these Concepts, including specialization,
+shall be defined explicitly by the ontology.
+
+Concepts representing ontology constructs, such as `Predicate`, SHALL NOT be
+assumed to be ordinary engineering artifacts merely because they participate
+in the ontology.
 
 ### AX
 
@@ -94,7 +97,7 @@ may derive.
 engineering knowledge is presented, explored, and understood in ATON
 applications.
 
-AX defines user experience semantics and is independent of a specific user
+AX defines experience semantics and remains independent of a specific user
 interface implementation.
 
 ### Constitution
@@ -107,11 +110,15 @@ and architectural foundations of ATON.
 
 ### Predicate
 
-`Predicate` is the Concept representing a canonical semantic relationship in
-the ATON ontology.
+`Predicate` is the Concept representing a canonical semantic relationship
+defined by the ATON ontology.
 
-A Predicate defines a directional relationship between a source Concept and a
-target Concept and SHALL define its allowed source-to-target Concept pairs.
+A Predicate defines semantic meaning and the constraints under which a
+relationship may be used.
+
+The Predicate Concept is therefore part of the ontology model and SHALL NOT
+be treated as an ordinary engineering artifact solely because it is
+represented by a Foundation artifact.
 
 ## Concept Specialization
 
@@ -375,7 +382,8 @@ Inverse:
 
 ## Predicate Direction
 
-Predicates SHALL be directional.
+Predicates SHALL be directional unless their semantic definition explicitly
+establishes symmetric semantics.
 
 For example:
 
@@ -511,21 +519,27 @@ taxonomy inheritance.
 
 A Predicate MAY define cardinality constraints.
 
-Cardinality SHALL describe the permitted number of targets for a given source
-and Predicate.
+Cardinality SHALL describe the permitted number of target relations for a
+given source and Predicate.
 
 Examples include:
 
-    0..1
-    0..*
-    1..1
-    1..*
+- `0..1`;
+- `0..*`;
+- `1..1`; and
+- `1..*`.
+
+Cardinality constraints SHALL be represented and validated according to
+RFC-0029.
+
+A missing cardinality constraint SHALL NOT imply an implicit cardinality
+restriction.
 
 Cardinality constraints are evaluated independently of source-to-target
 Concept validity.
 
-A relation MUST first satisfy the allowed source-to-target pair constraint
-before cardinality is evaluated.
+A relation MUST first satisfy the applicable allowed source-to-target
+Concept pair before cardinality is evaluated.
 
 ## Explicit Relations
 
@@ -539,51 +553,65 @@ For example:
         v
     ADR-0008
 
-The relation is explicitly authored.
+The relation is explicitly authored and forms authoritative source data of
+the Engineering Knowledge Model.
 
-Explicit relations are authoritative source data.
+Explicit relations SHALL be represented using the canonical Relation model
+defined by RFC-0025.
+
+Their semantic validity SHALL be evaluated against the ontology defined by
+this RFC and the applicable semantic constraints defined by RFC-0029.
 
 ## Derived Relations
 
-A derived relation is a relation generated from explicitly defined relations
-and ontology rules.
+A derived relation is a relation generated from explicitly represented
+relations and applicable ontology rules.
 
 Derived relations SHALL remain distinguishable from explicitly authored
 relations.
 
-For example, if:
+For example, if the ontology defines:
 
     motivates
-        inverse:
-            motivatedBy
+        inverse: motivatedBy
 
-then:
+and an explicit relation exists:
 
     Note -> motivates -> ADR
 
-may provide the derived inverse relation:
+an implementation MAY derive:
 
     ADR -> motivatedBy -> Note
 
-The mechanism for generating derived relations is outside the scope of this
-RFC.
+A derived relation SHALL NOT be treated as independently authored source
+data.
+
+The mechanism for generating, storing, or exposing derived relations is
+outside the scope of this RFC.
 
 ## Inferred Relations
 
-Inference is the process of deriving knowledge from existing knowledge and
-formal rules.
+Inference is the process of deriving knowledge from existing engineering
+knowledge and formal rules.
 
 Inference MAY be supported by future ATON components.
 
 Inference SHALL NOT be required for initial ontology validation.
 
+Ontology validation SHALL be possible using explicitly represented
+relations, their canonical semantic constraints, and the applicable
+ontology definitions.
+
 Future specifications MAY define:
 
-- inference rules
-- transitive reasoning
-- rule composition
-- provenance
-- derived knowledge lifecycle
+- inference rules;
+- transitive reasoning;
+- rule composition;
+- provenance of inferred knowledge; and
+- derived knowledge lifecycle.
+
+Inference SHALL NOT silently change the normative meaning of the ontology or
+the validity of explicitly represented relations.
 
 ## Ontology Evolution
 
@@ -598,50 +626,73 @@ artifacts use them.
 Changes to the meaning of an existing Predicate SHALL be treated as a
 semantic change.
 
-Changes to allowed source-to-target pairs SHALL be treated as ontology
-changes and MAY require migration of existing relations.
+Changes to the allowed source-to-target Concept pairs SHALL be treated as
+ontology changes and MAY require migration or revalidation of existing
+relations.
+
+Changes to Predicate constraints, including cardinality, inverse semantics,
+symmetry, or transitivity, SHALL be treated as semantic ontology changes.
+
+An ontology change SHALL NOT silently reinterpret existing engineering
+knowledge.
 
 ## Compatibility
 
 Ontology changes SHOULD preserve the semantic meaning of existing
 Predicates.
 
-Removing an allowed source-to-target pair MAY invalidate existing
+Removing an allowed source-to-target Concept pair MAY invalidate existing
 Foundation relations.
 
-Adding an allowed source-to-target pair SHALL NOT invalidate existing
-relations.
+Adding an allowed source-to-target Concept pair SHALL NOT invalidate
+existing relations.
+
+Changing the meaning or constraints of an existing Predicate MAY affect the
+semantic validity of existing relations and SHALL therefore be treated as a
+semantic migration.
 
 Renaming a Predicate SHALL be treated as a semantic migration rather than a
 simple text replacement.
 
+An ontology implementation SHALL NOT silently reinterpret an existing
+Predicate identifier as a different semantic relationship.
+
 ## Design Principle
 
-ATON SHALL prefer a small, precise vocabulary over a large set of overlapping
-Predicates.
+ATON SHALL prefer a small, precise vocabulary over a large set of
+overlapping Predicates.
 
 A new Predicate SHOULD only be introduced when an existing Predicate cannot
 express the intended engineering meaning without ambiguity.
 
-Generic structural relationships SHOULD NOT be introduced when a domain
-specific semantic Predicate can express the intended relationship.
+Generic structural relationships SHOULD NOT be introduced when a
+domain-specific semantic Predicate can express the intended relationship.
 
 ## Future Extensions
 
 Future RFCs MAY define:
 
-- additional Concepts
-- additional Predicates
-- Predicate namespaces
-- additional cardinality constraints
-- lifecycle constraints
-- ontology serialization
-- ontology versioning
-- inference rules
-- provenance of derived knowledge
-- automated ontology validation
+- additional Concepts;
+- additional Predicates;
+- Predicate namespaces;
+- additional semantic constraint types;
+- lifecycle constraints;
+- ontology serialization;
+- ontology versioning;
+- inference rules;
+- provenance of derived knowledge; and
+- automated ontology validation.
+
+Future extensions SHALL preserve the separation between:
+
+- canonical Relation representation;
+- Predicate semantics;
+- semantic constraints; and
+- reasoning or inference.
 
 ## References
 
-- RFC-0025 Canonical Relation Model
-- RFC-0026 Ontological Predicates
+- RFC-0025 — Canonical Relation Model
+- RFC-0026 — Ontological Predicates
+- RFC-0029 — Semantic Relation Constraints
+- ADR-0014 — Canonical Semantic Relation Model

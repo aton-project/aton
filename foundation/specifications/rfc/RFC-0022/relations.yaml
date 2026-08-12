@@ -1,5 +1,19 @@
-references: []
+references:
+  - ADR-0004
+  - ADR-0006
+  - ADR-0008
+  - ADR-0011
+  - RFC-0013
+  - RFC-0021
+  - RFC-0025
+  - RFC-0029
+  - NOTE-0018
+
 dependsOn: []
+
 supersedes: []
+
 supersededBy: []
-relatedTo: []
+
+relatedTo:
+  - RFC-0014

@@ -1,4 +1,4 @@
-# RFC-0026 Ontological Predicates
+# RFC-0026 — Ontological Predicates
 
 ## Status
 
@@ -7,124 +7,123 @@ Draft
 ## Summary
 
 This RFC specifies the semantic model for predicates within the ATON
-knowledge graph.
+Engineering Knowledge Model.
 
 RFC-0025 defines the canonical technical representation of relations inside
-the kernel.
+the ATON kernel.
 
 This RFC defines the semantic meaning and validity of those relations.
 
-A predicate SHALL represent a defined domain relationship between two
-concepts.
+A Predicate SHALL represent a defined semantic relationship between two
+Engineering Knowledge concepts.
 
 ## Scope
 
 This RFC specifies:
 
-- the concept of an ontological predicate
-- predicate identity
-- predicate semantics
-- source and target constraints
-- predicate direction
-- inverse predicates
-- cardinality
-- semantic validation requirements
-- the separation between explicit and derived relations
+- the concept of an ontological Predicate;
+- Predicate identity;
+- Predicate semantics;
+- semantic source and target constraints;
+- Predicate direction;
+- inverse Predicates;
+- cardinality semantics;
+- semantic validation requirements; and
+- the separation between explicit and derived relations.
 
 The implementation of inference and reasoning is outside the scope of this
 RFC.
 
+The canonical representation of semantic constraints is defined separately by
+RFC-0029.
+
 ## Ontological Predicate
 
-An ontological predicate defines a semantic relationship between a source
+An ontological Predicate defines a semantic relationship between a source
 concept and a target concept.
 
-A predicate SHALL have a defined semantic meaning.
+A Predicate SHALL have a defined semantic meaning.
 
-A predicate MUST NOT be interpreted merely as an arbitrary string.
+A Predicate MUST NOT be interpreted merely as an arbitrary string.
 
 For example:
 
-    NOTE
+    Note
       |
       | motivates
       v
-    ADR
+      ADR
 
-The predicate `motivates` expresses a specific engineering relationship.
+The Predicate `motivates` expresses a specific engineering relationship.
 
 ## Predicate Identity
 
-Each predicate SHALL have a stable identifier.
+Each Predicate SHALL have a stable identifier.
 
-The identifier SHALL uniquely identify the predicate within the ATON ontology.
+The identifier SHALL uniquely identify the Predicate within the ATON ontology.
 
 Predicate identifiers SHOULD use a concise, human-readable form.
 
 Examples include:
 
-    motivates
-    specifiedBy
-    implements
-    verifies
-    governs
-    defines
-    allocates
-    refines
-    specializes
-    references
+- `motivates`
+- `specifiedBy`
+- `implements`
+- `verifies`
+- `governs`
+- `defines`
+- `allocates`
+- `refines`
+- `specializes`
+- `references`
 
-The identifier alone does not define the complete semantics of a predicate.
+The identifier alone does not define the complete semantics of a Predicate.
 
-The ontology definition SHALL provide the complete predicate specification.
+The ontology definition SHALL provide the complete Predicate specification.
 
 ## Predicate Semantics
 
-Every predicate SHALL define its intended meaning.
+Every Predicate SHALL define its intended meaning.
 
 The meaning SHALL be expressed independently of any particular serialization
 format.
 
-For example:
+For example, `motivates` may be defined as:
 
-    motivates
-
-may be defined as:
-
-    A Note provides a rationale, observation, or identified problem that
-    contributes to an architectural decision.
+> A Note provides rationale, observation, or an identified problem that
+> contributes to an architectural decision.
 
 The semantic definition SHALL be authoritative for interpretation of the
-predicate.
+Predicate.
 
 ## Source Constraints
 
-A predicate SHALL define the concept types that MAY act as its source.
+A Predicate MAY define the concept types that may act as its source.
 
-Example:
+For example:
 
     predicate: motivates
 
-    source:
+    permitted source:
       - Note
 
 This means that `motivates` MAY originate from a Note.
 
-An artifact that is not compatible with the defined source concept SHALL NOT
-use the predicate.
+An Engineering Knowledge object that is not compatible with the defined source
+concept SHALL NOT use the Predicate in that role.
 
 ## Target Constraints
 
-A predicate SHALL define the concept types that MAY act as its target.
+A Predicate MAY define the concept types that may act as its target.
 
-Example:
+For example:
 
     predicate: motivates
 
-    source:
+    permitted source:
       - Note
 
-    target:
+    permitted target:
       - ADR
 
 This defines the valid direction:
@@ -135,9 +134,11 @@ The reverse direction SHALL NOT be assumed to be valid.
 
 ## Predicate Direction
 
-Predicates SHALL be directional.
+Predicates SHALL be directional unless their semantic definition explicitly
+establishes symmetric semantics.
 
-The source and target concepts are part of the semantic definition.
+The source and target concepts are part of the semantic meaning of a
+Predicate.
 
 For example:
 
@@ -159,76 +160,93 @@ If the inverse relationship is meaningful, it SHALL be defined explicitly.
 
 ## Inverse Predicates
 
-A predicate MAY define an inverse predicate.
+A Predicate MAY define an inverse Predicate.
 
 For example:
 
     motivates
-        inverse:
-            motivatedBy
+    inverse: motivatedBy
 
-This establishes two semantically related predicates:
+This establishes two semantically related Predicates:
 
     Note -> motivates -> ADR
 
     ADR -> motivatedBy -> Note
 
-An inverse predicate SHALL NOT be inferred merely from naming conventions.
+An inverse Predicate SHALL NOT be inferred merely from naming conventions.
 
 The ontology SHALL explicitly define inverse relationships.
 
+An inverse Predicate is a semantic relationship between Predicate definitions.
+It does not imply that the inverse relation is physically stored as a
+separate relation.
+
 ## Cardinality
 
-A predicate MAY define cardinality constraints.
+A Predicate MAY define cardinality constraints.
 
-Cardinality SHALL describe the permitted number of targets for a given source.
+Cardinality SHALL describe the permitted number of target relations for a
+given source under the applicable semantic constraint model.
 
 Examples include:
 
-    0..1
-    0..*
-    1..1
-    1..*
+- `0..1`
+- `0..*`
+- `1..1`
+- `1..*`
 
-Cardinality constraints SHALL be interpreted by the ontology validation layer.
+Cardinality constraints SHALL be interpreted by the ontology validation
+layer.
 
 A missing cardinality definition SHALL mean that no cardinality constraint is
-defined by this RFC.
+defined by this RFC for that Predicate.
+
+The canonical representation of cardinality constraints is defined by
+RFC-0029.
 
 ## Predicate Specification
 
-A complete predicate definition SHOULD contain at least:
+A canonical Predicate definition SHOULD contain at least:
 
-    id
-    description
-    source
-    target
+- an identifier;
+- a semantic description; and
+- its applicable semantic constraints.
 
-It MAY additionally contain:
+Applicable semantic constraints MAY define:
 
-    inverse
-    cardinality
-    symmetric
-    transitive
+- permitted source concepts;
+- permitted target concepts;
+- permitted source-to-target concept pairs;
+- cardinality;
+- inverse Predicates;
+- symmetry;
+- transitivity; or
+- other semantic properties defined by the ontology.
 
-Example:
+For example, a Predicate MAY be semantically defined as:
 
     id: motivates
 
     description:
       A Note provides rationale or an identified problem for an ADR.
 
-    source:
-      - Note
+    permitted source:
+      Note
 
-    target:
-      - ADR
+    permitted target:
+      ADR
 
     inverse:
       motivatedBy
 
     cardinality:
       0..*
+
+The example describes the semantic properties of the Predicate. It does not
+define the canonical physical serialization of those properties.
+
+The canonical representation and validation model for semantic constraints is
+defined by RFC-0029.
 
 The exact serialization format for ontology definitions is outside the scope
 of this RFC.
@@ -240,14 +258,17 @@ ontology.
 
 At minimum, semantic validation SHALL be capable of determining:
 
-- whether the predicate exists
-- whether the source concept is permitted
-- whether the target concept is permitted
-- whether the relation direction is valid
-- whether cardinality constraints are satisfied when defined
+- whether the Predicate exists;
+- whether the source concept is permitted;
+- whether the target concept is permitted;
+- whether the relation direction is valid; and
+- whether cardinality constraints are satisfied when defined.
 
 A relation that violates an ontology constraint SHALL be reported as a
 verification issue.
+
+Semantic validation SHALL operate on the canonical Relation model defined by
+RFC-0025 and the applicable semantic constraints defined by RFC-0029.
 
 ## Explicit Relations
 
@@ -263,7 +284,8 @@ For example:
 
 The relation is explicitly stored by the author.
 
-Explicit relations form the authoritative source data of the knowledge graph.
+Explicit relations form authoritative source data of the Engineering Knowledge
+Model.
 
 ## Derived Relations
 
@@ -275,8 +297,7 @@ Derived relations SHALL NOT be treated as independently authored source data.
 For example, if the ontology defines:
 
     motivates
-        inverse:
-            motivatedBy
+    inverse: motivatedBy
 
 then:
 
@@ -296,98 +317,114 @@ formal rules.
 
 Inference MAY be supported by future ATON components.
 
-Inference SHALL NOT be considered part of the initial predicate validation
+Inference SHALL NOT be considered part of the initial Predicate validation
 defined by this RFC.
 
 Future specifications MAY define:
 
-- inference rules
-- transitive reasoning
-- rule composition
-- derived knowledge lifecycle
-- provenance of inferred knowledge
+- inference rules;
+- transitive reasoning;
+- rule composition;
+- derived knowledge lifecycle; and
+- provenance of inferred knowledge.
 
 ## Ontology Constraints
 
-The ontology MAY define constraints between concepts and predicates.
+A Predicate MAY define semantic constraints that restrict its valid use.
 
-Examples include:
+Such constraints MAY define:
 
-- allowed source concepts
-- allowed target concepts
-- cardinality
-- inverse predicates
-- symmetry
-- transitivity
-- lifecycle constraints
+- permitted source concepts;
+- permitted target concepts;
+- permitted source-to-target concept pairs;
+- cardinality;
+- inverse Predicates;
+- symmetry;
+- transitivity; or
+- other semantic properties defined by the ontology.
 
-These constraints SHALL be machine-readable in the canonical ontology model.
+The semantic definition of a Predicate and the constraints applicable to that
+Predicate are distinct concerns.
+
+RFC-0029 defines the canonical semantic constraint model used to represent
+and validate such constraints.
+
+This RFC defines the semantic role and meaning of Predicates but does not
+replace the canonical constraint model defined by RFC-0029.
 
 ## Separation of Concerns
 
 The following responsibilities SHALL remain separate:
 
     Foundation serialization
-        |
-        v
+            |
+            v
     Canonical Relation Model
-        |
-        v
+            |
+            v
     Ontological Predicate
-        |
-        v
+            |
+            v
+    Semantic Constraint Model
+            |
+            v
     Semantic Validation
-        |
-        v
+            |
+            v
     Future Reasoning
 
 RFC-0025 defines the canonical relation representation.
 
-This RFC defines predicate semantics and semantic constraints.
+This RFC defines the semantic meaning and role of ontological Predicates.
+
+RFC-0029 defines the canonical semantic constraint model applicable to
+Predicates and relations.
 
 Future specifications MAY define reasoning and inference.
 
 ## Consequences
 
-The ontological predicate model provides:
+The ontological Predicate model provides:
 
-- semantically meaningful relations
-- explicit source and target constraints
-- machine-verifiable relationship semantics
-- separation between technical representation and domain meaning
-- a foundation for ontology-based verification
-- a foundation for future knowledge graph reasoning
+- semantically meaningful relations;
+- explicit source and target constraints;
+- machine-verifiable relationship semantics;
+- separation between technical representation and domain meaning;
+- a foundation for ontology-based verification; and
+- a foundation for future knowledge graph reasoning.
 
 It prevents generic structural relationships from becoming an uncontrolled
 part of the ATON knowledge model.
 
 ## Design Principle
 
-ATON SHALL prefer semantically meaningful predicates over generic structural
+ATON SHALL prefer semantically meaningful Predicates over generic structural
 relationships.
 
 Generic relationships such as:
 
-    parent
-    child
-    related
+- `parent`;
+- `child`; and
+- `related`
 
-SHOULD NOT be introduced when a domain-specific semantic predicate can express
-the intended relationship.
+SHOULD NOT be introduced when a domain-specific semantic Predicate can
+express the intended relationship.
 
 ## Future Extensions
 
 Future specifications MAY define:
 
-- the ATON concept taxonomy
-- the normative predicate catalogue
-- ontology serialization
-- predicate namespaces
-- semantic versioning of predicates
-- reasoning and inference rules
-- provenance of derived knowledge
-- ontology evolution and compatibility
+- the ATON concept taxonomy;
+- the normative Predicate catalogue;
+- ontology serialization;
+- Predicate namespaces;
+- semantic versioning of Predicates;
+- reasoning and inference rules;
+- provenance of derived knowledge; and
+- ontology evolution and compatibility.
 
 ## References
 
-- RFC-0025 Canonical Relation Model
+- RFC-0025 — Canonical Relation Model
+- RFC-0029 — Semantic Relation Constraints
+- ADR-0014 — Canonical Semantic Relation Model

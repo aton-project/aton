@@ -81,6 +81,12 @@ These concerns may be defined by applicable process or governance models.
 A Baseline SHALL represent an explicitly defined and reproducible selection
 of Engineering Knowledge at a particular engineering state.
 
+A Baseline SHALL be understood as a semantic state selection rather than
+merely as a collection of engineering artifacts.
+
+The meaning of a Baseline is determined by the engineering knowledge selected
+and the versions and relationships applicable to that selection.
+
 A Baseline MAY contain:
 
 - Engineering Entities;
@@ -120,17 +126,24 @@ canonical Baseline identity.
 ## Baseline Membership
 
 A Baseline SHALL explicitly determine which Engineering Knowledge belongs to
-the selected state.
+the selected engineering state.
 
-Membership MAY be represented by references to:
-
-- Engineering Versions;
-- Engineering Entities;
-- Artifact Revisions; or
-- other canonical domain objects.
+Baseline membership SHOULD be expressed through references to canonical
+Engineering Knowledge objects, including Engineering Versions where
+applicable.
 
 Where an Engineering Entity has multiple versions, the Baseline SHALL
-identify the version applicable to the Baseline state.
+identify the Engineering Version applicable to the Baseline state.
+
+A Baseline MAY additionally reference:
+
+- Engineering Entities;
+- Engineering Artifacts;
+- Artifact Revisions; or
+- other canonical domain objects
+
+when such references are required to make the selected state explicit or
+reproducible.
 
 A Baseline SHALL NOT depend on an implicit interpretation of the latest
 available version.
@@ -176,6 +189,10 @@ Its membership SHALL NOT be silently changed after establishment.
 
 If a different engineering state is required, a new Baseline SHALL be
 created.
+
+A change to the metadata describing an established Baseline SHALL NOT change
+the semantic membership or selected engineering state of that Baseline unless
+such metadata is itself part of the Baseline's canonical state definition.
 
 A technical implementation MAY store Baseline information in a mutable
 database or repository, but the semantic model SHALL preserve the
@@ -229,6 +246,9 @@ exist in another version.
 
 A Baseline therefore represents not only a collection of entities but a
 defined state of their applicable semantic relationships.
+
+A Baseline SHALL NOT create, modify or delete canonical relations merely by
+including or excluding engineering knowledge from the selected state.
 
 The canonical Relation Model remains defined independently of Baseline
 semantics.

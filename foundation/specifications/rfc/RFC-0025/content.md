@@ -29,15 +29,29 @@ scope of this RFC.
 
 ## Relation Domain Object
 
-The kernel SHALL provide a dedicated Relation domain object.
+The kernel SHALL provide a dedicated canonical Relation domain object.
 
-Each Relation SHALL contain at least:
+Each Relation SHALL identify:
 
-- a relation type
-- a target artifact identifier
+- a source;
+- a predicate; and
+- a target.
 
-The canonical representation SHALL be independent of the serialization format
-used by the Foundation repository.
+The source identifies the Engineering Knowledge object from which the
+relation originates.
+
+The predicate identifies the canonical relation predicate.
+
+The target identifies the Engineering Knowledge object to which the relation
+points.
+
+The canonical Relation domain object SHALL represent the relation itself and
+SHALL NOT depend on the serialization format used by the Foundation
+repository.
+
+The semantic validity of the predicate for a particular source and target
+combination is defined separately by the applicable ontology and semantic
+constraint specifications.
 
 ## Supported Serialization Formats
 
@@ -74,10 +88,20 @@ Relations MAY be represented explicitly as relation objects:
 Regardless of the serialization format, the loader SHALL normalize relation
 data into the canonical Relation domain model.
 
+The canonical representation SHALL preserve the semantic identity of:
+
+- the source;
+- the predicate; and
+- the target.
+
 Kernel components SHALL operate exclusively on the canonical representation.
 
 Kernel components MUST NOT depend on the serialization format of
 relations.yaml.
+
+The serialization of a relation SHALL therefore be considered a physical
+representation of the canonical Relation domain object and SHALL NOT define
+its semantics.
 
 ## Loader Requirements
 
@@ -102,27 +126,45 @@ format.
 
 Verification MAY validate:
 
-- existence of relation targets
-- duplicate relations
-- self references
-- structural consistency of Relation objects
+- existence of relation sources;
+- existence of relation targets;
+- duplicate relations;
+- self references;
+- structural consistency of Relation objects; and
+- consistency between the canonical Relation representation and its
+  serialized representation.
+
+Semantic validation of source, predicate and target combinations SHALL be
+performed according to the applicable ontology and semantic relation
+constraint specifications.
 
 Validation of whether a specific predicate is semantically valid for a given
 source and target artifact type is outside the scope of this RFC.
 
 ## Predicate Semantics
 
-This RFC does not define the semantic meaning or allowed usage of relation
-types.
+This RFC defines the structural representation of a relation but does not
+define the semantic meaning or allowed usage of individual predicates.
 
-For example, this RFC does not define whether:
+A predicate therefore does not become semantically valid merely because it
+can be represented by the canonical Relation domain object.
 
-- an ADR may be specified by an RFC
-- an RFC may be implemented by a component
-- a Note may motivate an ADR
+Semantic constraints MAY define:
 
-Such rules SHALL be defined by the ATON ontology and its predicate
-specifications.
+- the meaning of a predicate;
+- allowed source ontology types;
+- allowed target ontology types;
+- cardinality;
+- inverse predicates;
+- symmetry or directionality;
+- transitivity; and
+- other semantic constraints.
+
+Such rules SHALL be defined by the applicable ontology and semantic relation
+constraint specifications.
+
+The canonical Relation domain model SHALL remain independent of these
+ontology-specific constraints.
 
 ## Migration Strategy
 

@@ -294,7 +294,8 @@ Only after such a decision is established MAY the relation be migrated.
 
 ## Source and Target Validation
 
-A migration SHALL validate the complete source-to-target Concept pair.
+A migration SHALL validate the complete source-to-target Concept pair
+according to the semantic constraint model defined by RFC-0029.
 
 A Predicate SHALL NOT be considered valid merely because its source Concept
 and target Concept are individually permitted.
@@ -357,8 +358,8 @@ The verification system SHALL distinguish at least the following conditions:
 
 ### Valid
 
-The relation uses a canonical Predicate and satisfies its ontology
-constraints.
+The relation uses a canonical Predicate and satisfies its applicable ontology
+constraints as defined by RFC-0027 and represented according to RFC-0029.
 
 ### Unresolved
 
@@ -543,6 +544,7 @@ Future RFCs MAY define:
 
 ## References
 
-- RFC-0025 Canonical Relation Model
-- RFC-0026 Ontological Predicates
-- RFC-0027 ATON Ontology
+- RFC-0025 — Canonical Relation Model
+- RFC-0026 — Ontological Predicates
+- RFC-0027 — ATON Ontology
+- RFC-0029 — Semantic Relation Constraints

@@ -1,1 +1,6 @@
-relations: []
+references:
+  - ADR-0002
+  - ADR-0008
+  - ADR-0011
+  - RFC-0015
+  - RFC-0021

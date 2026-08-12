@@ -201,16 +201,19 @@ Version.
 
 ## Version and Artifact
 
-An Engineering Artifact is a physical or logical representation of
-engineering knowledge according to the applicable artifact model.
+An Engineering Artifact is a logical engineering representation according
+to RFC-0010.
 
-An Engineering Version represents the semantic state of an Engineering Entity.
+An Engineering Version represents the semantic state of an Engineering
+Entity.
 
-A physical artifact MAY represent one or more versions over time, but a
-single established version SHALL correspond to one defined semantic state.
+An Engineering Artifact MAY represent information belonging to one or more
+Engineering Versions over its lifecycle.
 
-The physical artifact representation SHALL NOT be treated as the version
-itself.
+A physical artifact representation SHALL NOT be treated as the Engineering
+Version itself.
+
+Artifact Revision and Engineering Version semantics SHALL remain distinct.
 
 ## Version and Git
 
@@ -576,3 +579,4 @@ A conforming implementation SHALL:
 - RFC-0013 Baselines
 - RFC-0023 Traceability
 - NOTE-0006 Engineering Semantics of Git Commits
+- NOTE-0009 Engineering Version Semantics

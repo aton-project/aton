@@ -1,7 +1,10 @@
 references:
   - ADR-0012
+  - ADR-0003
   - RFC-0012
+  - RFC-0015
   - RFC-0023
+  - NOTE-0009
 
 dependsOn:
   - RFC-0012

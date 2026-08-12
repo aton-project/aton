@@ -1,11 +1,11 @@
 references:
   - RFC-0026
+  - RFC-0029
+  - ADR-0014
 
 dependsOn:
   - RFC-0025
 
 supersedes: []
-
 supersededBy: []
-
 relatedTo: []

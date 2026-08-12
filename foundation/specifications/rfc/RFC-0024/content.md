@@ -44,15 +44,36 @@ Future versions may support additional artifact types.
 
 ## Input
 
-The renderer consumes artifacts stored under the Foundation repository.
+The renderer SHALL consume the canonical Engineering Knowledge Model through the applicable loading and translation boundary.
 
-Each artifact consists of:
+The renderer SHALL NOT interpret repository layout, persistence-specific metadata or physical artifact structure as engineering semantics.
 
-- metadata
-- content
-- relations (optional)
+The renderer SHALL NOT require renderer-specific information inside Foundation artifacts.
 
-The renderer shall never require renderer-specific information inside Foundation artifacts.
+---
+
+## Canonical Input Boundary
+
+The Docusaurus Renderer SHALL operate on the canonical Engineering Knowledge
+Model.
+
+Physical Foundation representations SHALL be translated into the canonical
+domain model before renderer-specific processing occurs.
+
+The renderer SHALL NOT derive engineering semantics directly from:
+
+- repository paths;
+- directory structures;
+- Git-specific metadata;
+- persistence-specific fields; or
+- renderer-specific conventions.
+
+The renderer MAY use physical representation information where required for
+presentation or provenance, provided that such information does not redefine
+the semantics of the Engineering Knowledge Model.
+
+The canonical domain model SHALL remain the authoritative source for all
+engineering semantics rendered by the Docusaurus Renderer.
 
 ---
 
@@ -102,13 +123,19 @@ These capabilities may be added by future RFCs.
 The renderer is part of the presentation layer.
 
 ```text
-Foundation
-        │
-        ▼
-Docusaurus Renderer
-        │
-        ▼
-Generated Documentation
+Physical Foundation Representations
+                │
+                ▼
+        Loader / Translation
+                │
+                ▼
+   Canonical Engineering Knowledge Model
+                │
+                ▼
+       Docusaurus Renderer
+                │
+                ▼
+       Docusaurus Documentation
 ```
 
 The renderer consumes Foundation artifacts but never modifies them.

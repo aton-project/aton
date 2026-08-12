@@ -1,4 +1,4 @@
-# RFC-0029 Canonical Semantic Relation Constraint Model
+# RFC-0029 — Canonical Semantic Relation Constraint Model
 
 ## Status
 
@@ -325,8 +325,8 @@ be valid.
 
 ## Structural and Semantic Verification
 
-The renderer SHALL maintain a clear separation between structural and
-semantic verification.
+The verification subsystem SHALL maintain a clear separation between structural
+and semantic verification.
 
 Structural verification includes at least:
 
@@ -334,7 +334,7 @@ Structural verification includes at least:
 - missing content;
 - missing titles;
 - unknown relation targets;
-- duplicate relations;
+- duplicate relations; and
 - self references.
 
 Semantic verification includes at least:
@@ -342,18 +342,19 @@ Semantic verification includes at least:
 - unknown Predicates;
 - unknown source Concepts;
 - unknown target Concepts;
-- invalid source-to-target Concept pairs.
+- invalid source-to-target Concept pairs; and
+- violations of applicable semantic constraints.
 
-A relation MAY therefore pass structural verification while failing
-semantic verification.
+A Relation MAY therefore pass structural verification while failing semantic
+verification.
 
 ## Ontology Authority
 
 The ontology SHALL be the authoritative source for Predicate semantic
 constraints.
 
-Individual Relation instances SHALL NOT redefine the semantic
-constraints of their Predicate.
+Individual Relation instances SHALL NOT redefine the semantic constraints of
+their Predicate.
 
 A Relation instance continues to contain only the structural relation
 information defined by RFC-0025.
@@ -363,25 +364,25 @@ inconsistent semantic definitions.
 
 ## Separation from the Relation Model
 
-The canonical Relation model defined by RFC-0025 SHALL remain unchanged
-at the conceptual level.
+The canonical Relation model defined by RFC-0025 SHALL remain unchanged at the
+conceptual level.
 
 A Relation instance continues to represent:
 
     predicate + target
 
-Semantic constraints belong to the ontology and SHALL be resolved
-during semantic verification.
+Semantic constraints belong to the ontology and SHALL be resolved during
+semantic verification.
 
 The verifier MAY construct an internal semantic representation while
-processing a relation.
+processing a Relation.
 
 Such information SHALL NOT be duplicated into every Relation instance.
 
 ## Serialization
 
-The semantic constraint model SHALL be serializable independently of
-individual Relation instances.
+The semantic constraint model SHALL be serializable independently of individual
+Relation instances.
 
 The canonical conceptual serialization is:
 
@@ -393,8 +394,36 @@ The canonical conceptual serialization is:
         target: ONT-ADR
 
 The exact file location and surrounding ontology artifact structure are
-implementation concerns and SHALL NOT alter the semantic meaning of
-the model.
+implementation concerns and SHALL NOT alter the semantic meaning of the model.
+
+## Cardinality Constraints
+
+A Predicate MAY define cardinality constraints.
+
+Cardinality SHALL describe the permitted number of target Relations for a
+given source and Predicate.
+
+Examples include:
+
+- `0..1`;
+- `0..*`;
+- `1..1`; and
+- `1..*`.
+
+Cardinality constraints SHALL be represented and validated according to the
+canonical semantic constraint model defined by this RFC.
+
+Cardinality SHALL be evaluated only after the source-to-target Concept pair
+has been established as semantically valid.
+
+A Relation that does not satisfy the applicable cardinality constraint SHALL
+produce a semantic verification issue.
+
+A missing cardinality constraint SHALL NOT imply an implicit cardinality
+restriction.
+
+Cardinality SHALL apply to the set of Relations sharing the same source and
+Predicate within the applicable semantic scope.
 
 ## Verification Algorithm
 
@@ -411,8 +440,17 @@ The semantic verification algorithm SHALL conceptually implement:
 
         verify pair ∈ allowedPairs
 
-A failure of the pair membership test SHALL produce a semantic
-verification issue.
+        evaluate applicable cardinality constraints
+
+For each applicable source and Predicate combination, the verifier SHALL
+evaluate the cardinality constraint against the complete set of Relations
+sharing that source and Predicate within the applicable semantic scope.
+
+A failure of the pair membership test SHALL produce a semantic verification
+issue.
+
+Cardinality SHALL NOT be evaluated as satisfied merely because the individual
+Relation contains a valid source-to-target Concept pair.
 
 The verifier SHALL identify:
 
@@ -420,7 +458,7 @@ The verifier SHALL identify:
 - the Predicate;
 - the target artifact;
 - the resolved source Concept;
-- the resolved target Concept;
+- the resolved target Concept; and
 - the violated semantic constraint.
 
 ## Error Reporting
@@ -430,31 +468,30 @@ identifiers.
 
 The implementation SHOULD provide rules corresponding to at least:
 
-    unknown-relation-predicate
-    unknown-source-concept
-    unknown-target-concept
-    relation-concept-pair-violation
+- `unknown-relation-predicate`;
+- `unknown-source-concept`;
+- `unknown-target-concept`;
+- `relation-concept-pair-violation`; and
+- `relation-cardinality-violation`.
 
-The exact reporting format SHALL follow the existing
-`VerificationReport` model.
+The exact reporting format SHALL follow the existing `VerificationReport`
+model.
 
 ## Migration Strategy
 
-Existing relations SHALL remain valid structural artifacts during
-migration.
+Existing Relations SHALL remain valid structural artifacts during migration.
 
-Semantic verification SHALL initially operate in migration-compatible
-mode.
+Semantic verification SHALL initially operate in migration-compatible mode.
 
-Predicates without defined semantic constraints SHOULD produce warnings
-rather than immediately invalidating the Foundation.
+Predicates without defined semantic constraints SHOULD produce warnings rather
+than immediately invalidating the Foundation.
 
 Once all required Predicates have semantic constraints, the project MAY
 promote missing semantic definitions from warnings to errors.
 
-Existing semantic violations SHALL be corrected by changing the
-affected engineering artifacts or by changing the ontology definition
-through the normal ATON governance process.
+Existing semantic violations SHALL be corrected by changing the affected
+engineering artifacts or by changing the ontology definition through the
+normal ATON governance process.
 
 The verifier SHALL NOT silently modify engineering artifacts.
 
@@ -472,12 +509,12 @@ Assume the ontology defines:
 and the Foundation contains:
 
     NOTE-0020
-    concept: ONT-Note
+        concept: ONT-Note
 
     ADR-0008
-    concept: ONT-ADR
+        concept: ONT-ADR
 
-The relation:
+The Relation:
 
     NOTE-0020 --motivates--> ADR-0008
 
@@ -486,7 +523,7 @@ is semantically valid.
 If the Foundation contains:
 
     ADR-0009
-    concept: ONT-ADR
+        concept: ONT-ADR
 
 then:
 
@@ -501,7 +538,7 @@ is not an Allowed Pair for `motivates`.
 Likewise, if the Foundation contains:
 
     DECISION-0001
-    concept: ONT-Decision
+        concept: ONT-Decision
 
 then:
 
@@ -518,12 +555,11 @@ is not an Allowed Pair for `motivates`.
 This RFC SHALL preserve compatibility with the canonical Relation model
 defined by RFC-0025.
 
-Existing structural relations remain representable.
+Existing structural Relations remain representable.
 
 Semantic constraints are an additional ontology-level layer.
 
-No existing Relation instance needs to contain an `allowedPairs`
-definition.
+No existing Relation instance needs to contain an `allowedPairs` definition.
 
 ## Implementation Boundary
 
@@ -531,23 +567,23 @@ The following are in scope:
 
 - canonical Predicate constraints;
 - explicit source-to-target Concept pairs;
-- semantic relation verification;
+- semantic Relation verification;
+- cardinality constraints;
 - semantic verification reporting;
-- migration-compatible handling of undefined Predicates;
+- migration-compatible handling of undefined Predicates; and
 - canonical ontology Concept identity.
 
 The following are out of scope:
 
 - type inheritance;
 - automatic Predicate inheritance;
-- cardinality;
-- inverse relation generation;
+- inverse Relation generation;
 - transitivity;
 - symmetry;
 - property chains;
-- reasoning over relation graphs;
-- inference;
-- automatic relation repair.
+- reasoning over Relation graphs;
+- inference; and
+- automatic Relation repair.
 
 These capabilities require separate architectural decisions or RFCs.
 
@@ -562,23 +598,24 @@ The implementation of this RFC SHALL satisfy at least the following:
 4. Undefined Predicates can be reported.
 5. Unknown source Concepts can be reported.
 6. Unknown target Concepts can be reported.
-7. Structural relation validation remains independent of semantic
-   validation.
-8. Existing Relation instances do not contain duplicated semantic
-   constraint definitions.
+7. Structural Relation validation remains independent of semantic validation.
+8. Existing Relation instances do not contain duplicated semantic constraint
+   definitions.
 9. Verification issues identify the affected artifact and rule.
-10. Concept specialization does not implicitly expand Predicate
-    applicability.
+10. Concept specialization does not implicitly expand Predicate applicability.
 11. Existing Foundation artifacts remain structurally loadable during
     migration.
 12. The semantic model does not rely on an implicit Cartesian product of
     source and target Concept sets.
+13. Cardinality constraints can be evaluated independently of
+    source-to-target Concept validity.
+14. Cardinality violations can be reported as semantic verification issues.
 
 ## References
 
-- RFC-0025 Canonical Relation Model
-- RFC-0026 Ontological Predicates
-- RFC-0027 ATON Ontology
-- ADR-0009 Semantic Constraints for Relations
-- NOTE-0021 Semantic Constraints for Relations
-- ENTITY-0001 Universal Entity Model
+- RFC-0025 — Canonical Relation Model
+- RFC-0026 — Ontological Predicates
+- RFC-0027 — ATON Ontology
+- ADR-0009 — Semantic Constraints for Relations
+- NOTE-0021 — Semantic Constraints for Relations
+- ENTITY-0001 — Universal Entity Model
