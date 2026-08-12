@@ -310,9 +310,11 @@ property:
 
 or:
 
+    ```text
     {
       "title": "Braking System"
     }
+    ```
 
 The serialization mechanism SHALL NOT alter the semantic meaning of the
 Property.
