@@ -15,3 +15,5 @@ allowedPairs:
     target: ONT-RFC
   - source: ONT-RFC
     target: ONT-Entity
+  - source: ONT-GlossaryEntry
+    target: ONT-Entity
