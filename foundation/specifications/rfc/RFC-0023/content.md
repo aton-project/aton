@@ -91,11 +91,13 @@ A traceability relationship consists of:
 
 The relationship SHALL be represented using the canonical Relation model.
 
-A traceability relationship SHALL therefore have an explicitly represented
-predicate and target.
+A traceability relationship SHALL therefore be represented by a canonical
+Relation containing an explicitly represented Predicate and target.
 
-The source is determined by the engineering knowledge object that owns the
-Relation.
+The source is determined by the Entity that owns the Relation, according to
+the canonical Relation model defined by RFC-0025.
+
+Traceability does not introduce a separate relation type or representation.
 
 ## Explicit Traceability
 
@@ -128,8 +130,11 @@ RFC-0025 defines the canonical Relation representation.
 
 RFC-0029 defines semantic constraints for Predicates.
 
-Therefore, a relation contributes to canonical traceability only when its
-structural and applicable semantic constraints are satisfied.
+Therefore, a Relation contributes to canonical traceability only when its
+structural representation is valid and its applicable semantic constraints
+are satisfied.
+
+Semantic validity SHALL be determined according to RFC-0029.
 
 A structurally representable relation MAY nevertheless be semantically
 invalid.
@@ -225,7 +230,7 @@ For example:
         |
         | refines
         ▼
-    Specification
+    Requirement
         |
         | implementedBy
         ▼
@@ -234,6 +239,13 @@ For example:
         | verifiedBy
         ▼
     Test
+
+The example uses only Predicate applications permitted by the ATON ontology
+defined by RFC-0027.
+
+A traceability path SHALL NOT be considered valid merely because each
+individual relation is structurally representable. Each Relation SHALL satisfy
+the applicable semantic constraints defined by RFC-0029.
 
 Such a path MAY provide useful engineering traceability.
 
@@ -359,6 +371,7 @@ Verification MAY identify:
 - invalid self references;
 - unknown Predicates;
 - invalid source-to-target Concept pairs;
+- violations of applicable semantic constraints;
 - relationships referencing unavailable Engineering Versions;
 - relationships inconsistent with a selected Baseline; or
 - other violations defined by applicable semantic constraints.
