@@ -1,6 +1,9 @@
 from knowledge_model import KnowledgeModel
 from verification_report import VerificationReport
 from predicate_registry import predicate_state
+from constraint_pattern_registry import (
+    is_known_constraint_pattern,
+)
 
 
 def verify(model: KnowledgeModel) -> VerificationReport:
@@ -41,6 +44,11 @@ def verify(model: KnowledgeModel) -> VerificationReport:
     )
 
     # Semantic verification
+    verify_constraint_patterns(
+        model,
+        report,
+    )
+
     verify_semantic_relations(
         model,
         report,
@@ -242,6 +250,38 @@ def resolve_concept(
         return artifact.id
 
     return artifact.ontology_type
+
+
+def verify_constraint_patterns(
+    model: KnowledgeModel,
+    report: VerificationReport,
+) -> None:
+    """
+    Verify that all explicitly declared Constraint Patterns
+    are known to the canonical Pattern Registry.
+    """
+    print(
+        "Verifying constraint patterns..."
+    )
+
+    for artifact in model.repository.predicates():
+        for pair in artifact.allowed_pairs:
+            for pattern in (
+                pair.source_pattern,
+                pair.target_pattern,
+            ):
+                if pattern is None:
+                    continue
+
+                if not is_known_constraint_pattern(pattern):
+                    report.error(
+                        artifact,
+                        (
+                            f"Predicate '{artifact.id}' uses unknown "
+                            f"Constraint Pattern '{pattern}'."
+                        ),
+                        rule="unknown-constraint-pattern",
+                    )
 
 
 def verify_semantic_relations(
