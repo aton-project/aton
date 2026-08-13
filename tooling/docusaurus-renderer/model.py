@@ -16,10 +16,14 @@ class Relation:
 @dataclass(slots=True)
 class AllowedPair:
     """
-    Semantic source-to-target Concept pair allowed by a Predicate.
+    Semantic source-to-target Concept pair or Constraint Pattern
+    allowed by a Predicate.
     """
-    source: str
-    target: str
+
+    source: str | None
+    target: str | None
+    source_pattern: str | None = None
+    target_pattern: str | None = None
 
 
 @dataclass(slots=True)

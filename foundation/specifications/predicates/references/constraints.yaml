@@ -1,19 +1,5 @@
 allowedPairs:
-  - source: ONT-ADR
-    target: ONT-Note
-  - source: ONT-ADR
-    target: ONT-RFC
-  - source: ONT-ADR
-    target: ONT-Entity
-  - source: ONT-Predicate
-    target: ONT-RFC
-  - source: ONT-RFC
-    target: ONT-ADR
-  - source: ONT-RFC
-    target: ONT-Note
-  - source: ONT-RFC
-    target: ONT-RFC
-  - source: ONT-RFC
-    target: ONT-Entity
-  - source: ONT-GlossaryEntry
-    target: ONT-Entity
+  - source:
+      pattern: ANY-CONCEPT
+    target:
+      pattern: ANY-CONCEPT

@@ -207,6 +207,43 @@ def verify_self_references(
                 )
 
 
+def matches_constraint(
+    actual: str,
+    concept: str | None,
+    pattern: str | None,
+    model: KnowledgeModel,
+) -> bool:
+    """
+    Match a resolved ontology Concept against a concrete Concept
+    or an explicit Constraint Pattern.
+    """
+    if concept is not None:
+        return actual == concept
+
+    if pattern == "ANY-CONCEPT":
+        return any(
+            ontology.id == actual
+            for ontology in model.repository.ontology_concepts()
+        )
+
+    return False
+
+
+def resolve_concept(
+    artifact,
+) -> str | None:
+    """
+    Resolve the canonical ontology Concept represented by an artifact.
+
+    Normal artifacts use their explicit ontologyType.
+    Ontology artifacts represent the Concept identified by their own ID.
+    """
+    if artifact.metadata.get("entityType") == "ontology":
+        return artifact.id
+
+    return artifact.ontology_type
+
+
 def verify_semantic_relations(
     model: KnowledgeModel,
     report: VerificationReport,
@@ -310,12 +347,14 @@ def verify_semantic_relations(
             # Source ontology type
             # --------------------------------------------------------
 
-            if not artifact.ontology_type:
+            source_concept = resolve_concept(artifact)
+
+            if not source_concept:
                 report.error(
                     artifact,
                     (
                         f"Source artifact '{artifact.id}' has no "
-                        f"explicit ontology type for relation "
+                        f"resolvable ontology Concept for relation "
                         f"'{relation.type}'."
                     ),
                     rule="unknown-source-type",
@@ -339,12 +378,14 @@ def verify_semantic_relations(
             # Target ontology type
             # --------------------------------------------------------
 
-            if not target.ontology_type:
+            target_concept = resolve_concept(target)
+
+            if not target_concept:
                 report.error(
                     artifact,
                     (
                         f"Target artifact '{target.id}' has no "
-                        f"explicit ontology type for relation "
+                        f"resolvable ontology Concept for relation "
                         f"'{relation.type}'."
                     ),
                     rule="unknown-target-type",
@@ -356,8 +397,18 @@ def verify_semantic_relations(
             # --------------------------------------------------------
 
             allowed = any(
-                pair.source == artifact.ontology_type
-                and pair.target == target.ontology_type
+                matches_constraint(
+                    source_concept,
+                    pair.source,
+                    pair.source_pattern,
+                    model,
+                )
+                and matches_constraint(
+                    target_concept,
+                    pair.target,
+                    pair.target_pattern,
+                    model,
+                )
                 for pair in predicate.allowed_pairs
             )
 

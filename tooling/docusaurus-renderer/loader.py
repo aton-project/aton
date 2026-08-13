@@ -254,16 +254,53 @@ def parse_allowed_pairs(
         source = entry.get("source")
         target = entry.get("target")
 
-        if not isinstance(source, str):
+        source_pattern = None
+        target_pattern = None
+
+        if isinstance(source, dict):
+            source_pattern = source.get("pattern")
+            if not isinstance(source_pattern, str):
+                print(
+                    f"WARNING: Allowed pair has invalid source pattern in: "
+                    f"{constraints_file}"
+                )
+                continue
+            source = None
+
+        if isinstance(target, dict):
+            target_pattern = target.get("pattern")
+            if not isinstance(target_pattern, str):
+                print(
+                    f"WARNING: Allowed pair has invalid target pattern in: "
+                    f"{constraints_file}"
+                )
+                continue
+            target = None
+
+        if source is not None and not isinstance(source, str):
             print(
                 f"WARNING: Allowed pair without valid source in: "
                 f"{constraints_file}"
             )
             continue
 
-        if not isinstance(target, str):
+        if target is not None and not isinstance(target, str):
             print(
                 f"WARNING: Allowed pair without valid target in: "
+                f"{constraints_file}"
+            )
+            continue
+
+        if source is None and source_pattern is None:
+            print(
+                f"WARNING: Allowed pair without source or source pattern in: "
+                f"{constraints_file}"
+            )
+            continue
+
+        if target is None and target_pattern is None:
+            print(
+                f"WARNING: Allowed pair without target or target pattern in: "
                 f"{constraints_file}"
             )
             continue
@@ -272,6 +309,8 @@ def parse_allowed_pairs(
             AllowedPair(
                 source=source,
                 target=target,
+                source_pattern=source_pattern,
+                target_pattern=target_pattern,
             )
         )
 

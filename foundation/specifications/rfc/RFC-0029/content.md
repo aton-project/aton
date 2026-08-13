@@ -113,6 +113,43 @@ A Predicate MAY define multiple allowed pairs.
 A Predicate with no allowed pair SHALL NOT be considered semantically
 applicable to any source-to-target Concept combination.
 
+## Constraint Patterns
+
+An Allowed Pair MAY use an explicit Constraint Pattern instead of a concrete
+source or target Concept.
+
+A Constraint Pattern SHALL be explicitly identified by a `pattern` value.
+
+The initial canonical Constraint Pattern is:
+
+`ANY-CONCEPT`
+
+`ANY-CONCEPT` matches any valid canonical ontology Concept defined by the ATON
+ontology.
+
+`ANY-CONCEPT` SHALL NOT match:
+
+- an unknown Concept;
+- an undefined ontology type;
+- an arbitrary string; or
+- a physical artifact that has no canonical ontology Concept.
+
+Constraint Patterns SHALL be evaluated only where they are explicitly declared.
+
+A missing or empty Concept identifier SHALL NOT implicitly constitute a
+Constraint Pattern.
+
+Constraint Patterns SHALL NOT introduce implicit ontology inheritance,
+specialization or Cartesian product semantics.
+
+An Allowed Pair SHALL contain either a concrete Concept identifier or an
+explicit Constraint Pattern for each position.
+
+A concrete Concept identifier SHALL be matched exactly.
+
+A Constraint Pattern SHALL be evaluated according to its normative pattern
+definition.
+
 ## Explicit Pair Semantics
 
 The allowed source-to-target pairs SHALL be evaluated exactly as
@@ -287,7 +324,8 @@ the relation is invalid because the exact pair
 
 ## Exact Pair Matching
 
-Semantic validation SHALL use exact Concept matching.
+Semantic validation SHALL use exact Concept matching for concrete Concept
+identifiers.
 
 A relation SHALL NOT become valid because:
 
@@ -296,8 +334,11 @@ A relation SHALL NOT become valid because:
 - the source Concept specializes an allowed Concept;
 - the target Concept specializes an allowed Concept.
 
-Such behavior requires explicit ontology hierarchy semantics and is
-outside the scope of this RFC.
+Where an Allowed Pair contains a Constraint Pattern, the pattern SHALL be
+evaluated according to its explicitly defined semantics.
+
+Constraint Pattern matching SHALL NOT imply ontology specialization or
+inheritance.
 
 ## Type Specialization
 
@@ -436,11 +477,21 @@ The semantic verification algorithm SHALL conceptually implement:
         resolve target Entity
         resolve target Concept
 
-        pair = (source Concept, target Concept)
+        for each allowed pair:
+            match source Concept against allowed source
+            match target Concept against allowed target
 
-        verify pair ∈ allowedPairs
+        verify that at least one allowed pair matches
 
         evaluate applicable cardinality constraints
+
+A concrete Concept SHALL match only the identical canonical Concept.
+
+A Constraint Pattern SHALL match according to its normative pattern
+definition.
+
+A relation SHALL be semantically valid when at least one complete Allowed Pair
+matches both its source Concept and target Concept.
 
 For each applicable source and Predicate combination, the verifier SHALL
 evaluate the cardinality constraint against the complete set of Relations
