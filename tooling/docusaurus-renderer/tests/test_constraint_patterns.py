@@ -187,6 +187,7 @@ class SemanticVerificationTests(unittest.TestCase):
             repository=ArtifactRepository(artifacts),
         )
 
+
     def test_any_concept_allowed_pair_is_accepted(self):
         from model import AllowedPair, Artifact, Relation
 
@@ -236,6 +237,123 @@ class SemanticVerificationTests(unittest.TestCase):
         from verification import verify
 
         report = verify(model)
+
+        self.assertTrue(
+            report.ok,
+            msg=[
+                issue.message
+                for issue in report.issues
+            ],
+        )
+
+
+    def test_source_pattern_with_concrete_target_is_accepted(self):
+        from model import AllowedPair, Artifact, Relation
+
+        source = self._artifact(
+            "ADR-TEST",
+            "ONT-ADR",
+            relations=[
+                Relation(
+                    type="references",
+                    target="ART-TEST",
+                ),
+            ],
+        )
+
+        target = self._artifact(
+            "ART-TEST",
+            "ONT-Artifact",
+        )
+
+        predicate = Artifact(
+            id="PRED-references",
+            type="predicate",
+            ontology_type=None,
+            title="References",
+            status="Draft",
+            source_dir=source.source_dir,
+            content_file=source.content_file,
+            metadata_file=source.metadata_file,
+            metadata={"entityType": "predicate"},
+            allowed_pairs=[
+                AllowedPair(
+                    source=None,
+                    target="ONT-Artifact",
+                    source_pattern="ANY-CONCEPT",
+                )
+            ],
+            content="# References\\n",
+        )
+
+        model = self._model(
+            source,
+            target,
+            predicate,
+        )
+
+        from verification import verify
+
+        report = verify(model)
+
+        self.assertTrue(
+            report.ok,
+            msg=[
+                issue.message
+                for issue in report.issues
+            ],
+        )
+
+
+    def test_concrete_source_with_target_pattern_is_accepted(self):
+        from model import AllowedPair, Artifact, Relation
+
+        source = self._artifact(
+            "ADR-TEST",
+            "ONT-ADR",
+            relations=[
+                Relation(
+                    type="references",
+                    target="ART-TEST",
+                ),
+            ],
+        )
+
+        target = self._artifact(
+            "ART-TEST",
+            "ONT-Artifact",
+        )
+
+        predicate = Artifact(
+            id="PRED-references",
+            type="predicate",
+            ontology_type=None,
+            title="References",
+            status="Draft",
+            source_dir=source.source_dir,
+            content_file=source.content_file,
+            metadata_file=source.metadata_file,
+            metadata={"entityType": "predicate"},
+            allowed_pairs=[
+                AllowedPair(
+                    source="ONT-ADR",
+                    target=None,
+                    target_pattern="ANY-CONCEPT",
+                )
+            ],
+            content="# References\n",
+        )
+
+        model = self._model(
+            source,
+            target,
+            predicate,
+        )
+
+        from verification import verify
+
+        report = verify(model)
+
 
         self.assertTrue(
             report.ok,
