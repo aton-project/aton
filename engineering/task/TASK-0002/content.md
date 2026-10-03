@@ -1,66 +1,26 @@
-# TASK-0002 — Codex Execution: Entity, Artifact and Physical Representation Analysis
-
-## Status
-
-Draft
-
-## Task Type
-
-Codex Execution Order
-
-## Derived From
-
-TASK-0001
-
-## Purpose
-
-Execute the engineering analysis defined by TASK-0001.
-
-The analysis shall examine and clarify the semantic distinction between:
-
-- Entity
-- Artifact
-- Physical Representation
-
-within the ATON architecture.
-
-The resulting analysis is an unreviewed engineering analysis and shall
-be preserved as the original agent result.
-
-## Repository
+You are working on the ATON repository.
 
 Repository:
-
     /opt/projects/aton
 
 Branch:
-
     development
 
 Remote:
-
     origin = git@github.com:aton-project/aton.git
 
-## Established Working Decision
-
-For the purpose of this analysis, ATON shall distinguish:
+Your task is to perform an independent architecture analysis of the
+concrete ATON ontology concepts in the context of the established K1
+distinction between:
 
     Entity
     Artifact
     Physical Representation
 
-These concepts shall not be treated as interchangeable.
+IMPORTANT WORKING PRINCIPLE
 
-The analysis shall NOT assume that Entity and Artifact are disjoint
-categories.
-
-The analysis shall NOT assume a strict containment hierarchy.
-
-The analysis shall distinguish semantic identity from logical
-representation and physical representation.
-
-The following working hypotheses may be used as analytical starting
-points:
+The K1 distinction is an established architectural decision for the
+purpose of this analysis:
 
     Entity
         = semantically identifiable unit of engineering knowledge
@@ -69,383 +29,452 @@ points:
         = logical engineering representation or expression of knowledge
 
     Physical Representation
-        = concrete technical manifestation or serialization of an Artifact
+        = concrete technical manifestation / serialization of an Artifact
 
-These are analysis hypotheses and shall not be silently converted into
-new normative ATON definitions.
+Do NOT assume that Entity, Artifact and Physical Representation form a
+strict containment hierarchy.
 
-## Objective
+Do NOT assume that Entity and Artifact are disjoint categories unless the
+repository explicitly establishes that.
 
-Determine whether the current ATON architecture consistently
-distinguishes:
+Do NOT invent missing ATON semantics.
+
+Distinguish carefully between:
+
+    - documented repository facts
+    - interpretations supported by existing sources
+    - inconsistencies
+    - hypotheses
+    - open semantic decisions
+    - proposed future changes
+
+This is an ANALYSIS task, not an implementation task.
+
+Do NOT modify normative Foundation definitions, ontology definitions,
+schemas, tooling, ADRs or RFCs.
+
+============================================================
+OBJECTIVE
+============================================================
+
+Perform a systematic semantic examination of the concrete ATON ontology
+concepts and determine how each concept relates to:
 
     Entity
     Artifact
     Physical Representation
 
-and identify:
+The primary question is:
 
-- supporting definitions
-- contradictions
-- ambiguities
-- incomplete semantic contracts
-- identity problems
-- typing problems
-- relation-model implications
-- version and revision implications
-- metadata ownership questions
-- open architectural decisions
+    Does the current ATON ontology correctly distinguish semantic
+    concepts from their logical representations and their physical
+    representations?
 
-The analysis shall distinguish documented repository facts from
-interpretation and unresolved questions.
+The analysis must identify where the current ontology:
 
-## Authority and Document Status
+    - supports K1
+    - is compatible with K1 but incomplete
+    - conflicts with K1
+    - mixes semantic and representational levels
+    - leaves the relationship unresolved
 
-Respect the status of all repository documents.
+============================================================
+CONCEPTS TO EXAMINE
+============================================================
 
-The Constitution and accepted ADRs have higher architectural authority
-than Proposed or Draft documents.
+At minimum examine all current ontology concepts in:
 
-Draft and Proposed documents may provide evidence of intended or
-explored semantics, but shall not be treated as accepted architecture.
+    foundation/specifications/ontology/
 
-When sources conflict, explicitly identify the conflict and the status
-of the conflicting sources.
+including:
 
-Do not silently resolve architectural conflicts.
+    Thing
+    Entity
+    Artifact
+    Metadata
+    Property
+    Relation
+    Predicate
+    Requirement
+    Component
+    Interface
+    Test
+    Definition
+    Decision
+    ADR
+    RFC
+    Note
+    Review
+    Finding
+    Collection
+    View
+    GlossaryEntry
+    Constitution
+    AX
 
-## Mandatory Source Inspection
+Do not infer the role of a concept merely from its name.
+
+For example:
+
+    ADR does not automatically mean Artifact.
+    Decision does not automatically mean Entity.
+    Review does not automatically mean Activity.
+    Finding does not automatically mean Entity.
+
+Determine the semantic role from the actual ATON definitions and
+relationships.
+
+============================================================
+MANDATORY SOURCE INSPECTION
+============================================================
 
 Inspect at minimum:
 
     foundation/constitution/CONSTITUTION/content.md
 
     foundation/specifications/adr/ADR-0004/content.md
+    foundation/specifications/adr/ADR-0007/content.md
+    foundation/specifications/adr/ADR-0008/content.md
+    foundation/specifications/adr/ADR-0009/content.md
+    foundation/specifications/adr/ADR-0010/content.md
+    foundation/specifications/adr/ADR-0011/content.md
+    foundation/specifications/adr/ADR-0012/content.md
     foundation/specifications/adr/ADR-0013/content.md
+    foundation/specifications/adr/ADR-0014/content.md
+    foundation/specifications/adr/ADR-0015/content.md
+    foundation/specifications/adr/ADR-0016/content.md
+    foundation/specifications/adr/ADR-0017/content.md
+    foundation/specifications/adr/ADR-0018/content.md
 
     foundation/specifications/entity/ENTITY-0001/content.md
-
-    foundation/specifications/ontology/Entity/content.md
-    foundation/specifications/ontology/Artifact/content.md
 
     foundation/specifications/rfc/RFC-0001/content.md
     foundation/specifications/rfc/RFC-0010/content.md
     foundation/specifications/rfc/RFC-0012/content.md
     foundation/specifications/rfc/RFC-0013/content.md
+    foundation/specifications/rfc/RFC-0015/content.md
+    foundation/specifications/rfc/RFC-0020/content.md
+    foundation/specifications/rfc/RFC-0021/content.md
+    foundation/specifications/rfc/RFC-0022/content.md
+    foundation/specifications/rfc/RFC-0023/content.md
+    foundation/specifications/rfc/RFC-0025/content.md
+    foundation/specifications/rfc/RFC-0026/content.md
+    foundation/specifications/rfc/RFC-0027/content.md
+    foundation/specifications/rfc/RFC-0028/content.md
+    foundation/specifications/rfc/RFC-0029/content.md
+    foundation/specifications/rfc/RFC-0030/content.md
+    foundation/specifications/rfc/RFC-0031/content.md
 
     foundation/specifications/glossary/TERM-Entity/content.md
     foundation/specifications/glossary/TERM-Artifact/content.md
+    foundation/specifications/glossary/TERM-Predicate/content.md
+    foundation/specifications/glossary/TERM-Relation/content.md
 
-Inspect relevant metadata.yaml and relations.yaml files where they
-materially affect the interpretation.
+Inspect metadata.yaml and relations.yaml sidecars where they materially
+affect the interpretation.
 
-Inspect additional sources when required to establish semantic
-relationships or resolve references.
+Also inspect relevant predicate definitions and schemas where required.
 
-## Required Analysis Areas
+You may inspect additional repository files when necessary.
 
-### 1. Entity
+============================================================
+AUTHORITY AND STATUS
+============================================================
 
-Determine:
+Respect document status.
 
-- what Entity means in the current ATON architecture
-- what constitutes Entity identity
-- whether Entity is universal, specialized or otherwise constrained
-- how Entity relates to Artifact
-- how Entity relates to Physical Representation
+The Constitution and accepted ADRs have higher architectural authority
+than Proposed or Draft documents.
 
-### 2. Artifact
+Draft and Proposed documents are evidence of intended or explored
+semantics, but must NOT be treated as accepted architecture.
 
-Determine:
+Explicitly identify when an important conclusion depends on a Draft or
+Proposed source.
 
-- what Artifact means
-- whether Artifact has its own logical identity
-- whether Artifact is independent of physical representation
-- whether an Artifact can have multiple Physical Representations
-- whether an Artifact must correspond to an Entity
-- whether one Artifact may describe or express multiple Entities
+Do not silently resolve conflicts in favor of newer-looking or more
+detailed documents.
 
-### 3. Physical Representation
+============================================================
+ANALYSIS QUESTIONS
+============================================================
 
-Determine:
+For EACH ontology concept determine:
 
-- what constitutes a Physical Representation
-- whether repository directories and files are Physical Representations
-- whether metadata.yaml, content.md and relations.yaml together form
-  a composite Physical Representation
-- whether individual files should be treated as Artifacts
-- whether physical location contributes to semantic identity
+1. What is the semantic meaning of the concept?
 
-### 4. Identity
+2. Does it describe:
+       - a semantic engineering entity
+       - a logical artifact/representation
+       - a physical representation
+       - a relation between things
+       - metadata/property information
+       - a view/collection
+       - a process/activity
+       - another category
+       - or an unresolved combination?
 
-Analyze the distinction between:
+3. Does the concept have its own semantic identity?
 
-- Entity identity
-- Artifact identity
-- Physical Representation identity
-- UUID
-- id
-- path
-- filename
-- URI
-- Git commit
-- Git revision
+4. If it has semantic identity, what kind?
 
-Determine which existing sources assign identity to which level.
+5. Does it represent or describe another Entity?
 
-Do not invent a final identity model.
+6. Can it have one or more Artifacts?
 
-### 5. Versioning and Revision
+7. Can one Artifact describe or express multiple Entities?
 
-Analyze:
+8. Can it have multiple Physical Representations?
 
-- Engineering Version
-- Artifact Revision
-- physical representation changes
-- Git commits
-- baselines
+9. What constitutes its Physical Representation in the current ATON
+   repository?
 
-Determine which level each concept currently appears to belong to.
+10. Is the current definition explicit about these levels?
 
-Do not equate Git commits with Artifact Revisions unless the repository
-explicitly establishes that relationship.
+11. Does the definition accidentally equate:
+        Entity = Artifact
+    or:
+        Artifact = Physical Representation
+    or:
+        Entity = Physical Representation?
 
-### 6. ontologyType
+12. What relations are currently defined for the concept?
 
-Analyze the meaning of:
+13. Are relation endpoints semantically consistent with the K1 model?
 
-    ontologyType
+14. Is the concept's identity dependent on:
+        - UUID
+        - path
+        - filename
+        - Git location
+        - Artifact identity
+        - Entity identity
+        - something else?
 
-Determine whether existing sources associate it with:
+15. Does the current model provide sufficient identity stability when
+    the physical representation changes?
 
-- Entity
-- Artifact
-- both
-- another level
-- unresolved ownership
+16. Does the concept introduce any ambiguity concerning version,
+    revision, baseline or history?
 
-Do not invent a new ownership rule.
+17. Is the concept primarily:
+        - semantic
+        - representational
+        - physical
+        - organizational
+        - procedural
+        - mixed?
 
-### 7. Relations
+18. What changes, if any, appear necessary to make the concept coherent
+    with K1?
 
-Analyze the implications of K1 for the relation model.
+Do NOT turn question 18 into implementation.
 
-Determine whether current sources assume:
+============================================================
+SPECIAL CASES
+============================================================
 
-    Entity -> Entity
+Pay particular attention to:
 
-    Artifact -> Artifact
+### Requirement
 
-    Entity -> Artifact
+Determine whether a Requirement is:
 
-    Artifact -> Entity
+    - an Entity
+    - an Artifact
+    - both in different senses
+    - or another concept
 
-or combinations thereof.
+Do not equate a requirement identifier such as REQ-xxxx with a file.
 
-Identify contradictions and unresolved questions.
+### Decision and ADR
 
-Do not create new predicates as part of this task.
+Explicitly distinguish:
 
-### 8. Metadata
+    Decision
+    ADR
+    ADR physical representation
 
-Determine whether metadata is currently understood as belonging to:
+Determine whether an ADR is:
 
-- Entity
-- Artifact
-- Physical Representation
-- multiple levels
+    - the decision itself
+    - a logical representation/documentation of a decision
+    - an Entity
+    - an Artifact
+    - or currently ambiguous.
 
-Identify contradictions between sources.
+### RFC
 
-### 9. Canonical Repository Representation
+Determine whether an RFC itself is an engineering Entity, Artifact,
+or another semantic category.
 
-Analyze the role of:
+Consider that an RFC may describe multiple Entities.
 
-    metadata.yaml
-    content.md
-    relations.yaml
+### Review and Finding
 
-Determine whether these files represent:
+Determine whether:
 
-- an Entity
-- an Artifact
-- a Physical Representation
-- components of a composite Physical Representation
+    Review
+    Finding
 
-Use repository evidence.
+represent:
 
-### 10. Tooling
+    - activities
+    - results
+    - semantic entities
+    - artifacts
+    - combinations
 
-Inspect relevant tooling where it materially affects the semantic
-interpretation.
+Do not assume the answer.
 
-In particular determine whether current tooling distinguishes:
+### Note
 
-- Entity
-- Artifact
-- Physical Representation
+Determine whether a Note can exist as an independent logical Artifact
+without a corresponding dedicated Entity, or whether the current
+ontology requires an Entity.
 
-or combines these concepts.
+### Collection and View
 
-Do not modify tooling.
+Determine whether Collection and View are:
 
-## Concrete Ontology Examples
+    - semantic entities
+    - logical artifacts
+    - derived constructs
+    - organizational constructs
 
-Where useful, test the K1 model against existing ATON concepts such as:
+Pay particular attention to whether they have identity independent of
+their physical representation.
 
-- Requirement
-- Component
-- Interface
-- Decision
-- ADR
-- RFC
-- Review
-- Finding
-- Note
-- Test
-- Definition
-- Collection
-- View
-- GlossaryEntry
-- Constitution
+### GlossaryEntry
 
-Do not assume that the name of a concept determines whether it is an
-Entity, Artifact or Physical Representation.
+Determine whether a GlossaryEntry is:
 
-For example:
+    - a semantic concept
+    - an Artifact documenting a concept
+    - both at different levels
+    - or unresolved.
 
-    Decision != automatically Artifact
-    ADR != automatically Entity
-    ADR != automatically Physical Representation
-    Requirement != automatically a file
-    content.md != automatically an Artifact
+### Constitution
 
-Determine the semantic role from repository evidence.
+Determine the distinction between:
 
-## Semantic Tests
+    - the Constitution as semantic/normative engineering knowledge
+    - its logical Artifact
+    - its physical repository representation.
 
-Apply the following conceptual tests where relevant.
+============================================================
+REQUIRED CROSS-CONCEPT ANALYSIS
+============================================================
 
-### Identity Test
+After examining the individual concepts, analyze the ontology as a whole.
 
-If the physical representation is deleted and recreated at another
-path, does the semantic object remain the same?
+Specifically determine:
 
-### Representation Test
+### A. Taxonomy
 
-Can the same semantic object have multiple physical representations?
-
-### Documentation Test
-
-Can one Artifact describe or document multiple Entities?
-
-### Replacement Test
-
-Can a Physical Representation be replaced without changing the
-semantic identity of the Artifact?
-
-### Artifact Continuity Test
-
-Can an Artifact remain the same Artifact while its Physical
-Representation changes?
-
-### Entity Continuity Test
-
-Can an Entity remain the same Entity while its Artifact or physical
-representation changes?
-
-### File Identity Test
-
-Is a repository file incorrectly being treated as an Entity or
-Artifact?
-
-## Required Cross-Concept Analysis
-
-After the individual analysis, examine the overall architecture.
-
-### Taxonomy
-
-Determine whether ATON currently provides a coherent taxonomy involving:
+Does ATON currently define a coherent taxonomy involving:
 
     Thing
     Entity
     Artifact
     Physical Representation
 
-Do not automatically propose inheritance.
+If not, identify exactly what is missing.
 
-### Cardinality
+Do NOT automatically propose inheritance.
 
-Identify documented or implied cardinalities between:
+### B. Cardinality
 
-    Entity <-> Artifact
+Identify currently documented or implied cardinalities between:
 
-    Artifact <-> Physical Representation
+    Entity ↔ Artifact
+    Artifact ↔ Physical Representation
 
 Do not invent cardinalities where the repository is silent.
 
-### Identity
+### C. Identity
 
-Determine whether semantic identity, logical Artifact identity and
-physical identity are consistently distinguished.
+Determine whether the ontology consistently distinguishes:
 
-### Typing
+    semantic identity
+    logical Artifact identity
+    physical locator/identity
 
-Determine whether ontologyType is consistently applied to the correct
-semantic level.
+Pay particular attention to:
 
-### Relations
+    id
+    uuid
+    ontologyType
+    path
+    filename
+    version
+    revision
 
-Determine whether relation endpoint semantics are compatible with K1.
+### D. Typing
 
-### Metadata
+Analyze the meaning and ownership of:
 
-Determine whether metadata ownership is consistent.
+    ontologyType
 
-### Evolution
+Determine whether it currently belongs conceptually to:
 
-Determine whether version, revision, baseline and physical change
-semantics are consistent.
+    Entity
+    Artifact
+    both
+    another level
+    unresolved
 
-## Required Separation of Conclusions
+Use actual repository evidence.
 
-Separate the results into three categories.
+### E. Relations
 
-### Direct Consequences of K1
+Determine whether the current relation model assumes:
 
-Changes or clarifications that logically follow from distinguishing:
+    Entity → Entity
+
+    Artifact → Artifact
+
+    Entity → Artifact
+
+    Artifact → Entity
+
+or combinations thereof.
+
+Identify contradictions and unresolved questions.
+
+### F. Metadata
+
+Determine whether metadata is attached conceptually to:
 
     Entity
     Artifact
     Physical Representation
+    or multiple levels.
 
-### K1-Dependent Open Decisions
+Identify conflicting definitions.
 
-Questions exposed by K1 whose answers are NOT determined by K1.
+### G. Versioning and Revision
 
-Examples include:
+Determine how the three levels interact with:
 
-- Entity/Artifact cardinality
-- Artifact identity continuity
-- ontologyType ownership
-- relation endpoint scope
-- metadata ownership
-- Artifact Revision semantics
+    Engineering Version
+    Artifact Revision
+    Physical representation changes
+    Git commits
+    Baselines
 
-### Independent Ontology Decisions
+Do not invent a final version model.
 
-Questions that are not logically determined by K1.
+============================================================
+REQUIRED MATRIX
+============================================================
 
-Do not use K1 as a reason to redesign unrelated ontology areas.
-
-## Required Output Matrix
-
-Create a matrix similar to:
+Produce a comprehensive matrix similar to:
 
 | Concept | Semantic Role | Own Identity | Entity Relationship | Artifact Relationship | Physical Representation | Main Ambiguity |
 |---------|---------------|--------------|---------------------|-----------------------|--------------------------|----------------|
 
-Use descriptive classifications such as:
+Use values such as:
 
     supported
     partially supported
@@ -454,14 +483,15 @@ Use descriptive classifications such as:
     not applicable
     unresolved
 
-Do not use rankings or scores.
+Do NOT use evaluative rankings such as "best", "worst", "good",
+"bad", etc.
 
-Create a second matrix:
+Then produce a second matrix:
 
 | Concept | Current Definition | K1 Compatibility | Evidence | Potential Change |
 |---------|--------------------|------------------|----------|------------------|
 
-Potential Change shall remain analytical, for example:
+Potential Change must remain analytical, e.g.:
 
     clarify
     separate levels
@@ -470,137 +500,221 @@ Potential Change shall remain analytical, for example:
     no apparent change
     requires separate decision
 
-## Required Open Questions
+Do not prescribe implementation details.
 
-Explicitly identify unresolved questions that require human
-architectural decisions.
+============================================================
+SEPARATE K1 CONSEQUENCES FROM OTHER DECISIONS
+============================================================
 
-Do not resolve such questions merely to make the model appear complete.
+This distinction is mandatory.
 
-## Required Report
+Create three categories:
+
+### 1. Direct consequences of K1
+
+Changes that logically follow from distinguishing:
+
+    Entity
+    Artifact
+    Physical Representation
+
+### 2. K1-dependent decisions
+
+Questions that become necessary because K1 exposes them, but whose
+answer is NOT determined by K1.
+
+Examples:
+
+    - Entity/Artifact cardinality
+    - Artifact identity continuity
+    - ontologyType ownership
+    - relation endpoint model
+    - metadata ownership
+    - Artifact Revision semantics
+
+### 3. Independent ontology decisions
+
+Issues unrelated to K1 or not logically determined by it.
+
+This separation is important because K1 must not silently become a
+vehicle for redesigning the entire ontology.
+
+============================================================
+SEMANTIC TESTS
+============================================================
+
+For each concept, apply these conceptual tests:
+
+TEST 1 — Identity test
+
+If the physical representation is deleted and recreated at another
+path, does the semantic object remain the same?
+
+TEST 2 — Representation test
+
+Can the same semantic object have multiple physical representations?
+
+TEST 3 — Documentation test
+
+Can one Artifact describe or document multiple Entities?
+
+TEST 4 — Replacement test
+
+Can a Physical Representation be replaced without changing the semantic
+identity of the Artifact?
+
+TEST 5 — Artifact continuity test
+
+Can an Artifact remain the same Artifact while its Physical
+Representation changes?
+
+TEST 6 — Entity continuity test
+
+Can an Entity remain the same Entity while its Artifact or physical
+representation changes?
+
+TEST 7 — File identity test
+
+Is a repository file itself being incorrectly treated as an Entity or
+Artifact?
+
+Record the results where they reveal meaningful semantic issues.
+
+============================================================
+EXPECTED OUTPUT
+============================================================
 
 Create:
 
-    engineering/analysis/architecture/K1-Entity-Artifact-Physical-Representation.md
+    engineering/analysis/architecture/K1.13-Concrete-Ontology-Analysis.md
 
-The report shall be written entirely in ENGLISH.
+The report MUST be written entirely in ENGLISH.
 
-The report shall explicitly state:
+The report MUST be explicitly marked:
 
     Status: Draft
     Analysis Type: Engineering Analysis
     Normative Status: Non-normative
 
-The report shall contain at minimum:
+Include:
 
 1. Executive Summary
+
 2. Analysis Basis
+   - Git commit
+   - branch
+   - repository
+   - date
+   - working-tree state
+
 3. Method
+
 4. Source Authority and Document Status
+
 5. K1 Semantic Baseline
-6. Entity Analysis
-7. Artifact Analysis
-8. Physical Representation Analysis
-9. Identity Analysis
-10. Version and Revision Analysis
-11. ontologyType Analysis
+
+6. Individual Ontology Concept Analysis
+
+7. Required Concept Matrix
+
+8. Cross-Concept Analysis
+
+9. Taxonomy Analysis
+
+10. Identity Analysis
+
+11. Typing Analysis
+
 12. Relation Analysis
+
 13. Metadata Analysis
-14. Canonical Repository Representation
-15. Tooling Analysis
-16. Concrete Ontology Examples
-17. Required Concept Matrix
-18. Cross-Concept Analysis
-19. Direct K1 Consequences
-20. K1-Dependent Open Decisions
-21. Independent Ontology Decisions
-22. Contradictions and Ambiguities
-23. Candidate Clarifications
-24. Open Questions
-25. Conclusion
-26. Recommended Next Analysis Steps
 
-The conclusion shall not silently introduce new architectural decisions.
+14. Version and Revision Analysis
 
-## Constraints
+15. Direct K1 Consequences
 
-This task is analytical.
+16. K1-Dependent Open Decisions
 
-Do NOT:
+17. Independent Ontology Decisions
 
-- modify normative Foundation definitions
-- modify ADRs
-- modify RFCs
-- modify ontology definitions
-- modify schemas
-- modify predicates
-- modify tooling
-- rename concepts
-- introduce new ontology types
-- introduce new predicates
-- introduce new normative rules
-- assume Entity and Artifact are disjoint
-- assume every Entity has exactly one Artifact
-- assume every Artifact has exactly one Entity
-- assume every Physical Representation has an ATON UUID
-- equate paths with semantic identity
-- equate filenames with semantic identity
-- equate Git commits with Artifact Revisions
-- treat Draft or Proposed documents as accepted architecture
+18. Contradictions and Ambiguities
+
+19. Candidate Clarifications
+
+20. Open Questions
+
+21. Conclusion
+
+22. Recommended Next Analysis Steps
+
+The conclusion MUST NOT silently introduce new architectural decisions.
+
+============================================================
+IMPORTANT ANALYTICAL CONSTRAINTS
+============================================================
+
+Do not:
+
+    - modify existing ontology definitions
+    - modify ADRs
+    - modify RFCs
+    - modify schemas
+    - modify tooling
+    - rename concepts
+    - create new normative definitions
+    - resolve open architecture decisions without evidence
+    - assume inheritance
+    - assume Entity and Artifact are disjoint
+    - assume every Artifact has exactly one Entity
+    - assume every Entity has exactly one Artifact
+    - assume every Physical Representation has an ATON UUID
+    - equate Git commits with Artifact Revisions
+    - equate paths with semantic identity
 
 Do:
 
-- inspect actual repository content
-- follow references
-- inspect relevant sidecar files
-- distinguish document status
-- identify contradictions
-- preserve uncertainty
-- explicitly distinguish facts from interpretation
-- identify decisions that require human review
+    - follow references
+    - inspect actual definitions
+    - inspect sidecar metadata and relations
+    - distinguish source status
+    - identify contradictions
+    - preserve uncertainty
+    - explicitly state when evidence is insufficient.
 
-## Analysis Basis
+============================================================
+GIT WORKFLOW
+============================================================
 
-Before performing the analysis:
+This is intentionally an UNREVIEWED analysis result.
 
-1. Inspect the current Git status.
-2. Record the current HEAD commit.
-3. Record the current branch.
-4. Record whether the working tree is clean.
-5. Use this information as the analysis basis.
+After completing the report:
 
-The report shall record the exact commit against which the analysis was
-performed.
+1. Check git status before modification.
 
-## Git Workflow
+2. Write the report to:
 
-This task intentionally produces an UNREVIEWED agent result.
+       engineering/analysis/architecture/K1.13-Concrete-Ontology-Analysis.md
 
-After completing the analysis:
+3. Review the generated file for:
+       - completeness
+       - English-only language
+       - correct repository paths
+       - correct source-status distinctions
+       - no accidental normative decisions
+       - no implementation changes
 
-1. Create only the requested analysis file.
+4. Do NOT modify unrelated files.
 
-2. Do not modify unrelated files.
+5. Commit the analysis even though it has not yet been reviewed by the
+   human.
 
-3. Review the generated Markdown for:
-   - completeness
-   - English-only language
-   - correct repository paths
-   - correct source-status distinctions
-   - separation of fact and interpretation
-   - absence of accidental normative decisions
+Use an appropriate Conventional Commit, for example:
 
-4. Commit the original analysis.
+    docs(analysis): add K1.13 concrete ontology analysis
 
-Use the Conventional Commit message:
-
-    docs(analysis): add K1 entity artifact physical representation analysis
-
-5. Push the commit to:
+6. Push the commit to:
 
     origin/development
-
-6. Do NOT amend the commit after creation.
 
 7. Verify:
 
@@ -610,31 +724,40 @@ Use the Conventional Commit message:
 
     git branch -vv
 
-## Preservation of Original Agent Result
+8. Report:
 
-The resulting commit represents the ORIGINAL, UNREVIEWED Codex analysis.
+    - report path
+    - report line count
+    - report byte count if available
+    - analysis-base commit
+    - resulting commit hash
+    - push status
+    - final git status
+    - whether unrelated files were modified
 
-It SHALL remain unchanged after creation.
+IMPORTANT:
 
-Human review and subsequent corrections SHALL be represented by separate
-later commits.
+The commit represents the ORIGINAL, UNREVIEWED agent analysis.
 
-The purpose of this workflow is to preserve the original analytical
-result and its provenance.
+Do not amend it after committing.
 
-## Final Response
+Any later human corrections will intentionally be made as separate
+commits.
 
-After execution, report concisely:
+============================================================
+FINAL RESPONSE
+============================================================
+
+Your final response to the user must be concise and in ENGLISH.
+
+Report:
 
     Analysis completed.
     Report path: ...
-    Analysis-base commit: ...
-    Resulting commit: ...
+    Base commit: ...
+    Commit: ...
     Push: ...
     Working tree: ...
 
 Do not paste the full analysis into the terminal response.
-
-The complete analysis belongs in:
-
-    engineering/analysis/architecture/K1-Entity-Artifact-Physical-Representation.md
+The complete analysis belongs in the Markdown file.

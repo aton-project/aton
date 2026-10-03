@@ -1,1 +1,3 @@
 id: TASK-0002
+type: ai-prompt
+executor: codex
