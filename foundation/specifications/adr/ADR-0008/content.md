@@ -72,11 +72,16 @@ future domain concepts.
 
 ### Explicit Ontology Type Identity
 
-Each artifact that participates in the ATON semantic model SHALL explicitly
-declare its canonical ontology type.
+Each Engineering Entity that participates in the ATON semantic model SHALL
+explicitly declare its canonical ontology type.
 
 The canonical ontology type SHALL be represented by the `ontologyType`
-metadata field.
+metadata field of the Engineering Entity.
+
+`artifactType`, when applicable, classifies the Engineering Artifact. Both
+values MAY be serialized together in the canonical artifact representation's
+`metadata.yaml`; physical co-location SHALL NOT change their semantic
+ownership.
 
 The `ontologyType` SHALL reference a canonical ontology Concept identifier.
 
@@ -90,11 +95,11 @@ The ontology type SHALL NOT be inferred from:
 
 Persistence classification and ontology identity are separate concerns.
 
-An artifact SHALL have exactly one explicitly declared canonical ontology
-type.
+An Engineering Entity SHALL have exactly one explicitly declared canonical
+ontology type.
 
 Concept specialization SHALL be represented by the ontology model and SHALL
-NOT be duplicated as multiple ontology type values on the artifact.
+NOT be duplicated as multiple ontology type values on the Engineering Entity.
 
 ## Alternatives Considered
 

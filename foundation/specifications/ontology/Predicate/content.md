@@ -8,5 +8,6 @@ Concept and a target Concept.
 Predicate applicability is defined by explicit allowed source-to-target Concept
 pairs.
 
-A Predicate is itself an engineering knowledge artifact and therefore has an
-explicit ontology type.
+A Predicate represented as an Engineering Entity SHALL have an explicit
+`ontologyType`. The Foundation artifact representing it may serialize that
+declaration, but SHALL NOT thereby own the Entity's classification.

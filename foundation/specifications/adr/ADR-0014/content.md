@@ -91,8 +91,9 @@ semantic definition of its Predicate.
 Semantic validation SHALL use the canonical ontology types of the source and
 target.
 
-Ontology type SHALL be obtained from the explicit canonical ontology
-identity of the participating artifact or entity.
+Ontology type SHALL be obtained from the explicit canonical `ontologyType`
+declaration of each participating Engineering Entity.
+An artifact may serialize that declaration without owning the classification.
 
 Ontology type SHALL NOT be inferred from repository paths, directory names,
 file names or persistence classifications.

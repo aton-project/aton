@@ -153,6 +153,10 @@ Likewise, an Engineering Entity SHALL NOT require exactly one artifact.
 An Engineering Artifact SHALL have a semantic identity independent of its
 physical representation.
 
+Artifact Identity and Entity Identity SHALL remain semantically distinct.
+In the normal one-Entity/one-Artifact case they MAY use the same identifier
+value without requiring a second technical Artifact ID.
+
 Artifact identity SHALL NOT depend solely on:
 
 - file name;
@@ -191,7 +195,13 @@ applicable Engineering Knowledge Model and ontology.
 
 An artifact MAY have an artifact type.
 
-The artifact type SHALL define the semantic classification of the artifact.
+The artifact type, represented by `artifactType` when applicable, SHALL define
+the semantic classification of the Engineering Artifact.
+
+`ontologyType` SHALL classify the Engineering Entity, not the artifact
+representing it. The two values MAY be serialized together in the canonical
+artifact representation's `metadata.yaml` without changing their semantic
+ownership.
 
 Examples MAY include:
 

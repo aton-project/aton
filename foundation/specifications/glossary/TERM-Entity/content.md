@@ -18,6 +18,10 @@ independent of its physical serialization or persistence mechanism.
 Every engineering object represented by the ATON Foundation is represented
 as an Entity.
 
+`ontologyType` is the Entity-level classification by a canonical ontology
+Concept. It is distinct from `artifactType`, which classifies the Engineering
+Artifact when applicable, even if both are serialized in `metadata.yaml`.
+
 ## Relationship to the Entity Model
 
 The normative Entity model is defined by ENTITY-0001 — Universal Entity Model.

@@ -96,12 +96,17 @@ content.
 ## Metadata
 
 The `metadata.yaml` file SHALL contain the explicitly persisted metadata of
-the Engineering Artifact.
+the Engineering Artifact and the Engineering Entities represented by it,
+as required by the applicable domain models.
 
 Metadata SHALL use YAML as its canonical serialization format.
 
 Metadata SHALL contain the artifact identity and other persisted properties
 required by the applicable domain model.
+
+`ontologyType` SHALL classify the Engineering Entity. `artifactType`, when
+applicable, SHALL classify the Engineering Artifact. Physical serialization
+of both values in `metadata.yaml` SHALL NOT change their semantic ownership.
 
 Metadata SHALL NOT be used to duplicate information that is defined as
 derived by another normative specification.
@@ -235,6 +240,11 @@ Empty relation collections SHALL be represented explicitly.
 
 Artifact identity SHALL be represented explicitly in `metadata.yaml`.
 
+Entity Identity and Artifact Identity SHALL remain semantically distinct.
+In the normal one-Entity/one-Artifact case, the existing `id` value MAY serve
+both identities; a second technical Artifact ID SHALL NOT be required merely
+to distinguish their meanings.
+
 The artifact identifier SHALL be unique within the applicable Engineering
 Knowledge Model scope.
 
@@ -251,8 +261,12 @@ change its engineering identity.
 
 ## Domain Type
 
-The semantic type of an artifact SHALL be represented explicitly by its
-canonical metadata or applicable domain model.
+The Engineering Entity's `ontologyType` SHALL be represented explicitly in
+canonical metadata according to ADR-0008 and RFC-0020.
+
+Where an Artifact Type is defined or required by the applicable domain model,
+`artifactType` SHALL describe the Engineering Artifact. It SHALL NOT replace
+or determine the Engineering Entity's `ontologyType`.
 
 A Markdown heading SHALL NOT be used as the authoritative semantic type of an
 artifact.

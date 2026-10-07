@@ -118,6 +118,10 @@ Artifact identity SHALL identify the representation itself.
 
 The two identities SHALL remain conceptually distinct.
 
+In the normal one-Entity/one-Artifact case, Entity Identity and Artifact
+Identity MAY use the same identifier value. Their semantic distinction SHALL
+NOT require a second technical Artifact ID.
+
 A change in artifact identity SHALL NOT automatically imply a change in
 engineering identity.
 

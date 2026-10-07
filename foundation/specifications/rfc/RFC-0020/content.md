@@ -66,7 +66,7 @@ This RFC SHALL:
 - provide stable semantic identity for ontology concepts;
 - distinguish ontology concepts from engineering knowledge instances;
 - distinguish ontology semantics from physical representation;
-- support explicit ontology typing of engineering artifacts;
+- support explicit ontology typing of Engineering Entities;
 - support specialization of ontology concepts;
 - provide a foundation for semantic relation and predicate definitions;
 - support semantic verification of engineering knowledge; and
@@ -143,11 +143,11 @@ identifiers SHALL remain distinguishable from canonical ontology identity.
 
 ## Ontology Type
 
-An engineering artifact that participates in the ATON semantic model SHALL
+An Engineering Entity that participates in the ATON semantic model SHALL
 explicitly declare its canonical ontology type.
 
-The ontology type SHALL identify the semantic concept under which the artifact
-is interpreted.
+The ontology type SHALL identify the semantic concept under which the
+Engineering Entity is interpreted. It SHALL be declared through `ontologyType`.
 
 Ontology type identity SHALL be represented explicitly in the canonical
 Engineering Knowledge Model.
@@ -156,7 +156,8 @@ Ontology type SHALL NOT be inferred solely from physical persistence or
 repository structure.
 
 For example, the fact that an artifact is stored below an `rfc` directory
-does not by itself define its semantic ontology type.
+does not by itself define the ontology type of the Engineering Entity it
+represents.
 
 The canonical ontology declaration provides the semantic classification,
 while persistence metadata describes how that classification is represented.
@@ -213,6 +214,13 @@ to the applicable artifact model.
 
 The artifact representation SHALL NOT itself define the ontology concept.
 
+`ontologyType` belongs to the Engineering Entity represented by the artifact.
+`artifactType`, when applicable, belongs to the Engineering Artifact and
+classifies that artifact according to RFC-0010. These values MAY be physically
+serialized together in `metadata.yaml` without changing their semantic owners.
+An artifact representing multiple Entities SHALL NOT transfer a single
+`ontologyType` to all of them merely because they share a representation.
+
 For example, a Markdown file, YAML file, database record or API object MAY
 represent an engineering object classified by the same ontology concept.
 
@@ -223,7 +231,7 @@ representation.
 
 Ontology identity and metadata are distinct concepts.
 
-Metadata MAY describe the ontology classification of an engineering object,
+Metadata MAY describe the ontology classification of an Engineering Entity,
 but the semantic meaning of the ontology concept SHALL be defined by the
 ontology itself.
 
@@ -263,7 +271,7 @@ An implementation SHALL NOT assume that a syntactically valid relation is
 semantically valid solely because both referenced objects exist.
 
 Semantic validity MAY depend on the ontology types of the source and target
-objects and on the applicable predicate constraints.
+Engineering Entities and on the applicable predicate constraints.
 
 ## Ontology and Semantic Constraints
 
@@ -438,8 +446,8 @@ or implementation mechanisms.
 
 ## Migration
 
-Existing engineering artifacts may not explicitly declare their ontology
-type.
+Existing Engineering Entities may lack an explicit ontology type declaration
+in their artifact representations.
 
 A migration implementation MAY infer candidate ontology classifications from
 existing metadata, repository structure or other available evidence.

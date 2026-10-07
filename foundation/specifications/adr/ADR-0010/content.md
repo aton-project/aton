@@ -48,7 +48,7 @@ The physical location of a metadata value SHALL NOT determine its semantic meani
 
 Canonical metadata SHALL be explicitly represented.
 
-For example, an artifact may explicitly contain identity, title, lifecycle status and ontology type as part of its canonical metadata.
+For example, an artifact representation may explicitly contain identity, title, lifecycle status and the represented Engineering Entity's `ontologyType` as canonical metadata. An applicable `artifactType` describes the Engineering Artifact. Physical co-location in `metadata.yaml` SHALL NOT change either value's semantic ownership.
 
 These values are part of the canonical engineering representation.
 
@@ -151,7 +151,7 @@ Metadata SHALL belong to the logical engineering concept that it describes.
 
 An implementation MAY store metadata together with a physical artifact, but physical co-location SHALL NOT change metadata ownership.
 
-Metadata describing an engineering entity SHALL therefore remain distinguishable from metadata describing a physical representation.
+Metadata describing an engineering entity SHALL therefore remain distinguishable from metadata describing an Engineering Artifact or a Physical Representation.
 
 ## Consequences
 

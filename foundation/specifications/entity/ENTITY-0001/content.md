@@ -32,6 +32,10 @@ serialization format.
 
 Every Entity SHALL be uniquely identifiable within the ATON Foundation.
 
+Entity Identity and Artifact Identity SHALL remain semantically distinct.
+In the normal one-Entity/one-Artifact case they MAY use the same identifier
+value; distinct meanings SHALL NOT require a second technical Artifact ID.
+
 The identifier SHALL be independent of:
 
 - file name
@@ -43,7 +47,13 @@ The identifier SHALL be independent of:
 
 Every Entity SHALL have exactly one primary conceptual type.
 
-The primary type determines the semantic category of the Entity.
+The primary type determines the semantic category of the Entity and SHALL be
+explicitly declared as `ontologyType`, referencing a canonical ontology
+Concept identifier according to ADR-0008.
+
+`ontologyType` belongs to the Engineering Entity. `artifactType`, when
+applicable, belongs to the Engineering Artifact representing it. Serializing
+both values in `metadata.yaml` SHALL NOT change their semantic ownership.
 
 Specialized engineering concepts such as Requirements, Architecture
 Decisions, RFCs, Components, Interfaces and Tests SHALL be represented
@@ -81,7 +91,7 @@ its conceptual identity or semantics.
 
 ## Specialization
 
-The Entity model provides the foundation for specialized ATON artifact
+The Entity model provides the foundation for specialized ATON Entity
 types.
 
 A specialized type SHALL NOT redefine the fundamental identity model

@@ -139,7 +139,8 @@ performed according to the applicable ontology and semantic relation
 constraint specifications.
 
 Validation of whether a specific predicate is semantically valid for a given
-source and target artifact type is outside the scope of this RFC.
+source and target Engineering Entity ontology type is outside the scope of
+this RFC.
 
 ## Predicate Semantics
 
@@ -205,8 +206,8 @@ ontology-based relation validation.
 Future specifications MAY define:
 
 - predicate semantics
-- allowed source artifact types
-- allowed target artifact types
+- allowed source Engineering Entity ontology types
+- allowed target Engineering Entity ontology types
 - inverse predicates
 - cardinality constraints
 - relation lifecycle rules

@@ -55,7 +55,10 @@ The combination forms a typed knowledge graph:
 
     Concept --Predicate--> Concept
 
-Individual artifacts are instances of Concepts.
+Engineering Entities are classified by Concepts through `ontologyType`.
+Engineering Artifacts represent engineering knowledge and, when applicable,
+are classified separately through `artifactType`. Physical serialization
+SHALL NOT conflate these classifications.
 
 ## Concept Model
 

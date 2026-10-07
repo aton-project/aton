@@ -24,7 +24,12 @@ An Artifact is part of the physical or addressable representation of the
 Engineering Knowledge Model.
 
 Artifact identity and Engineering Entity identity SHALL remain conceptually
-distinct.
+distinct. In the normal one-Entity/one-Artifact case, they MAY use the
+same identifier value without requiring a second technical Artifact ID.
+
+`artifactType`, when applicable, classifies the Engineering Artifact.
+`ontologyType` classifies the Engineering Entity represented by it. Physical
+co-location in `metadata.yaml` SHALL NOT change their semantic ownership.
 
 An Engineering Entity MAY be represented by one or more Artifacts.
 
