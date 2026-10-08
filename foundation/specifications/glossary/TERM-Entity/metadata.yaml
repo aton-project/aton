@@ -2,4 +2,5 @@ id: TERM-Entity
 title: Entity
 entityType: glossary-entry
 status: Draft
+version: 0.2.0
 ontologyType: ONT-GlossaryEntry
