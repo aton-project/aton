@@ -1,5 +1,6 @@
 id: RFC-0030
 title: Canonical Engineering Artifact Serialization
 entityType: rfc
-status: Proposed
+status: Draft
+version: 0.2.0
 ontologyType: ONT-RFC
