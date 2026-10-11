@@ -1,5 +1,13 @@
 TASK-0005 — Consolidate Foundation Semantic Decisions
 
+Task Status and Revision Context
+
+This task definition has been updated because the initial execution stopped before creating a decision artifact. The initial execution made no repository changes.
+
+This revision supersedes the previous task prompt. The initial execution and its outcome remain available in Git history.
+
+The task is to create a dedicated ATON decision artifact consolidating the decisions made during the semantic review of the ATON Foundation, including the subsequent clarification of the relationship between Decision Entities and ADR Artifacts.
+
 Objective
 
 Create a dedicated ATON decision artifact that consolidates the decisions made during the semantic review of the ATON Foundation.
@@ -10,21 +18,34 @@ The primary source for the review findings is:
 
 First, inspect the current repository, branch, existing task artifacts, identifier conventions, ontology definitions, and relevant Foundation specifications.
 
-Determine the appropriate location, identifier, and physical representation for a general Decision Entity based on the conventions actually established in the repository. Do not assume that a "DEC-" identifier scheme or a particular directory structure already exists. If the conventions do not support an unambiguous choice, stop and report the issue without creating a speculative artifact.
+Determine the appropriate location, identifier, and physical representation for the decision artifact based on conventions actually established in the repository.
+
+If a convention is missing or ambiguous, do not stop the entire task automatically. Instead:
+
+1. Identify the missing or ambiguous convention.
+2. Examine existing related conventions and their implications.
+3. Develop a reasoned proposal consistent with the agreed semantic model.
+4. Clearly label the proposal as unresolved and not yet adopted.
+5. Continue creating the decision artifact if this can be done without silently adopting the proposed convention.
+6. If no safe representation is possible without making an unresolved decision, stop only that part of the work and report the specific blocker.
+
+Do not present an inferred convention as an existing normative rule.
 
 Scope and Constraints
 
-- Create only the consolidated decision artifact and the files required for its physical representation.
+- Create the consolidated decision artifact and the files required for its physical representation.
 - Do not modify any existing Foundation artifact.
 - Do not modify the semantic review report.
-- Do not modify existing tasks or previous commits.
-- Do not create correction tasks at this stage.
-- Do not implement any Foundation corrections.
-- Do not introduce new ontology concepts, predicates, identifier schemes, or model rules.
+- Do not modify existing tasks other than the explicitly authorized update to TASK-0005.
+- Do not implement Foundation corrections.
+- Do not create Foundation correction tasks.
+- Do not introduce new ontology concepts, predicates, identifier schemes, or model rules as if they had already been approved.
 - Do not silently resolve questions that remain undecided.
-- Clearly distinguish agreed decisions, implementation implications, and unresolved questions.
+- Clearly distinguish agreed decisions, existing normative rules, proposed conventions, implementation implications, and unresolved questions.
 - Use only existing, valid relation predicates. Do not invent new predicates.
-- Follow the repository's established artifact structure and metadata conventions. If the required representation depends on an unresolved model decision, stop and report the issue.
+- Follow established repository conventions where they exist.
+- Preserve the original semantic review report and its Git history unchanged.
+- Do not commit or push unless explicitly instructed.
 
 Decisions to Consolidate
 
@@ -102,14 +123,13 @@ Engineering Versions, Artifact Revisions, and Git history are distinct concepts 
 
 7. Entity Types and Ontology Concepts
 
-The following are treated as Entity types or specialized Entities in the agreed model:
+The following are treated as Entity types or specialized model concepts in the agreed model. Their classification as Entities or Artifacts must follow the specific distinctions below rather than assuming that every named item is an Entity.
 
 - Requirement
 - Specification
 - Component
 - Interface
 - Decision
-- ADR
 - Baseline
 - Test Case
 - Test Procedure
@@ -137,20 +157,23 @@ The following are not Entities in this model:
 
 Further clarifications:
 
-1. Finding, Review, and Note are Entities. Their corresponding ontology concepts define their types.
-2. A Note may exist without a relation to another Entity.
-3. A Finding is tied to a specific review context. The same factual observation in another Review is represented by a new Finding. Different Reviews MUST NOT refer to the same Finding.
-4. Review is an independently managed engineering object, not an Activity. Activities may include Inspection or Check.
-5. Test Case, Test Procedure, and Test Result are Entities. Test Execution provides the context for producing a result and is not automatically a separate Entity.
-6. A Baseline is an Entity when managed by ATON. Its core semantic content is a frozen, reproducible state of selected Entity versions. It is not automatically a Collection.
-7. A Collection is an Entity. Changes to its membership do not change its identity.
-8. A View is an Entity. Changing its presentation from a table to a graph does not change its identity. A View is a defined view of a Collection; its rendered table or graph is a Physical Representation.
-9. An RFC is an Entity with its own identity, status, version, and lifecycle. It may motivate a Decision.
-10. A general Decision is an engineering Decision Entity. An ADR is a specialized Decision Entity for architecture.
-11. A GlossaryEntry is an Entity identified by its term, such as "TERM-Artifact". It is distinct from the ontology concept it defines or describes.
-12. A Definition is an independently identifiable semantic object that defines a term, concept, property, or interface. It is not identical to the object it defines.
-13. A Constitution is an Entity with its own identity, version, lifecycle, and normative content.
-14. AX is an experience and presentation model, not an Entity.
+1. A Decision is an independently identifiable engineering Entity with its own identity and lifecycle.
+2. An ADR is an Artifact that documents a Decision. It is not itself a specialized Decision Entity.
+3. The Decision and its ADR are semantically distinct. Their identifiers MUST NOT be assumed to be identical merely because the ADR documents that Decision.
+4. A Decision may have an Artifact that represents its documentation. The general Entity-to-Artifact rules apply.
+5. Finding, Review, and Note are Entities. Their corresponding ontology concepts define their types.
+6. A Note may exist without a relation to another Entity.
+7. A Finding is tied to a specific review context. The same factual observation in another Review is represented by a new Finding. Different Reviews MUST NOT refer to the same Finding.
+8. Review is an independently managed engineering object, not an Activity. Activities may include Inspection or Check.
+9. Test Case, Test Procedure, and Test Result are Entities. Test Execution provides the context for producing a result and is not automatically a separate Entity.
+10. A Baseline is an Entity when managed by ATON. Its core semantic content is a frozen, reproducible state of selected Entity versions. It is not automatically a Collection.
+11. A Collection is an Entity. Changes to its membership do not change its identity.
+12. A View is an Entity. Changing its presentation from a table to a graph does not change its identity. A View is a defined view of a Collection; its rendered table or graph is a Physical Representation.
+13. An RFC is an Entity with its own identity, status, version, and lifecycle. It may motivate a Decision.
+14. A GlossaryEntry is an Entity identified by its term, such as "TERM-Artifact". It is distinct from the ontology concept it defines or describes.
+15. A Definition is an independently identifiable semantic object that defines a term, concept, property, or interface. It is not identical to the object it defines.
+16. A Constitution is an Entity with its own identity, version, lifecycle, and normative content.
+17. AX is an experience and presentation model, not an Entity.
 
 8. Concrete Semantic Examples
 
@@ -160,6 +183,7 @@ Further clarifications:
 4. An Interface such as "IF-0023 CAN Interface Bodycontroller" may be an Entity.
 5. A GlossaryEntry such as "TERM-Artifact" defines or describes the term or concept Artifact; it is not the concept itself.
 6. A generated Traceability Report may be an Artifact that organizes information about multiple Entities without representing a single Entity. If a Verification Report is itself a managed engineering object, it may instead be modeled as an Entity.
+7. An ADR is a documentary Artifact for a Decision Entity. Whether one ADR may document multiple Decisions, or whether each ADR must document exactly one Decision, is an unresolved modeling question. Do not silently choose either rule.
 
 9. AX Terminology and Provenance
 
@@ -168,23 +192,42 @@ Further clarifications:
 3. Substantive engineering provenance and technical change history MUST be distinguishable.
 4. These are semantic requirements for future AX implementation, not decisions about the concrete user interface design.
 
+Identifier and Repository Convention Analysis
+
+The decision artifact requires an identifier and a physical location, but no new convention may be treated as approved merely because it is convenient.
+
+1. Inspect existing identifier patterns and storage conventions for Decisions, ADRs, and other comparable engineering objects.
+2. Determine whether the repository establishes a distinct identity convention for Decision Entities and documentary Artifacts.
+3. Determine whether an ADR has an established Artifact identity separate from the Decision it documents.
+4. If no convention exists, propose a suitable approach and document its rationale, alternatives, implications, and unresolved status.
+5. Do not introduce a "DEC-" prefix, an "ADR-" identity rule, or a new directory solely by assumption.
+6. Do not conflate the ontology concept "ONT-Decision" with an individual Decision Entity.
+7. Do not claim that a proposed convention is normative until explicitly approved.
+
+The decision artifact itself must be represented using existing repository conventions wherever possible. If the repository has no unambiguous convention for the decision artifact's own identity or location, use a clearly justified, minimally invasive proposal only if doing so does not falsely claim that the convention is already established. Otherwise, stop and report the remaining blocker while preserving any useful analysis in the task output without modifying unrelated files.
+
 Requirements for the Decision Artifact
 
-- Consolidate the decisions above without changing their meaning.
-- Clearly distinguish decisions, rationale, implications, and unresolved questions.
+- Consolidate the agreed decisions without changing their meaning.
+- Clearly distinguish decisions, rationale, implications, proposals, and unresolved questions.
 - Reference relevant findings from "Foundation-Semantic-Review.md" where possible.
+- Include the clarification that a Decision is an Entity and an ADR is an Artifact documenting a Decision.
+- Record the unresolved cardinality question concerning whether an ADR may document one or multiple Decisions.
 - Do not claim that any Foundation correction has already been implemented.
 - Do not convert a proposal or unresolved detail into an accepted decision.
 - Do not invent missing Predicates, schemas, identifiers, or rules.
 - Follow the repository's actual artifact conventions and use only fields supported by those conventions.
-- Preserve the original review report and its commit unchanged.
+- Preserve the original review report and its Git history unchanged.
 
 Validation and Output
 
-After creating the artifact:
+After creating the decision artifact:
 
-1. Inspect the diff and confirm that only the new decision artifact has been added.
+1. Inspect the diff and confirm that only the intended task update and the new decision artifact have changed. Do not modify Foundation files or the review report.
 2. Run relevant existing validation commands, provided they can be executed without modifying unrelated files.
-3. Report the selected path and identifier, the files created, validation results, any unresolved convention questions, and the exact Git commands the user can use to inspect and commit the changes.
+3. Verify that the decision artifact consistently distinguishes Decision Entities from ADR Artifacts.
+4. Verify that Engineering Version, Artifact Revision, and Git history are used consistently and distinctly.
+5. Verify that unresolved questions are explicitly marked and have not been silently decided.
+6. Report the selected path and identifier, the files created, validation results, unresolved convention questions, and the exact Git commands the user can use to inspect and commit the changes.
 
 Do not commit or push unless explicitly instructed.
